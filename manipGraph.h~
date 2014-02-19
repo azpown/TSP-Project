@@ -1,5 +1,0 @@
-/* /\* #ifndef _MANIP *\/ */
-/* /\* #define _MANIP *\/ */
-
-/* /\* int distanceSommet */ */(int* graphe,int s1,int s2);
- 
