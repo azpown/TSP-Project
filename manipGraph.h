@@ -1,13 +1,18 @@
 #ifndef _MANIP 
 #define _MANIP 
 
-typedef struct graphe *graphe;
+#include <stdbool.h>
 
-int distanceSommetFullMatrice (int* graphe,int s1,int s2);
+typedef struct graphe * Graphe;
+
+double distanceSommetFullMatrice (Graphe Graphe,int s1,int s2);
 int rand_a_b(int a,int b);
-int distanceSommetFullMatrice(graphe graph,int s1,int s2);
-void initialise_1_n(int* tab,int taille);
-int plusProcheVoisin(int sommet,int* tab_dispo,int taille);
-void HeuristiquePlusProcheVoisin(graphe graph);
+void initialise_true_n(bool* tab,int taille);
+int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc);
+void HeuristiquePlusProcheVoisin(Graphe graph);
+Graphe creeGraph(int len,double** mat);
+Graphe creeGraph(int len,double** mat);
+void afficherGraphe(Graphe g);
+
 
 #endif
