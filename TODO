@@ -1,0 +1,13 @@
+Ce qu'il faut qu'on fasse en prioritée:
+
+Rémi : Je fini le parseur mardi au plus tard, ça nous permettra de faire les tests et les autres modules plus facilement par la suite (Je l'ai sur un autre ordi et j'ai oublié de push,sorry).
+Je m'attaque ensuite aux autres euristiques, et je donne un coup de main sur le tas si nécessaire.
+
+Pour vous (Je vous laisse vous divisez le travail, meme si on en parle plus en détail lundi):
+Il faut avancez avec le tas, on en aura besoin tôt dans le projet, je vous parlerai des tas de Fibonnaci dans la semaine, on le fera si on a le temps.
+Il y a pas mal de problèmes avec ce que vous avez fait pour le TasGen.
+Il faut également ajouter des fonctions de tests pour les modules existants.
+
+Le plus important sera de faire un bon gros makefile bien robuste mardi, sachant qu'on est notée en parti sur ça, faudra faire ça propre !
+
+TODO : TAS, TEST, MAKEFILE DELAMORTQUITUE
