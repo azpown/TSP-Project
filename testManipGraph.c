@@ -5,8 +5,10 @@
 #include <time.h>
 #include <math.h>
 
+//On fera un module contenant les fonctions standart de manipulation de matrice.
 void afficherMatrice(double** mat,int taille)
 {
+  printf("\nAffichage matrice rentrée:\n");
   for(int i=0;i<taille;i++)
   {
     for(int j=0;j<taille;j++)
@@ -30,8 +32,6 @@ double** InitMat10(int taille,double (*matrice)[10])
 
 int main()
 {
-  double tmp=0;
-  bool tab[10]={false,true,true,true,true,true,true,true,true,true};
   double mat[10][10]={{0,9,4,11,10,8,8,13,10,16}, 
 			  {9,0,7,2,7,9,13,10,15,11}, 
 			  {4,7,0,7,6,4,6,9,8,12}, 
@@ -47,8 +47,12 @@ int main()
   Graphe g = creeGraph(10,matrice);
   afficherGraphe(g);
   printf("\n\n--- Plus Proche Voisin ---\n");
-  HeuristiquePlusProcheVoisin(g);
-
+  for(int i=0;i<5;i++)
+  {
+    printf("\nRun %d:\n",i);
+    HeuristiquePlusProcheVoisin(g);
+  }
+  free(g);
 }
   
 				

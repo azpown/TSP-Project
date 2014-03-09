@@ -55,9 +55,10 @@ void initialise_true_n(bool* tab,int taille)
 
 void afficherGraphe(Graphe g)
 {
-  printf("Taille : %d\nMatrice : ",g->taille);
+  printf("\nAffichage de la structure graphe:\nTaille : %d\nMatrice :\n ",g->taille);
   for(int i=0;i< g->taille;i++)
   {
+    printf("%d- ",i);
     for(int j=0;j< g->taille;j++)
       printf("%.2lf ",g->matrice[i][j]);
     printf("\n");
@@ -88,6 +89,7 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
 }
 
 //TODO: Changer la sortie en string
+//On changera donc les fonctions de test, qui prendrons un char* en parametre
 void HeuristiquePlusProcheVoisin(Graphe graph)
 {
   double distanceAcc=0;
@@ -107,7 +109,7 @@ void HeuristiquePlusProcheVoisin(Graphe graph)
     printf("Ville %d->",dernierVisite);
   }
   distanceAcc+=distanceSommetFullMatrice(graph,dernierVisite,depart);
-  printf("Ville %d\n -.-> Distance totale : %.2lf \nLes villes sont numéroté de 0 a 9\n",depart,distanceAcc);
+  printf("Ville %d\n -.-> Distance totale : %.2lf \nLes villes sont numéroté de 0 a 9 \n",depart,distanceAcc);
 }
 
       
