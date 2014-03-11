@@ -1,0 +1,52 @@
+LIBDIR = $(PREFIX)/lib
+
+#le compilateur
+CC= gcc
+
+#les flags de compilation
+CFLAGS= -g -std=c99 -Wall
+
+#les flags du preprocesseur 
+CPPFLAGS= -I../bin
+DEPS= make.deps
+MAKE= make
+
+LDFLAGS= -L/lib -libmatrice
+
+#le nom de la librairy générée
+LIB= matrice.a
+
+#le nom des fichiers parcourus
+DIR= lib graphic bin
+
+#Le nom du fichier executable a generer
+OUTFILE=Voyager
+
+#les fichiers objets a generer 
+OBJ= input.o manipGraph.o
+
+$(OUTFILE) : $(OBJ)
+$(CC) $(OBJ) $(LDFLAGS) -o $(OUTFILE)
+
+#les dépendances des fichiers objets
+input.o: input.c input.h
+manipGraph.o: manipGraph.c manipGraph.h
+
+libmatrice.a :graphic/manipGraph.o bin/input.o
+	for i in */ ; do make -C $$i ; done
+	ar -cr matrice.a input.o manipGraph.o
+
+install:
+	mv libmatrice.a /lib
+	cp input.h /bin
+	cp manipGraph.h /graphic
+
+all:
+	for i in */ ; do make -C $$i ;
+	do make -C $$i ;
+	done
+
+#.PHONY: clean
+clean :
+rm -f $(OBJ) $(OUTFILE);
+rm -f $(LIBDIR)/$(LIBNAME);
