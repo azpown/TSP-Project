@@ -15,5 +15,6 @@ void* filsGauche(ville v, int pere);
 void* filsDroit(ville v, int pere);
 void reorganiserTasMin(ville v);
 void echanger(void* i,void* j);
+bool comparer(void* a,void* b);
 
 #endif

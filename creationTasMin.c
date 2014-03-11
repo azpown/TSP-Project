@@ -4,10 +4,6 @@
 #include "creationTasMin.h"
 
 
-struct voisin{
-  int indice;
-  long distance;
-};
 
 struct ville{	//crée une structure ville qui contient une taille maximale et un tableau de pointeurs génériques qui contiendra les distances avec les autres villes. 
   long taille_max;
@@ -71,13 +67,17 @@ void echanger(void* i,void* j){
 
 
 
-void reorganiserTasMin(ville v){
+
+
+
+void reorganiserTasMin(ville v,){
   int taille=v->taille_max;
   for(int i=0;i<taille;i++){
-    if(v->sommets[i]>filsGauche(v,i)) // si le sommet père est supérieur à son fils
-      echanger(v->sommets[i],filsGauche(v,i));// gauche alors on les échange
-    if(v->sommets[i]>filsDroit(v,i)) // si le sommet père est superieur à son fils
-      echanger(v->sommets[i],filsGauche(v,i));// droit alors on les échange
+    for(int j=i;j<taille;j++){
+      if(comparer(v->sommets[i],filsGauche(v,j))) // si le sommet père est supérieur à son fils
+	echanger(v->sommets[i],filsGauche(v,j));// gauche alors on les échange
+      if(comparer(v->sommets[i],filsDroit(v,j))) // si le sommet père est superieur à son fils
+	echanger(v->sommets[i],filsGauche(v,j));// droit alors on les échange
   }
 }
 
