@@ -38,6 +38,17 @@ static struct input
   double**    display_data;
 }input;
 
+/*------ ACCESSEUR ------*/
+
+
+
+/* TODO... */
+
+
+
+
+
+
 void print_input_data(){
     printf("-- Données d'entrées --\n");
     printf("nom_file : %s\n", input.nom_file);
@@ -48,24 +59,24 @@ void print_input_data(){
     printf("edge_weight_type : %s\n", input.edge_weight_type);
     printf("edge_weight_format : %s\n", input.edge_weight_format);
     printf("display_data_type : %s\n", input.display_data_type);
-    printf("edge weight matrix :\n");
+    printf("edge_weight_matrix :\n");
     if(input.edge_weight_matrix != NULL)
       {
         for(int i = 0 ; i<input.dimension ; i++)
 	  {
             for(int j = 0 ; j<input.dimension ; j++)
-                printf("%lf\t", input.edge_weight_matrix[i][j]);
+                printf("%.1lf\t", input.edge_weight_matrix[i][j]);
             printf("\n");
 	  }
       }
     else
       printf("Matrice vide.\n"); // Si matrice vide
-    printf("display data :\n");
+    printf("display_data :\n");
     if(input.display_data != NULL)
       {
         for(int i = 0 ; i<input.dimension ; i++)
 	  if(input.display_data[i]!=NULL)
-            printf("%d -> %lf\t%lf\n", i+1, input.display_data[i][0], input.display_data[i][1]);
+            printf("%d ->\t%.1lf\t%.1lf\n", i+1, input.display_data[i][0], input.display_data[i][1]);
       }
     else
       printf("Matrice vide.\n"); // Si matrice vide
@@ -287,6 +298,7 @@ static void parsing_champs(FILE* file)
     affiche_erreur();
     free_erreur(file,ligne_ptr);
   }
+  /* Parsing reussi.*/
 }
 
 
@@ -333,10 +345,12 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc)
 
       /* L'affectation realisé via sscanf est donc valide. */
       affectation_display_data(numero_ville-1,position_x,position_y);
-      print_input_data();
     }
-    affiche_erreur();
-    free_erreur(file,ligne_ptr);
+    else
+    {
+      affiche_erreur();
+      free_erreur(file,ligne_ptr);
+    }
   }
 }
 
