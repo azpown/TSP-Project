@@ -1,17 +1,23 @@
-testt : testManipGraph.o manipGraph.o
-	gcc testManipGraph.o manipGraph.o -o testt
+#testt : testManipGraph.o manipGraph.o
+#	gcc testManipGraph.o manipGraph.o -o testt
 
-manipGraph.o : manipGraph.c manipGraph.h
-	gcc -std=c99 -c manipGraph.c
+testInput : Input.o
+	gcc Input.o -o testInput
 
-testManipGraph.o : testManipGraph.c manipGraph.h
-	gcc -std=c99 -c testManipGraph.c
+#manipGraph.o : manipGraph.c manipGraph.h
+#	gcc -std=c99 -c manipGraph.c
+
+#testManipGraph.o : testManipGraph.c manipGraph.h
+#	gcc -std=c99 -c testManipGraph.c
+
+Input.o : Input.c
+	gcc -std=c99 -c Input.c
 
 .PHONY : clean runTest
 clean :
 	rm *Graph.o 
 runTest :
-	./testt
+	./testInput
 
 
 
