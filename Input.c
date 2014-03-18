@@ -45,8 +45,9 @@ void print_input_data(){
     printf("type : %s\n", input.type);
     printf("commentaire : %s\n", input.commentaire);
     printf("dimension : %d\n", input.dimension);
-    printf("edge_weight_type: %s\n", input.edge_weight_type);
-    printf("display_data_type: %s\n", input.display_data_type);
+    printf("edge_weight_type : %s\n", input.edge_weight_type);
+    printf("edge_weight_format : %s\n", input.edge_weight_format);
+    printf("display_data_type : %s\n", input.display_data_type);
     printf("edge weight matrix :\n");
     if(input.edge_weight_matrix != NULL)
       {
@@ -63,6 +64,7 @@ void print_input_data(){
     if(input.display_data != NULL)
       {
         for(int i = 0 ; i<input.dimension ; i++)
+	  if(input.display_data[i]!=NULL)
             printf("%d -> %lf\t%lf\n", i+1, input.display_data[i][0], input.display_data[i][1]);
       }
     else
@@ -237,7 +239,7 @@ static void parsing_champs(FILE* file)
     /*------ EDGE WEIGHT FORMAT ------*/
     if(est_valide(!input.edge_weight_format,file,ligne_ptr,"EDGE_WEIGHT_FORMAT: %ms",true,"FULL_MATRIX","EDGE_WEIGHT_FORMAT non géré."))
     {
-      input.edge_weight_type=alloc_chaine(taille_ligne,18,ligne_ptr);
+      input.edge_weight_format=alloc_chaine(taille_ligne,20,ligne_ptr);
       continue;
     }
 
@@ -254,14 +256,15 @@ static void parsing_champs(FILE* file)
     {
       /* Pour parser les différents champs de données, il faut que certains champs soient présents 
        * sinon, on affiche un message d'erreur */
-      if(bool_section && input.display_data_type && input.dimension)
-      {
-	parsing_display(file,ligne_ptr,taille_alloc);
-	continue;
-      }
-      else if(input.dimension && input.edge_weight_type && input.edge_weight_matrix && input.edge_weight_format)
+      if(bool_section && input.dimension && input.edge_weight_type && !input.edge_weight_matrix && input.edge_weight_format)
       {
 	parsing_matrice(file,ligne_ptr,taille_alloc);
+	continue;
+      }
+      
+      else if(input.display_data_type && input.dimension)
+      {
+	parsing_display(file,ligne_ptr,taille_alloc);
 	continue;
       }
       error(0,0,"Champs manquant avant section_part, ou section_part redondante.");
@@ -314,7 +317,7 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc)
     {
       nombre_affectation=sscanf(ligne_ptr,"%d %lf %lf",&numero_ville,&position_x,&position_y);
       
-      /* Si il y a moins de 3 affectations, erreur de lecture */
+      /* Si il y a moins de 3 affectations, erreur de lecture*/
       if(nombre_affectation<3)
       {
 	error(0,0,"Format de la display_section incorrect.");
@@ -324,13 +327,13 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc)
       if(numero_ville<1 || numero_ville > taille || input.display_data[numero_ville-1])
       /* input.display_data[numero_ville-1] : On verifie qu'il n'y a pas deja eu d'affectation.*/
       {
-   
 	error(0,0,"Erreur display_section : ville avec le meme numéro ou numéro incorrect.");
 	free_erreur(file,ligne_ptr);
       }
 
       /* L'affectation realisé via sscanf est donc valide. */
       affectation_display_data(numero_ville-1,position_x,position_y);
+      print_input_data();
     }
     affiche_erreur();
     free_erreur(file,ligne_ptr);
@@ -340,30 +343,35 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc)
 static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc)
 {
   char* ptr_debut_double;
-  char** ptr_fin_double;
+  char* ptr_fin_double;
   ssize_t taille_ligne;
   int taille=input.dimension;
   
+  input.edge_weight_matrix = calloc(input.dimension, sizeof(double*));
+
   for(int i=0;i<taille;i++)
-  {
+  { 
     if(taille_ligne=getline(&ligne_ptr,&taille_alloc,file) != EOF)
     {
-      ptr_debut_double=ligne_ptr;
-      ptr_fin_double=NULL;
-      for(int j=0;i<taille;i++)
+      input.edge_weight_matrix[i] = calloc(input.dimension, sizeof(double));
+      ptr_debut_double=ptr_fin_double=ligne_ptr;
+      for(int j=0;j<taille;j++)
       {
-	input.edge_weight_matrix[i][j]=strtod(ptr_debut_double,ptr_fin_double);
-	if(ptr_debut_double==*ptr_fin_double || input.edge_weight_matrix[i][j]<0)
+	input.edge_weight_matrix[i][j]=strtod(ptr_debut_double,&ptr_fin_double);
+	if(ptr_debut_double==ptr_fin_double || input.edge_weight_matrix[i][j]<0)
 	{
 	  error(0,0,"Erreur matrice: distance ou format incorrect.");
 	  free_erreur(file,ligne_ptr);
 	}
 	/* On passe a la valeur suivante,en décalant le pointeur de debut. */
-	ptr_debut_double=*ptr_fin_double;
+	ptr_debut_double=ptr_fin_double;
       }
     }
-    affiche_erreur();
-    free_erreur(file,ligne_ptr);
+    else
+    {
+      affiche_erreur();
+      free_erreur(file,ligne_ptr);
+    }
   }
 }
     
