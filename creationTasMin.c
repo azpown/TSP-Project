@@ -3,7 +3,9 @@
 #include <stdbool.h>
 #include "creationTasMin.h"
 
+typedef bool (*ptr_compar)(void*,void*)
 
+/* C'est un tas générique, pas le module délégué, je trouve que le choix de vile pour la structure est peu etre mal * choisi. Manque fonction de rallongement.*/
 
 struct ville{	//crée une structure ville qui contient une taille maximale et un tableau de pointeurs génériques qui contiendra les distances avec les autres villes. 
   long taille_max;
@@ -13,24 +15,26 @@ struct ville{	//crée une structure ville qui contient une taille maximale et un
 ville creerVille(long taille){
    ville v;	    //initialise un Tas min v
    v->taille_max=taille;	    //initialise le nombre maximum d'éléments du tas
-   v->sommets=(void **)calloc(taille,sizeof(void *)); //initialise les distances à 0
+   v->sommets=calloc(taille,sizeof(void *)); //initialise les distances à 0
    return v;
 }
 
 bool estvide(ville v){
-  if (!v->sommets[0])
-    return false;
-  return true;
+  if (v->sommets[0])
+    return true;
+  return false;
 }
 
 void detruireVille(ville v){
-   for(int i=0;i< v->taille_max;++i){		//on parcours les cases de la table de distance
-      if (v->sommets[i])				//on teste si la case contient quelque chose
-       free(v->sommets[i]);			//on libère les cases pleines
-   }
-   free(v->sommets);
+  /*on parcours les cases de la table de distance*/
+  /*on libère les cases pleines*/
+  for(int i=0;i< v->taille_max;++i){				      
+    free(v->sommets[i]);		   
+  }
+  free(v->sommets);
 }
 
+/*Autant insérer directement a la bonne place plutot que de réorganiser a chaque fois non ?*/
 void ajouterSommet(ville v, void* t){
   int i=0;
   while (v->sommets[i])
@@ -65,18 +69,13 @@ void echanger(void* i,void* j){
   j=echange;
 }
 
-
-
-
-
-
-void reorganiserTasMin(ville v,){
+void reorganiserTasMin(ville v,ptr_compar){
   int taille=v->taille_max;
   for(int i=0;i<taille;i++){
     for(int j=i;j<taille;j++){
-      if(comparer(v->sommets[i],filsGauche(v,j))) // si le sommet père est supérieur à son fils
+      if(ptr_compar(v->sommets[i],filsGauche(v,j))) // si le sommet père est supérieur à son fils
 	echanger(v->sommets[i],filsGauche(v,j));// gauche alors on les échange
-      if(comparer(v->sommets[i],filsDroit(v,j))) // si le sommet père est superieur à son fils
+      if(ptr_compar(v->sommets[i],filsDroit(v,j))) // si le sommet père est superieur à son fils
 	echanger(v->sommets[i],filsGauche(v,j));// droit alors on les échange
   }
 }
