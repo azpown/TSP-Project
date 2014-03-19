@@ -10,13 +10,13 @@ testInput : Input.o
 #testManipGraph.o : testManipGraph.c manipGraph.h
 #	gcc -std=c99 -c testManipGraph.c
 
-Input.o : Input.c
+Input.o : Input.c Input.h
 	gcc -std=c99 -c Input.c
 
-.PHONY : clean runTest
+.PHONY : clean r
 clean :
 	rm *Graph.o 
-runTest :
+r :
 	./testInput
 
 

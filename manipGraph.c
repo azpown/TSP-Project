@@ -39,7 +39,8 @@ void freeGraph(Graphe graph)
 
 int rand_a_b(int a,int b)
 {
-  return rand()%(b-a) +a; // Tire un nombre dans l'intervalle [a,b[
+  srand(time(NULL)); /* Initialisation de rand */
+  return rand()%(b-a) +a; /* Tire un nombre dans l'intervalle [a,b[ */
 }
 
 double distanceSommetFullMatrice(Graphe graph,int s1,int s2)
@@ -88,28 +89,29 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
   return min;
 }
 
-//TODO: Changer la sortie en string
-//On changera donc les fonctions de test, qui prendrons un char* en parametre
-void HeuristiquePlusProcheVoisin(Graphe graph)
+double* HeuristiquePlusProcheVoisin(Graphe graph)
 {
   double distanceAcc=0;
-  bool* tab_a_parcourir= malloc(graph->taille*sizeof(bool));
-  initialise_true_n(tab_a_parcourir,graph->taille);
+  int taille=graph->taille;
+  double* tab=malloc(taille+1*sizeof(double));
+  bool* tab_a_parcourir= malloc(taille*sizeof(bool));
+  initialise_true_n(tab_a_parcourir,taille);
   // On crée un tableau de bool,pour savoir quels sont les sommets déjà dans le chemin
   int alloue= 1; //Nombre de ville deja visitée
-  int dernierVisite=rand_a_b(0,graph->taille);
+  int dernierVisite=rand_a_b(0,taille);
   int depart=dernierVisite; 
-  printf("Ville %d->",dernierVisite);
+  tab[alloue-1]=dernierVisite;
   tab_a_parcourir[dernierVisite]=false;
-  while (alloue < graph->taille)
+  while (alloue < taille)
   {
     dernierVisite=plusProcheVoisin(dernierVisite,tab_a_parcourir,graph,&distanceAcc);
     alloue++;
     tab_a_parcourir[dernierVisite]=false;
-    printf("Ville %d->",dernierVisite);
+    tab[alloue-1]=dernierVisite;
   }
   distanceAcc+=distanceSommetFullMatrice(graph,dernierVisite,depart);
-  printf("Ville %d\n -.-> Distance totale : %.2lf \nLes villes sont numéroté de 0 a 9 \n",depart,distanceAcc);
+  tab[alloue]=depart;
+  return tab;
 }
 
       
