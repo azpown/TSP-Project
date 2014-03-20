@@ -39,7 +39,20 @@ struct input
 
 /*------ ACCESSEUR ------*/
 
-void print_input_data(Input input){
+char* get_nom_file(Input input){return input->nom_file;}
+char* get_nom(Input input){return input->nom;}
+char* get_type(Input input){return input->type;}
+char* get_commentaire(Input input){return input->commentaire;}
+int   get_dimension(Input input){return input->dimension;}
+char* get_edge_weight_type(Input input){return input->edge_weight_type;}
+char* get_edge_weight_format(Input input){return input->edge_weight_format;}
+char* get_display_data_type(Input input){return input->display_data_type;}
+double** get_edge_weight_matrix(Input input){return input->edge_weight_matrix;}
+double** get_display_data(Input input){return input->display_data;}
+
+
+void print_input_data(Input input)
+{
     printf("-- Données d'entrées --\n");
     printf("nom_file : %s\n", input->nom_file);
     printf("nom : %s\n", input->nom);
@@ -50,28 +63,33 @@ void print_input_data(Input input){
     printf("edge_weight_format : %s\n", input->edge_weight_format);
     printf("display_data_type : %s\n", input->display_data_type);
     printf("edge_weight_matrix :\n");
-    if(input->edge_weight_matrix != NULL)
+    if(input->edge_weight_matrix)
+    {
+      for(int i = 0 ; i<input->dimension ; i++)
       {
-        for(int i = 0 ; i<input->dimension ; i++)
-	  {
-            for(int j = 0 ; j<input->dimension ; j++)
-                printf("%.1lf\t", input->edge_weight_matrix[i][j]);
-            printf("\n");
-	  }
+	if(input->edge_weight_matrix[i])
+	{
+	  for(int j = 0 ; j<input->dimension ; j++)
+	    if(input->edge_weight_matrix[i][j])
+	      printf("%.1lf\t", input->edge_weight_matrix[i][j]);
+	  printf("\n");
+	}
       }
-    else
-      printf("Matrice vide.\n"); // Si matrice vide
+      else
+	printf("Matrice vide.\n"); // Si matrice vide
+    }
     printf("display_data :\n");
     if(input->display_data != NULL)
-      {
-        for(int i = 0 ; i<input->dimension ; i++)
-	  if(input->display_data[i]!=NULL)
-            printf("%d ->\t%.1lf\t%.1lf\n", i+1, input->display_data[i][0], input->display_data[i][1]);
-      }
+    {
+      for(int i = 0 ; i<input->dimension ; i++)
+	if(input->display_data[i]!=NULL)
+	  printf("%d ->\t%.1lf\t%.1lf\n", i+1, input->display_data[i][0], input->display_data[i][1]);
+    }
     else
       printf("Matrice vide.\n"); // Si matrice vide
     printf("\n");
 }
+
 
 Input open_TSP_file(char* nom_file)
 {    
@@ -103,6 +121,13 @@ static Input alloc_init_input(char * nom)
   return myStruct;
 }
 
+static char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
+{
+  char* alloc = malloc(sizeof(char) * (taille_ligne-taille_pattern));
+  strcpy(alloc,ligne_lue+taille_pattern);
+  *(alloc+taille_ligne-taille_pattern-1)='\0'; /* On supprime le retour chariot */
+  return alloc;
+}
  
 /* nom_file vient de la console, et taille n'est pas allouer dynamiquement */
 void free_input(Input input)
@@ -132,9 +157,10 @@ static void free_erreur(FILE* file, char* line_ptr,Input input)
   exit(EXIT_FAILURE);
 }
 
+/*------ AFFICHE ERROR ------*/ 
 static void affiche_erreur(){
   /* errno == -1 ou 0, erreur appels système ou erreur fonction bibliotheque */
-  if(errno || errno==-1) 
+  if(!errno || errno==-1) 
     perror("Erreur du la lecture du fichier.\nConsultez l'entrée errno du manuel pour plus d'information\nErreur");
   else
     error(0,0,"Erreur de lecture de l'entrée.");
@@ -178,16 +204,6 @@ static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pa
   }
   return false;
 }
-
-
-static char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
-{
-  char* alloc = malloc(sizeof(char) * (taille_ligne-taille_pattern));
-  strcpy(alloc,ligne_lue+taille_pattern);
-  *(alloc+taille_ligne-taille_pattern-1)='\0'; /* On supprime le retour chariot */
-  return alloc;
-}
-
 
 static void parsing_champs(FILE* file,Input input)
 {     

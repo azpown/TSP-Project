@@ -1,11 +1,5 @@
 Ce qu'il faut qu'on fasse en prioritée:
 
-Rémi : Je fini le parseur durant la séance prochaine au plus tard, ça nous permettra de faire les tests et les autres modules plus facilement par la suite.
-Je m'attaque ensuite aux autres heuristiques, et je donne un coup de main sur le tas si nécessaire.
+Rémi : J'ai fini le parseur, on doit finir le tas pas l'arbre couvrant de poid min avec l'algo de prim.
 
-Pour vous :
-TAS fini. Algorithme de Prim en tete. Il faut commencé le module pour tas pour TSP.
-
-/!\ Reflechissez a la structure en vous basant sur ce qu'on a déjà implémenté : On défini clairement la structure globale du programme et on découpe en module avant de faire quoi que ce soit mercredi.
-
-TODO pour mercredi 19/03 au plus tard : TAS GENERIQUE FINI, PARSEUR FINI,MAKEFILE FINI
+Vous : Il faut qu'avant le prochain rapport, le Makefile/Cmake soit fait, j'ai ajouter les répertoire au dépot git, a vous de jouer maintenant ...
