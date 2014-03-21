@@ -1,8 +1,10 @@
 TODO en prioritée:
 
-Rémi : Je suis en train de modifier le module TasGen (Les algo' n'avaient pas la complexitée attendue avec vos fonctions, de plus la structure n'était pas celle attendu pour un module générique.), je m'attaque ensuite a l'algo de Prim.
+Rémi : Je suis en train de modifier le module TasGen (Les algo' n'avaient pas la complexitée attendue avec vos fonctions, 
+de plus la structure n'était pas celle attendu pour un module générique.), je m'attaque ensuite a l'algo de Prim.
 
 /!\ A FAIRE ABSOLUMENT SVP /!\
-Vous : Il faut qu'avant le prochain rapport, le Makefile/Cmake soit fait, j'ai ajouter les répertoire au dépot git, a vous de jouer maintenant ...
+Vous : Il faut qu'avant le prochain rapport, le Makefile/Cmake soit fait, j'ai ajouter les répertoire au dépot git, 
+a vous de jouer maintenant ...
 
 Je met a jour les dépendances des modules dans le debut de soirée (sorti du train ;)),pour vos eventuels test.
