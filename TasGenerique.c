@@ -2,15 +2,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
-#include "creationTasMin.h"
+#include "TasGenerique.h"
 
 /* La fonction ptr_compar(a,b) renvoie -1,0,1 respectivement pour :
  * - a<b
  * - a==b
  * - a>b */
-typedef int (*ptr_compar)(void*,void*)
 
-/* Refonte du module TasGen, les compléxités de vos algorithmes étaient bien souvent supérieures
+/* Refonte du module TasGen, les complexités de vos algorithmes étaient bien souvent enormes par rapport
  * aux valeurs attendues.*/
 
 struct TasMinGen
@@ -19,16 +18,38 @@ struct TasMinGen
   int taille;
   int taille_tas;
   ptr_compar comparaison;
+  ptr_affichage affichage;
 };
 
+/*------ DECLARATION FONCTION STATIQUE ------*/
+static void percolate_haut(TasMinGen tas,int indice);
 
-TasGen creerTasMinGen(int taille,ptr_compar cmp)
+/*------ ACCESSEUR/MUTATEUR ------*/
+void setAffichage(TasMinGen tas,ptr_affichage fonction){tas->affichage=fonction;}
+void setComparaison(TasMinGen tas,ptr_compar fonction){tas->comparaison=fonction;}
+void setTailleTas(TasMinGen tas,int taille){tas->taille_tas=taille;}
+int getTailleTas(TasMinGen tas){return tas->taille;}
+
+/* On ne laisse pas la possibilité au client d'instancier un tas sans fonction de comparaison ni
+ * d'affichage (moins de traintement d'erreurs, et pas d'utilité dans le cadre de ce projet */
+
+/* On affiche le tas tel qu'il est dans la mémoire <-> tableau 1D
+ *c'est au module utilisant le délégué de faire un affichage perso.  */
+void affichageTas(TasGen tas)
+{
+  printf("\tCONTENU DU TAS MIN\n");
+  for(int i=0; i< tas->taille;i++)
+    t->affichage(sommet(tas,i));
+}
+
+TasGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage)
 {
   TasGen tas=malloc(sizeof(struct TasMinGen));	  //initialise un TasMin
   tas->taille_tas=taille_tas;	                  //initialise le nombre maximum d'éléments du tas
   tas->taille=0;
   tas->sommets=calloc(taille,sizeof(void*));
   tas->comparaison=cmp;
+  tas->affichage=affichage;
   return tas;
 }
 
@@ -116,23 +137,13 @@ int pere(TasMinGen tas,int indice){return indice/2;}
 int filsGauche(TasMinGen tas, int indice){return 2*indice+1];}
 int filsDroit(TasMinGen tas, int indice){return 2*indice+2];}
 		  
-void echanger(int i,int j)
+static void echanger(int i,int j)
 {
   void* tmp=t[i];
   t[i]=t[j];
   t[j]=tmp;
 }
 
-void reorganiserTasMin(ville v,ptr_compar){
-  int taille=v->taille_max;
-  for(int i=0;i<taille;i++){
-    for(int j=i;j<taille;j++){
-      if(ptr_compar(v->sommets[i],filsGauche(v,j))) // si le sommet père est supérieur à son fils
-	echanger(v->sommets[i],filsGauche(v,j));// gauche alors on les échange
-      if(ptr_compar(v->sommets[i],filsDroit(v,j))) // si le sommet père est superieur à son fils
-	echanger(v->sommets[i],filsGauche(v,j));// droit alors on les échange
-  }
-}
 
 
 

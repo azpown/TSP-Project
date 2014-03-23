@@ -4,6 +4,7 @@
 typedef struct Arete *Arete;
 
 Arete creerArete(double cle,int depart,int arrive);
+int comparaisonArete(Arete a,Arete b);
 void freeArete(Arete a);
 void afficheArete(Arete a);
 double getCle(Arete a);

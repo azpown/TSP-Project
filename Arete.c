@@ -17,6 +17,16 @@ Arete creerArete(double cle,int depart,int arrive)
   return a;
 }
 
+int comparaisonArete(Arete a,Arete b)
+{
+  double cmp=a->cle - b->cle;
+  if(cmp<0)
+    return -1;
+  if(cmp>0)
+    return 1;
+  return O;
+}
+
 void freeArete(Arete a){free(a);}
 
 void afficheArete(Arete a)
