@@ -23,6 +23,8 @@ struct TasMinGen
 
 /*------ DECLARATION FONCTION STATIQUE ------*/
 static void percolate_haut(TasMinGen tas,int indice);
+static void echanger(void* t,int i,int j);
+static void trierTableauTas(TasMinGen tas);
 
 /*------ ACCESSEUR/MUTATEUR ------*/
 void setAffichage(TasMinGen tas,ptr_affichage fonction){tas->affichage=fonction;}
@@ -30,22 +32,34 @@ void setComparaison(TasMinGen tas,ptr_compar fonction){tas->comparaison=fonction
 void setTailleTas(TasMinGen tas,int taille){tas->taille_tas=taille;}
 int getTailleTas(TasMinGen tas){return tas->taille;}
 
+void setTableau(TasMinGen tas,void** tab,int taille)
+{
+  assert(taille<=tas->taille_tas);
+  for(int i=0;i<taille;i++)
+    /* Attention a free avant */
+    tas->sommets[i]=tab[i];
+  /* On a fait une copie des références, on reorganise le tas
+   * afin qu'il represente un tas valide. */
+  tas->taille=taille;
+  trierTableauTas(tas);
+}
+
 /* On ne laisse pas la possibilité au client d'instancier un tas sans fonction de comparaison ni
  * d'affichage (moins de traintement d'erreurs, et pas d'utilité dans le cadre de ce projet */
 
 /* On affiche le tas tel qu'il est dans la mémoire <-> tableau 1D
  *c'est au module utilisant le délégué de faire un affichage perso.  */
-void affichageTas(TasGen tas)
+void affichageTas(TasMinGen tas)
 {
   printf("\tCONTENU DU TAS MIN\n");
   for(int i=0; i< tas->taille;i++)
-    t->affichage(sommet(tas,i));
+    tas->affichage(sommet(tas,i));
 }
 
-TasGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage)
+TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage)
 {
-  TasGen tas=malloc(sizeof(struct TasMinGen));	  //initialise un TasMin
-  tas->taille_tas=taille_tas;	                  //initialise le nombre maximum d'éléments du tas
+  TasMinGen tas=malloc(sizeof(struct TasMinGen));	  //initialise un TasMin
+  tas->taille_tas=taille;	                  //initialise le nombre maximum d'éléments du tas
   tas->taille=0;
   tas->sommets=calloc(taille,sizeof(void*));
   tas->comparaison=cmp;
@@ -69,13 +83,13 @@ void freeTasGen(TasMinGen tas)
 
 static void percolate_haut(TasMinGen tas,int indice)
 {
-  void* sommet=sommet(tas,indice);
+  void* cellule=sommet(tas,indice);
   void* pere=sommet(tas,pere(indice));
   /* Si le père est plus grand que le fils, on swap */
-  if(indice>0 && tas->comparaison(sommet,pere) < 0)
+  if(indice>0 && tas->comparaison(cellule,pere) < 0)
   {
     /* swap sommet/pere sommet */
-    echanger(sommet,pere(indice));
+    echanger(tas->sommets,cellule,pere(indice));
     percolate_haut(tas,pere(indice));
   }
 }
@@ -114,7 +128,7 @@ void entasserTas(TasMinGen tas,int indice)
    * avec le plus petit des deux. */
   if(min != indice)
   {
-    echanger(min,indice);
+    echanger(tas->sommets,min,indice);
     entasserTas(tas,min);
   }
 }
@@ -137,12 +151,21 @@ int pere(TasMinGen tas,int indice){return indice/2;}
 int filsGauche(TasMinGen tas, int indice){return 2*indice+1];}
 int filsDroit(TasMinGen tas, int indice){return 2*indice+2];}
 		  
-static void echanger(int i,int j)
+static void echanger(void* t,int i,int j)
 {
   void* tmp=t[i];
   t[i]=t[j];
   t[j]=tmp;
 }
+
+/* On reorganise le tas, sous arbre après sous arbre, sachant qu'on commence
+ * à l'indice taille/2 car tout les sommets avec des indices supérieur
+ * sont des feuilles (arbre q-parfait. */
+static void trierTableauTas(TasMinGen tas)
+{
+  for(int i=tas->taille;i<=0;i--)
+    entasserTas(tas,i);
+}  
 
 
 

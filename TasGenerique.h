@@ -1,18 +1,20 @@
 #ifndef _TASMIN
 #define _TASMIN
 
-struct TasMinGen *TasMinGen;
+typedef struct TasMinGen *TasMinGen;
 typedef int (*ptr_compar)(void*,void*);
 typedef void (*ptr_affichage)(void*);
 
 void setAffichage(TasMinGen tas,ptr_affichage fonction);
+void setTableau(TasMinGen tas,void** tab,int taille);
 void setComparaison(TasMinGen tas,ptr_compar fonction);
 void setTailleTas(TasMinGen tas,int taille);
 int getTailleTas(TasMinGen tas);
 
-TasGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage);
+
+TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage);
 bool estvide(TasMinGen tas);
-void affichageTas(TasGen tas);
+void affichageTas(TasMinGen tas);
 void freeTasGen(TasMinGen tas);
 void ajouterSommet(TasMinGen tas, void* elem);
 void entasserTas(TasMinGen tas,int indice);
