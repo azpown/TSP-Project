@@ -1,7 +1,9 @@
 #include "TasGenerique.h"
 #include "Arete.h"
+#include "TasArete.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 struct TasArete
 {
@@ -10,42 +12,42 @@ struct TasArete
 
 TasMinArete creerTasMinArete(int taille,ptr_compar cmp,ptr_affichage affichage)
 {
-  TasMinArete tas=malloc(sizeof(struct TasArete));
-  tas->tas= creerTasMinGen(taille,cmp,affichage);
-  return tas;
+  TasMinArete tasMin=malloc(sizeof(struct TasArete));
+  tasMin->tas= creerTasMinGen(taille,cmp,affichage);
+  return tasMin;
 }
 
-void freeTasArete(TasMinArete tas)
+void freeTasArete(TasMinArete tasMin)
 {
-  for(int i=0;i<taille;i++)
-    freeArete(sommet(tas->tas,i));
-  freeTasGen(tas->tas);
-  free(tas);
+  for(int i=0; i< getTailleTas(tasMin->tas) ;i++)
+    freeArete(sommet(tasMin->tas,i));
+  freeTasGen(tasMin->tas);
+  free(tasMin);
 }
 
-bool estVide(TasMinArete tas)
+bool estVide(TasMinArete tasMin)
 {
-  return estvide(tas->tas);
+  return estvide(tasMin->tas);
 }
 
-void ajouterArete(TasMinArete tas, Arete a)
+void ajouterArete(TasMinArete tasMin, Arete a)
 {
-  ajouterSommet(tas->tas,(void*) a);
+  ajouterSommet(tasMin->tas,(void*) a);
 }
 
-void entasserTasArete(TasMinArete tas, int indice)
+void entasserTasArete(TasMinArete tasMin, int indice)
 {
-  entasserTas(tas->tas,indice);
+  entasserTas(tasMin->tas,indice);
 }
 
-Arete extraireAreteMin(TasMinArete tas)
+Arete extraireAreteMin(TasMinArete tasMin)
 {
-  return (Arete) extraireMin(tas->tas);
+  return (Arete) extraireMin(tasMin->tas);
 }
 
-void affichageTasArete(TasMinArete tas)
+void affichageTasArete(TasMinArete tasMin)
 {
-  affichageTas(tas->tas);
+  affichageTas(tasMin->tas);
 }
 
 

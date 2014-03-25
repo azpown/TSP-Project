@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "Arete.h"
 
 struct Arete
 {
@@ -24,14 +25,14 @@ int comparaisonArete(Arete a,Arete b)
     return -1;
   if(cmp>0)
     return 1;
-  return O;
+  return 0;
 }
 
 void freeArete(Arete a){free(a);}
 
 void afficheArete(Arete a)
 {
-  printf("Depart: %d\tArrive: %d\tCle: %.1lf\n",a->depart,a->fin,a->cle);
+  printf("Depart: %d\tArrive: %d\tCle: %.1lf\n",a->depart,a->arrive,a->cle);
 }
 
 double getCle(Arete a){return a->cle;}

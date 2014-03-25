@@ -14,7 +14,7 @@
 
 struct TasMinGen
 { 
-  void* sommets;
+  void** sommets;
   int taille;
   int taille_tas;
   ptr_compar comparaison;
@@ -23,7 +23,7 @@ struct TasMinGen
 
 /*------ DECLARATION FONCTION STATIQUE ------*/
 static void percolate_haut(TasMinGen tas,int indice);
-static void echanger(void* t,int i,int j);
+static void echanger(void** t,int i,int j);
 static void trierTableauTas(TasMinGen tas);
 
 /*------ ACCESSEUR/MUTATEUR ------*/
@@ -69,10 +69,7 @@ TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage)
 
 bool estvide(TasMinGen tas)
 {
-  /* null=0=false */
-  if (tas->sommets[0])
-    return true;
-  return false;
+  return tas->taille !=0;
 }
 
 void freeTasGen(TasMinGen tas)
@@ -84,12 +81,12 @@ void freeTasGen(TasMinGen tas)
 static void percolate_haut(TasMinGen tas,int indice)
 {
   void* cellule=sommet(tas,indice);
-  void* pere=sommet(tas,pere(indice));
+  void* cellulePere=sommet(tas,pere(indice));
   /* Si le père est plus grand que le fils, on swap */
-  if(indice>0 && tas->comparaison(cellule,pere) < 0)
+  if(indice>0 && tas->comparaison(cellule,cellulePere) < 0)
   {
     /* swap sommet/pere sommet */
-    echanger(tas->sommets,cellule,pere(indice));
+    echanger(tas->sommets,indice,pere(indice));
     percolate_haut(tas,pere(indice));
   }
 }
@@ -115,8 +112,8 @@ void ajouterSommet(TasMinGen tas, void* elem)
 void entasserTas(TasMinGen tas,int indice)
 {
   int taille=tas->taille;
-  void* gauche=filsGauche(indice);
-  void* droit=filsDroit(indice);
+  int gauche=filsGauche(indice);
+  int droit=filsDroit(indice);
   int min=indice;
   /* Si gauche existe et sommet(gauche)<sommet(indice) */
   if(gauche<taille && tas->comparaison(sommet(tas,min),sommet(tas,gauche)) >0)
@@ -147,11 +144,11 @@ void* extraireMin(TasMinGen tas)
 
 /*------- Fonction d'accès, pour plus de lisibilité ------*/
 void* sommet(TasMinGen tas, int indice){return tas->sommets[indice];}
-int pere(TasMinGen tas,int indice){return indice/2;}
-int filsGauche(TasMinGen tas, int indice){return 2*indice+1];}
-int filsDroit(TasMinGen tas, int indice){return 2*indice+2];}
+int pere(int indice){return indice/2;}
+int filsGauche(int indice){return 2*indice+1;}
+int filsDroit(int indice){return 2*indice+2;}
 		  
-static void echanger(void* t,int i,int j)
+static void echanger(void** t,int i,int j)
 {
   void* tmp=t[i];
   t[i]=t[j];

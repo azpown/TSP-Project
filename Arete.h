@@ -1,4 +1,4 @@
-#infdef ARETE
+#ifndef ARETE
 #define ARETE
 
 typedef struct Arete *Arete;

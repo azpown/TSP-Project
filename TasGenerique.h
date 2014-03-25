@@ -1,6 +1,8 @@
 #ifndef _TASMIN
 #define _TASMIN
 
+#include <stdbool.h>
+
 typedef struct TasMinGen *TasMinGen;
 typedef int (*ptr_compar)(void*,void*);
 typedef void (*ptr_affichage)(void*);
@@ -23,8 +25,8 @@ void* extraireMin(TasMinGen tas);
 /* A voir si ce qui suit est utile, mais je pense pas */
 
 void* sommet(TasMinGen tas, int indice);
-int pere(TasMinGen tas,int indice);
-int filsGauche(TasMinGen tas, int indice);
-int filsDroit(TasMinGen tas, int indice);
+int pere(int indice);
+int filsGauche(int indice);
+int filsDroit(int indice);
 		  
 #endif
