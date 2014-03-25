@@ -1,10 +1,16 @@
 TODO en prioritée:
 
-Rémi : Je suis en train de modifier le module TasGen (Les algo' n'avaient pas la complexitée attendue avec vos fonctions, 
-de plus la structure n'était pas celle attendu pour un module générique.), je m'attaque ensuite a l'algo de Prim.
+Rémi : J'arrive au bout du TasGen et des délégues associés, je ferais des tests plus solide après avoir fait le module ArbrePlanaireGen (nécessaire pour Prim).
 
 /!\ A FAIRE ABSOLUMENT SVP /!\
 Vous : Il faut qu'avant le prochain rapport, le Makefile/Cmake soit fait, j'ai ajouter les répertoire au dépot git, 
-a vous de jouer maintenant ...
+Faut vous bougez le cul les gars, regardez le makefile que j'ai fait, il est plus automatisé que celui précédement réalisé.
+Il faudra qu'il lance les modules de tests si on lance avec options.
 
-Je met a jour les dépendances des modules dans le debut de soirée (sorti du train ;)),pour vos eventuels test.
+PS: Créez un compte sur Slickplan afin que vous puissiez apportez des modifications que vous trouvez utile a la structure du projet.
+Je vous donnerai les droits une fois ceci fait.
+
+J'ai ajouté un pdf illustrant ma vision du depot git, afin que vous puissiez faire, comme convenu des les premiers séances,
+le makefile et réorganiser le depot actuel en conséquence.
+
+Merci de faire part de vos remarques concernant le depot le plus vite possible afin de ne pas produire un makefile obsolète dans 2 jours.

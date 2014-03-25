@@ -96,7 +96,7 @@ void ajouterSommet(TasMinGen tas, void* elem)
   if(tas->taille < tas->taille_tas)
   {
     /* On ajoute l'elem en tant que feuille */
-    tas->sommets[tas->taille];
+    tas->sommets[tas->taille]=elem;
     /* On le fait ensuite remonter jusqu'a qu'il soit a une position valide du tas */
     percolate_haut(tas,tas->taille);
     tas->taille++;

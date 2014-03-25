@@ -1,4 +1,4 @@
-#infndef GRAPHE
+#ifndef GRAPHE
 #define GRAPHE
 
 typedef struct graphe * Graphe;

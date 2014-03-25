@@ -75,9 +75,9 @@ void print_input_data(Input input)
 	  printf("\n");
 	}
       }
-      else
-	printf("Matrice vide.\n"); // Si matrice vide
     }
+    else
+      printf("Matrice vide.\n"); // Si matrice vide
     printf("display_data :\n");
     if(input->display_data != NULL)
     {
@@ -403,13 +403,6 @@ static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
       free_erreur(file,ligne_ptr,input);
     }
   }
-}
-    
-int main()
-{
-  Input input=open_TSP_file("bays29.tsp");
-  print_input_data(input);
-  free_input(input);
 }
 
 

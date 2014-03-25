@@ -4,22 +4,24 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+/*------ Déclaration des fonctions statiques ------*/
+static void setAffichageTasMin(void* elem);
+static int setComparaisonTasMin(void* a,void *b);
+
 struct TasArete
 {
   TasMinGen tas;
 };
 
-TasMinArete creerTasMinArete(int taille,ptr_compar cmp,ptr_affichage affichage)
+TasMinArete creerTasMinArete(int taille)
 {
   TasMinArete tasMin=malloc(sizeof(struct TasArete));
-  tasMin->tas= creerTasMinGen(taille,cmp,affichage);
+  tasMin->tas= creerTasMinGen(taille,setComparaisonTasMin,setAffichageTasMin);
   return tasMin;
 }
 
 void freeTasArete(TasMinArete tasMin)
 {
-  for(int i=0; i< getTailleTas(tasMin->tas) ;i++)
-    freeArete(sommet(tasMin->tas,i));
   freeTasGen(tasMin->tas);
   free(tasMin);
 }
@@ -47,6 +49,16 @@ Arete extraireAreteMin(TasMinArete tasMin)
 void affichageTasArete(TasMinArete tasMin)
 {
   affichageTas(tasMin->tas);
+}
+
+static void setAffichageTasMin(void* elem)
+{
+  afficheArete( (Arete) elem);
+}
+
+static int setComparaisonTasMin(void* a,void *b)
+{
+  return comparaisonArete( (Arete) a, (Arete) b);
 }
 
 
