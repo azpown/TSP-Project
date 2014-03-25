@@ -2,6 +2,7 @@
 #define _TAS_ARETE
 
 #include <stdbool.h>
+#include <Arete.h>
 
 typedef struct TasArete *TasMinArete;
 

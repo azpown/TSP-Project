@@ -1,5 +1,4 @@
 #include "TasGenerique.h"
-#include "Arete.h"
 #include "TasArete.h"
 #include <stdlib.h>
 #include <stdio.h>

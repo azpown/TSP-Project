@@ -1,24 +1,17 @@
-#testt : testManipGraph.o manipGraph.o
-#	gcc testManipGraph.o manipGraph.o -o testt
+CC = gcc
+EXEC = testTas
+CFLAGS = -std=c99 -O2
+SRC = $(wildcard *.c)
+OBJ = $(SRC:.c=.o)
 
-testInput : Input.o
-	gcc Input.o -o testInput
+all : ${EXEC}
 
-#manipGraph.o : manipGraph.c manipGraph.h
-#	gcc -std=c99 -c manipGraph.c
+${EXEC} : depend $(OBJ)
+	${CC} -o $@ ${OBJ}
 
-#testManipGraph.o : testManipGraph.c manipGraph.h
-#	gcc -std=c99 -c testManipGraph.c
-
-Input.o : Input.c Input.h
-	gcc -std=c99 -c Input.c
-
-.PHONY : clean r
+.PHONY : clean
 clean :
-	rm *Graph.o 
-r :
-	./testInput
-
-
-
+	rm edit $(OBJ)
+depend : 
+	$(CC) -MM $(SRC) > depends.txt
 

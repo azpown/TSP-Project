@@ -4,9 +4,9 @@
 typedef struct Arete *Arete;
 
 Arete creerArete(double cle,int depart,int arrive);
-int comparaisonArete(Arete a,Arete b);
+int comparaisonArete(void* a,void* b);
 void freeArete(Arete a);
-void afficheArete(Arete a);
+void afficheArete(void* a);
 double getCle(Arete a);
 int getDepart(Arete a);
 int getArrive(Arete a);

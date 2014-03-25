@@ -18,8 +18,11 @@ Arete creerArete(double cle,int depart,int arrive)
   return a;
 }
 
-int comparaisonArete(Arete a,Arete b)
+int comparaisonArete(void* a,void* b)
 {
+  /* On compare uniquement la clé */
+  a= (Arete) a;
+  b= (Arete) b;
   double cmp=a->cle - b->cle;
   if(cmp<0)
     return -1;
@@ -30,8 +33,9 @@ int comparaisonArete(Arete a,Arete b)
 
 void freeArete(Arete a){free(a);}
 
-void afficheArete(Arete a)
+void afficheArete(void* a)
 {
+  a = (Arete) a;
   printf("Depart: %d\tArrive: %d\tCle: %.1lf\n",a->depart,a->arrive,a->cle);
 }
 
