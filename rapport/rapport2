@@ -1,0 +1,10 @@
+Bonjour,
+
+Depuis la dernière séance nous avons ajouté à notre projet un Makefile qui fonctionne pour la compilation des .c et la création d'un executable, il était également sensé créer une library contenant tous les .o mais ce n'est peut-être pas nécessaire étant donné qu'on ne va probablement générer qu'un seul exécutable qui laissera à l'utilisateur le choix de l'algorithme de parcours utilisé.
+
+Le parseur est en cours de création, la récupération des données du fichiers TSP est implémentée et il reste juste à créer une matrice contenant ces données. Les fonctions de vérifications de la validité des données ont elles aussi été implémentées.
+
+Pour le moment, nous pensons utiliser un tas min pour stocker les distances entre les villes et implémenter les différents algorithmes. Ce tas est représenté par la structure ville, les noms villes et voisins seront modifiés mais contiendront globalement les mêmes éléments, il nous reste à nous mettre d'accord sur ce qui est de leur utilisation.
+
+Bonne soirée !
+:)
