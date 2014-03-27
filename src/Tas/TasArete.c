@@ -1,5 +1,5 @@
-#include "TasGenerique.h"
-#include "TasArete.h"
+#include <TasGenerique.h>
+#include <TasArete.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -13,6 +13,8 @@ struct TasArete
   TasMinGen tas;
 };
 
+/*------ Allocation ------*/
+
 TasMinArete creerTasMinArete(int taille)
 {
   TasMinArete tasMin=malloc(sizeof(struct TasArete));
@@ -25,6 +27,8 @@ void freeTasArete(TasMinArete tasMin)
   freeTasGen(tasMin->tas);
   free(tasMin);
 }
+
+/*------ Primitives tas ------*/
 
 bool estVide(TasMinArete tasMin)
 {

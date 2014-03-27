@@ -1,9 +1,17 @@
 TODO en prioritée:
 
-Rémi : J'arrive au bout du TasGen et des délégues associés, je ferais des tests plus solide après avoir fait le module ArbrePlanaireGen (nécessaire pour Prim).
+Remi dit :
+
+moi : J'arrive au bout du TasGen et des délégues associés, je ferais des tests plus solide après avoir fait le module ArbrePlanaireGen (nécessaire pour Prim).
 
 /!\ A FAIRE ABSOLUMENT SVP /!\
-Tib: MAKEFILE fini le plus vite possible,seance vendredi dernier delais.
+Tib': MAKEFILE fini le plus vite possible,seance vendredi dernier delais.
 ps: pour tes tests, pense a changer les guillemets des inclusions des headers dans les sources (en local pour l'instant).
+Commit les modifications que tu as faites sur l'arborescence au plus vite, sinon on va a coup sur devoir gérée des tas de conflits de version.
 
-Wil: Test des modules, previens moi direct si t'as une erreure dans le code afin que tu puisses avancé.
+Wil': Test des modules, faut aller plus vite, pas encore un test finalisé (Je touche pas a l'algo nearest tant que Tib a pas commit ces modifs, va y avoir des conflits sinon)
+
+Tib dit :
+
+
+Wil dit :

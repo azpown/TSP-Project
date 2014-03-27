@@ -1,4 +1,4 @@
-#include "ArbrePlanaireGenerique.h"
+#include <ArbrePlanaireGenerique.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -23,6 +23,7 @@ struct arbrePlanaireGen
 static void visite(int* indice,void** tab,Noeud this);
 static void visiterPrefixe(int* indice,void** tab,Noeud this);
 static void detruireArbo(Noeud this);
+static void affichagePrefixeRecursif(Noeud this);
 
 /*------ Allocation ------*/
 Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet)
@@ -36,10 +37,11 @@ Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet)
 
 void freeNoeud(Noeud this){free(this);}
 
-ArbrePlanaireGen creerArbrePlanaireGen(void* elem,ptr_affichage f)
+ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f)
 {
+  /* retourne un arbre planaire vide, le premier appel de ajouter fils ce fait avec pere==NULL */
   ArbrePlanaireGen this=malloc(sizeof(struct arbrePlanaireGen));
-  this->racine= creerNoeud(elem,NULL,NULL,NULL);
+  this->racine=NULL;
   this->affiche=f;
   return this;
 }
@@ -92,7 +94,7 @@ static void visiterPrefixe(int* indice,void** tab,Noeud this)
   visite(indice,tab,this);
   if(!estFeuille(this))
     visiterPrefixe(indice,tab,getPremierFils(this));
-  if(this->frere)
+  if(getFrere(this))
     visiterPrefixe(indice,tab,getFrere(this));
 }
   
@@ -102,12 +104,34 @@ static void visite(int* indice,void** tab,Noeud this)
   *indice++;
 }
 
+/*------ Fonction affichage arbre planaire ------*/
+
+void affichagePrefixe(ArbrePlanaireGen this)
+{
+  static ptr_affichage f= this->affiche;
+  affichagePrefixeRecursif(getRacine(this))
+}
+
+static void affichagePrefixeRecursif(Noeud this)
+{
+  f(this->elem);
+  if(!estFeuille(this))
+    affichagePrefixeRecursif(getPremierFils(this));
+  if(getFrere(this)))
+    affichagePrefixeRecursif(getFrere(this));
+}
+  
 /*------ Primitive d'arbre planaire ------*/
 
 /* Fonction en O(nb_fils(this)) */
-void ajouterFils(Noeud pere,void* elem)
+void ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
 {
   Noeud this= creerNoeud(elem,pere,NULL,NULL);
+  if(!pere)
+  {
+    a->racine=this;
+    return;
+  }
   Noeud tmp= getPremierFils(pere);
   /* Traitement different dans le cas ou this a deja des fils ou non */
   if(tmp)
@@ -124,12 +148,18 @@ void ajouterFils(Noeud pere,void* elem)
     pere->premierFils=tmp;
 }
 
-bool estFeuille(Noeud this){return getPremierFils(this)==NULL}
+bool estFeuille(Noeud this){return getPremierFils(this)==NULL;}
 
 /* S'applique sur une feuille */
-void supprimerNoeud(Noeud this)
+void supprimerNoeud(ArbrePlanaireGen a,Noeud this)
 {
-  assert(estFeuille(this));
+  assert(this && estFeuille(this));
+  if(!getPere(this))
+  {
+    freeNoeud(this);
+    a->racine=NULL;
+    return
+  }
   Noeud tmp= getPremierFils(getPere(this));
   if(tmp==this)
     /* Si le sommet a enlever de l'arbre est le premier fils du pere, alors son frere devient
