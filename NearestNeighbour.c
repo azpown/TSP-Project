@@ -49,6 +49,7 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
 
 double* HeuristiquePlusProcheVoisin(Graphe graph)
 {
+  /* Variable qui va contenir la distance du chemin */
   double distanceAcc=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
@@ -77,6 +78,7 @@ double* HeuristiquePlusProcheVoisin(Graphe graph)
   /* On pourra eventuellement mettre un parametre distance qui sera un double*
    * ou on mettra la distance du chemin via effet de bord.*/  
   tab[alloue]=depart;
+  free(tab_a_parcourir);
   return tab;
 }
 
