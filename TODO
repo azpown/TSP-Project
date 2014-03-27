@@ -9,6 +9,8 @@ Tib': MAKEFILE fini le plus vite possible,seance vendredi dernier delais.
 ps: pour tes tests, pense a changer les guillemets des inclusions des headers dans les sources (en local pour l'instant).
 Commit les modifications que tu as faites sur l'arborescence au plus vite, sinon on va a coup sur devoir gérée des tas de conflits de version.
 
+/!\ Test pas le dossier Arbre, j'ai pas encore compil' :3
+
 Wil': Test des modules, faut aller plus vite, pas encore un test finalisé (Je touche pas a l'algo nearest tant que Tib a pas commit ces modifs, va y avoir des conflits sinon)
 
 Tib dit :
