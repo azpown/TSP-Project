@@ -79,9 +79,7 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChem
 }
 
       
-	  
-	   
-  
+
   
 
 	  
