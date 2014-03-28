@@ -1,5 +1,5 @@
-#include "NearestNeighbour.h"
-#include "Graphe.h"
+#include <NearestNeighbour.h>
+#include <Graphe.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

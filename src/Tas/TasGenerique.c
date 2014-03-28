@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
-#include "TasGenerique.h"
+#include <TasGenerique.h>
 
 /* La fonction ptr_compar(a,b) renvoie -1,0,1 respectivement pour :
  * - a<b

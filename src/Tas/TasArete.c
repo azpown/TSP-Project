@@ -1,5 +1,5 @@
-#include "TasGenerique.h"
-#include "TasArete.h"
+#include <TasGenerique.h>
+#include <TasArete.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

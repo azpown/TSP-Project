@@ -2,24 +2,20 @@ PREFIX=.
 LIBDIR = $(PREFIX)/lib
 CC = gcc
 SRC = $(wildcard *.c)
-OBJ = $(SRC:.c=.o)
-LDFLAGS = -L../lib -lmatrice
+OBJ = $(SRC:.c= .o)
+LDFLAGS = -L ../lib -lmatrice
 DIRS = ArbrePlanaire Arete Graphe Input NearestNeighbour Prim-MST Tas
-
 
 all:
 	for i in $(DIRS) ; do make -C $$i ; done
 
-
 libmatrice.a : $(OBJ)
-	for i in $(DIRS) ; do make -C $$i ; done
 	ar -cr libmatrice.a $(OBJ)
 
 install:
-	mv libmatrice.a $(PREFIX)../lib
+	mv libmatrice.a $(LDFLAGS)
 #	cp input.h $(PREFIX)/bin
 #	cp manipgraph.h $(PREFIX)/graphic
-
 
 .PHONY: clean
 clean :

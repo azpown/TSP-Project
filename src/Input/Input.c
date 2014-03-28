@@ -1,6 +1,6 @@
 /* La fonction getline est dans une extension GNU, d'où la ligne suivante.*/
 #define _GNU_SOURCE
-#include "Input.h"
+#include <Input.h>
 #include <malloc.h>
 #include <error.h>
 #include <errno.h>
