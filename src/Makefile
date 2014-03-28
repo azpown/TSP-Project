@@ -1,23 +1,26 @@
-PREFIX=.
-LIBDIR = $(PREFIX)/lib
+LIBNAME = bibli
+LIBRARY = lib$(LIBNAME).a
+LIBDIR = ../lib
 CC = gcc
-SRC = $(wildcard *.c)
-OBJ = $(SRC:.c= .o)
-LDFLAGS = -L ../lib -lmatrice
 DIRS = ArbrePlanaire Arete Graphe Input NearestNeighbour Prim-MST Tas
+OBJS = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.o))
 
-all:
-	for i in $(DIRS) ; do make -C $$i ; done
+all: $(LIBRARY)
+#	for i in $(DIRS) ; do make -C $$i ; done
 
-libmatrice.a : $(OBJ)
-	ar -cr libmatrice.a $(OBJ)
+objets:
+	for i in $(DIRS) ; do \
+		$(MAKE) -C $$i ; \
+	done
 
-install:
-	mv libmatrice.a $(LDFLAGS)
-#	cp input.h $(PREFIX)/bin
-#	cp manipgraph.h $(PREFIX)/graphic
+$(LIBRARY): objets
+	for i in $(DIRS) ; do \
+		ar -rs $@ $(OBJS) ; \
+	done
 
-.PHONY: clean
+.PHONY: clean install
 clean :
 	for i in $(DIRS) ; do make clean -C $$i ; done
-#	rm -f $(LIBDIR)/$(LIB);
+	rm -f $(LIBRARY) *~
+install:
+	mv libbibli.a $(LIBDIR)
