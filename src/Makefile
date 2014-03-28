@@ -1,7 +1,6 @@
 LIBNAME = bibli
 LIBRARY = lib$(LIBNAME).a
 LIBDIR = ../lib
-LDFLAGS = ../lib -lbibli
 CC = gcc
 DIRS = ArbrePlanaire Arete Graphe Input NearestNeighbour Prim-MST Tas
 OBJS = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.o))
@@ -24,4 +23,4 @@ clean :
 	for i in $(DIRS) ; do make clean -C $$i ; done
 	rm -f $(LIBRARY) *~
 install:
-	mv -t libbibli.a $(LDFLAGS)
+	mv libbibli.a $(LIBDIR)
