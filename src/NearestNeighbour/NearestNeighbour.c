@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <NearestNeighbour.h>
 #include <Graphe.h>
 #include <stdlib.h>

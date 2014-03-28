@@ -13,6 +13,8 @@ struct TasArete
   TasMinGen tas;
 };
 
+/*------ Allocation ------*/
+
 TasMinArete creerTasMinArete(int taille)
 {
   TasMinArete tasMin=malloc(sizeof(struct TasArete));
@@ -25,6 +27,8 @@ void freeTasArete(TasMinArete tasMin)
   freeTasGen(tasMin->tas);
   free(tasMin);
 }
+
+/*------ Primitives tas ------*/
 
 bool estVide(TasMinArete tasMin)
 {
