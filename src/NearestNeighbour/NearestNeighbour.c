@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <NearestNeighbour.h>
 #include <Graphe.h>
 #include <stdlib.h>
@@ -48,9 +47,9 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
   return min;
 }
 
-double* HeuristiquePlusProcheVoisin(Graphe graph)
+int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc)
 {
-  double distanceAcc=0;
+  distanceAcc*=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
   double* tab=malloc(taille+1*sizeof(double));
@@ -68,15 +67,14 @@ double* HeuristiquePlusProcheVoisin(Graphe graph)
   tab_a_parcourir[dernierVisite]=false;
   while (alloue < taille)
   {
-    dernierVisite=plusProcheVoisin(dernierVisite,tab_a_parcourir,graph,&distanceAcc);
+    dernierVisite=plusProcheVoisin(dernierVisite,tab_a_parcourir,graph,distanceAcc);
     alloue++;
     tab_a_parcourir[dernierVisite]=false;
     tab[alloue-1]=dernierVisite;
   }
   /* Il faut relier le chemin a la ville de départ maintenant.*/
-  distanceAcc+=distance_ville(graph,dernierVisite,depart);
-  /* On pourra eventuellement mettre un parametre distance qui sera un double*
-   * ou on mettra la distance du chemin via effet de bord.*/  
+  *(distanceAcc)+=distance_ville(graph,dernierVisite,depart);
+  /* distanceAcc contient la distance du chemin a la fin du parcour. */
   tab[alloue]=depart;
   return tab;
 }
