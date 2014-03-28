@@ -1,5 +1,5 @@
-#include <ArbrePlanaireGenerique.h>
 #include <stdlib.h>
+#include <ArbrePlanaireGenerique.h>
 #include <stdio.h>
 #include <assert.h>
 
@@ -124,7 +124,7 @@ static void affichagePrefixeRecursif(Noeud this)
 /*------ Primitive d'arbre planaire ------*/
 
 /* Fonction en O(nb_fils(this)) */
-void ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
+Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
 {
   Noeud this= creerNoeud(elem,pere,NULL,NULL);
   if(!pere)

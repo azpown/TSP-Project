@@ -20,7 +20,7 @@ void** parcourPrefixe(int taille,ArbrePlanaireGen this);
 void freeParcourPrefixe(void** this)
 void affichagePrefixe(ArbrePlanaireGen this);
 void parcourPrefixe(void** this);
-void ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem);
+Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem);
 bool estFeuille(Noeud this);
 void supprimerNoeud(ArbrePlanaireGen a,Noeud this);
 

@@ -1,5 +1,6 @@
 #include <ArbrePlanaireInt.h>
-#include <stdlib>
+#include <ArbrePlanaireGen.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 struct arbrePlanaireInt
@@ -64,7 +65,7 @@ void affichagePrefixeInt(ArbrePlanaireGen this)
   affichagePrefixe(this->arbre);
 }
 
-void ajouterNoeud(ArbrePlanaireInt this,NoeudInt pere,int elem)
+NoeudInt ajouterNoeudInt(ArbrePlanaireInt this,NoeudInt pere,int elem)
 {
   ajouterFils(this->arbre,pere->noeud,&elem)
 }
