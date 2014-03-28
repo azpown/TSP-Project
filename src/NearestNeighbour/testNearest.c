@@ -1,12 +1,12 @@
-#include "../../include/NearestNeighbour.h"
-#include "../../include/Graphe.h"
+#include <NearestNeighbour.h>
+#include <Graphe.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
 #include <assert.h>
-#include "../../include/Input.h"
+#include <Input.h>
 
 void
 afficher(int* t, int taille){
