@@ -47,12 +47,12 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
   return min;
 }
 
-int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc)
+int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChemin)
 {
   *(distanceAcc)=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
-  double* tab=malloc(taille+1*sizeof(double));
+  int* tab=malloc(taille+1*sizeof(double));
 
   bool* tab_a_parcourir= malloc(taille*sizeof(bool));
   initialise_true_n(tab_a_parcourir,taille);
@@ -61,8 +61,7 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc)
   int alloue= 1; //Nombre de ville deja visitée
 
   /* On tire une ville aléatoirement, je mettrai sans doute un paramètre ville depart plus tard.*/
-  int dernierVisite=rand_a_b(0,taille);
-  int depart=dernierVisite; 
+  int dernierVisite=departChemin;
   tab[alloue-1]=dernierVisite;
   tab_a_parcourir[dernierVisite]=false;
   while (alloue < taille)
@@ -73,9 +72,9 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc)
     tab[alloue-1]=dernierVisite;
   }
   /* Il faut relier le chemin a la ville de départ maintenant.*/
-  *(distanceAcc)+=distance_ville(graph,dernierVisite,depart);
+  *(distanceAcc)+=distance_ville(graph,dernierVisite,departChemin);
   /* distanceAcc contient la distance du chemin a la fin du parcour. */
-  tab[alloue]=depart;
+  tab[alloue]=departChemin;
   return tab;
 }
 

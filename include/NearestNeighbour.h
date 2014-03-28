@@ -5,6 +5,6 @@
 #include "Graphe.h"
 
 int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc);
-int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc);
+int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChemin);
 
 #endif
