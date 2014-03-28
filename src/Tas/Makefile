@@ -7,12 +7,14 @@ CPPFLAGS = -I ../../include
 
 all : ${EXEC}
 
+
 ${EXEC} : depend $(OBJ)
 	${CC} -o $@ ${OBJ} 
 
 .PHONY : clean
 clean :
 	rm $(OBJ)
+
 depend : 
 	$(CC) -MM $(SRC) > depends.txt
 
