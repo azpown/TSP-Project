@@ -49,7 +49,7 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
 
 int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc)
 {
-  distanceAcc*=0;
+  *(distanceAcc)=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
   double* tab=malloc(taille+1*sizeof(double));
