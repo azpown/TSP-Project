@@ -15,11 +15,10 @@ void* getElem(Noeud this);
 Noeud getPremierFils(Noeud this);
 Noeud getPere(Noeud this);
 Noeud getFrere(Noeud this);
-Noeud getRacine(ArbreBinaireGen this);
+Noeud getRacine(ArbrePlanaireGen this);
 void** parcourPrefixe(int taille,ArbrePlanaireGen this);
-void freeParcourPrefixe(void** this)
+void freeParcourPrefixe(void** this);
 void affichagePrefixe(ArbrePlanaireGen this);
-void parcourPrefixe(void** this);
 Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem);
 bool estFeuille(Noeud this);
 void supprimerNoeud(ArbrePlanaireGen a,Noeud this);

@@ -1,34 +1,21 @@
-#include <ArbrePlanaireInt.h>
-#include <ArbrePlanaireGen.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ArbrePlanaireInt.h>
 
 struct arbrePlanaireInt
 {
   ArbrePlanaireGen arbre;
 };
 
-struct noeudInt
-{
-  Noeud noeud;
-};
-
-/*------ Déclaration fonctions statiques ------*/
-static void affichePtrInt(int* elem)
+static int* homogeneise(int n);
 
 /*------ Allocation ------*/
 
-NoeudInt creerNoeudInt(int elem,NoeudInt parent,NoeudInt aine,NoeudInt cadet)
+static int* homogeneise(int n)
 {
-  NoeudInt this=malloc(sizeof(struct noeudInt));
-  this->noeud= creerNoeud((void *) &elem,parent,aine,cadet);
-  return this;
-}
-
-void freeNoeudInt(NoeudInt this)
-{
-  freeNoeud(this->noeud);
-  free(this);
+  int* ptr = malloc(sizeof(int));
+  *ptr = n;
+  return ptr;
 }
 
 ArbrePlanaireInt creerArbrePlanaireInt()
@@ -44,9 +31,10 @@ void freeArbrePlanaireInt(ArbrePlanaireInt this)
   free(this);
 }
 
-int getInt(NoeudInt this)
+int getInt(Noeud this)
 {
-  return (int) *(getElem(this->noeud));
+  int* elem=(int*) getElem(this);
+  return (int) *(elem);
 }
 
 /* Une copie necessaire, surrement optimisable || pas de deleg pour cette fonction*/
@@ -54,40 +42,40 @@ int* parcourPrefixeInt(int taille,ArbrePlanaireInt this)
 {
   void** tmp=parcourPrefixe(taille,this->arbre);
   int* tmp_int=calloc(taille,sizeof(int));
+  int* cast;
   for(int i=0;i<taille;i++)
-    tmp_int=(int) *(tmp[i]);
+  {
+    cast=(int*) tmp[i];
+    tmp_int[i]=*(cast);
+  } 
   freeParcourPrefixe(tmp);
   return tmp_int;
 }
 
-void affichagePrefixeInt(ArbrePlanaireGen this)
+void affichagePrefixeInt(ArbrePlanaireInt this)
 {
   affichagePrefixe(this->arbre);
 }
 
-NoeudInt ajouterNoeudInt(ArbrePlanaireInt this,NoeudInt pere,int elem)
+/* Cette fonction assure l'homogéneité de la structure deleguée */
+Noeud ajouterNoeudInt(ArbrePlanaireInt this,Noeud pere,int elem)
 {
-  ajouterFils(this->arbre,pere->noeud,&elem)
+  return ajouterFils(this->arbre,pere,homogeneise(elem));
 }
 
-bool estUneFeuille(NoeudInt this)
+bool estUneFeuille(Noeud this)
 {
-  return estFeuille(this->noeud);
+  return estFeuille(this);
 }
 
-void supprimerNoeud(ArbrePlanaireInt a,NoeudInt this)
+void supprimerNoeudInt(ArbrePlanaireInt a,Noeud this)
 {
-  supprimerNoeud(a->arbre,this->noeud);
+  supprimerNoeud(a->arbre,this);
 }
   
 void afficheInt(void* elem)
 {
-  affichePtrInt( (int*) elem);
-}
-
-static void affichePtrInt(int* elem)
-{
-  printf("%d -> ",*(elem));
+  printf("%d -> ",*((int *)elem));
 }
 
   

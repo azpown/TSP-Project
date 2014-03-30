@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include <ArbrePlanaireGenerique.h>
 #include <stdio.h>
 #include <assert.h>
+#include <ArbrePlanaireGenerique.h>
 
 /* structure représentant un noeud d'arbre, le premier fils est pointé,
  *les autres sont accessible via accès au frere successif. */
@@ -23,12 +23,13 @@ struct arbrePlanaireGen
 static void visite(int* indice,void** tab,Noeud this);
 static void visiterPrefixe(int* indice,void** tab,Noeud this);
 static void detruireArbo(Noeud this);
-static void affichagePrefixeRecursif(Noeud this);
+static void affichagePrefixeRecursif(Noeud this,ptr_affichage f);
 
 /*------ Allocation ------*/
 Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet)
 {
   Noeud this=malloc(sizeof(struct noeud));
+  assert(this!=NULL);
   this->elem=element;
   this->pere=parent;
   this->premierFils=aine;
@@ -68,7 +69,7 @@ void* getElem(Noeud this){return this->elem;}
 Noeud getPremierFils(Noeud this){return this->premierFils;}
 Noeud getPere(Noeud this){return this->pere;}
 Noeud getFrere(Noeud this){return this->frere;}
-Noeud getRacine(ArbreBinaireGen this){return this->racine;}
+Noeud getRacine(ArbrePlanaireGen this){return this->racine;}
 
 /*------ Parcour ------ */
 /* Dans notre utilisation de l'arbre pour l'algorithme de prim, la taille de l'arbre
@@ -104,21 +105,22 @@ static void visite(int* indice,void** tab,Noeud this)
   *indice++;
 }
 
+
 /*------ Fonction affichage arbre planaire ------*/
 
 void affichagePrefixe(ArbrePlanaireGen this)
 {
-  static ptr_affichage f= this->affiche;
-  affichagePrefixeRecursif(getRacine(this))
+  affichagePrefixeRecursif(getRacine(this),this->affiche);
 }
 
-static void affichagePrefixeRecursif(Noeud this)
+/* moins d'acces a la structure en passant f en parametre, mais plus de place sur la pile */
+static void affichagePrefixeRecursif(Noeud this,ptr_affichage f)
 {
   f(this->elem);
   if(!estFeuille(this))
-    affichagePrefixeRecursif(getPremierFils(this));
-  if(getFrere(this)))
-    affichagePrefixeRecursif(getFrere(this));
+    affichagePrefixeRecursif(getPremierFils(this),f);
+  if(getFrere(this))
+    affichagePrefixeRecursif(getFrere(this),f);
 }
   
 /*------ Primitive d'arbre planaire ------*/
@@ -130,7 +132,7 @@ Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
   if(!pere)
   {
     a->racine=this;
-    return;
+    return this;
   }
   Noeud tmp= getPremierFils(pere);
   /* Traitement different dans le cas ou this a deja des fils ou non */
@@ -146,6 +148,7 @@ Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
   else
     /* Le sommet ajouter est le seul fils du sommet passé en parametre -> c'est son premierFils */
     pere->premierFils=tmp;
+  return this;
 }
 
 bool estFeuille(Noeud this){return getPremierFils(this)==NULL;}
@@ -158,7 +161,7 @@ void supprimerNoeud(ArbrePlanaireGen a,Noeud this)
   {
     freeNoeud(this);
     a->racine=NULL;
-    return
+    return;
   }
   Noeud tmp= getPremierFils(getPere(this));
   if(tmp==this)
@@ -176,6 +179,7 @@ void supprimerNoeud(ArbrePlanaireGen a,Noeud this)
   /* Module générique, donc l'utilisateur doit free l'elem de this. */
   freeNoeud(this);
 }
+
   
 
   

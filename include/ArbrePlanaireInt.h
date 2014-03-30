@@ -1,18 +1,18 @@
 #ifndef _ARBREPLANAIREINT
 #define _ARBREPLANAIREINT
 
-#include <stdbool.h>
+#include <ArbrePlanaireGenerique.h>
 
-typedef struct noeudInt *NoeudInt;
 typedef struct arbrePlanaireInt *ArbrePlanaireInt;
-NoeudInt creerNoeudInt(int elem,NoeudInt parent,NoeudInt aine,NoeudInt cadet);
-void freeNoeudInt(NoeudInt this);
+
 ArbrePlanaireInt creerArbrePlanaireInt();
 void freeArbrePlanaireInt(ArbrePlanaireInt this);
-int getInt(NoeudInt this);
+int getInt(Noeud this);
 int* parcourPrefixeInt(int taille,ArbrePlanaireInt this);
-void affichagePrefixeInt(ArbrePlanaireGen this);
-NoeudInt ajouterNoeudInt(ArbrePlanaireInt this,NoeudInt pere,int elem);
-bool estUneFeuille(NoeudInt this);
-void supprimerNoeud(ArbrePlanaireInt a,NoeudInt this);
+void affichagePrefixeInt(ArbrePlanaireInt this);
+Noeud ajouterNoeudInt(ArbrePlanaireInt this,Noeud pere,int elem);
+bool estUneFeuille(Noeud this);
+void supprimerNoeudInt(ArbrePlanaireInt a,Noeud this);
 void afficheInt(void* elem);
+
+#endif
