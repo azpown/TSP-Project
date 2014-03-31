@@ -14,5 +14,6 @@ Noeud ajouterNoeudInt(ArbrePlanaireInt this,Noeud pere,int elem);
 bool estUneFeuille(Noeud this);
 void supprimerNoeudInt(ArbrePlanaireInt a,Noeud this);
 void afficheInt(void* elem);
+void freeInt(Noeud this);
 
 #endif

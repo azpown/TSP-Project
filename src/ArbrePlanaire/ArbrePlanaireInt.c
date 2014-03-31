@@ -31,10 +31,14 @@ void freeArbrePlanaireInt(ArbrePlanaireInt this)
   free(this);
 }
 
+void freeInt(Noeud this)
+{
+  free(getElem(this));
+}
+
 int getInt(Noeud this)
 {
-  int* elem=(int*) getElem(this);
-  return (int) *(elem);
+  return *((int *)getElem(this));
 }
 
 /* Une copie necessaire, surrement optimisable || pas de deleg pour cette fonction*/
@@ -60,7 +64,7 @@ void affichagePrefixeInt(ArbrePlanaireInt this)
 /* Cette fonction assure l'homogéneité de la structure deleguée */
 Noeud ajouterNoeudInt(ArbrePlanaireInt this,Noeud pere,int elem)
 {
-  return ajouterFils(this->arbre,pere,homogeneise(elem));
+  return ajouterFils(this->arbre,pere,(void*) homogeneise(elem));
 }
 
 bool estUneFeuille(Noeud this)

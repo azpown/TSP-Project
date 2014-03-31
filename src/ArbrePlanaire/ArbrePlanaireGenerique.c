@@ -31,12 +31,17 @@ Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet)
   Noeud this=malloc(sizeof(struct noeud));
   assert(this!=NULL);
   this->elem=element;
+  printf("elem : %d\n",*(int *)this->elem);
   this->pere=parent;
   this->premierFils=aine;
   this->frere=cadet;
+  return this;
 }
 
-void freeNoeud(Noeud this){free(this);}
+void freeNoeud(Noeud this)
+{
+  free(this);
+}
 
 ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f)
 {
@@ -49,7 +54,7 @@ ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f)
 
 static void detruireArbo(Noeud this)
 {
-  if(this)
+  if(!this)
     return;
   detruireArbo(getPremierFils(this));
   detruireArbo(getFrere(this));
@@ -65,7 +70,11 @@ void freeArbrePlanaireGen(ArbrePlanaireGen this)
     
 
 /*------ Accesseurs ------*/
-void* getElem(Noeud this){return this->elem;}
+void* getElem(Noeud this)
+{
+  return this->elem;
+}
+
 Noeud getPremierFils(Noeud this){return this->premierFils;}
 Noeud getPere(Noeud this){return this->pere;}
 Noeud getFrere(Noeud this){return this->frere;}
@@ -129,12 +138,15 @@ static void affichagePrefixeRecursif(Noeud this,ptr_affichage f)
 Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
 {
   Noeud this= creerNoeud(elem,pere,NULL,NULL);
+  printf("Adresse de la cellule : %p\n",this);
   if(!pere)
   {
+    printf("Pas de pere\n\n");
     a->racine=this;
     return this;
   }
   Noeud tmp= getPremierFils(pere);
+  printf("PremierFils du pere : %p\n",tmp);
   /* Traitement different dans le cas ou this a deja des fils ou non */
   if(tmp)
   {
@@ -144,10 +156,12 @@ Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
       tmp=getFrere(tmp);
     /* Il faut ajouter le noeud crée comme frere du dernier fils du sommet passé en parametre */
     tmp->frere=this;
+    printf("FRERE DE LA CELLULE : Pere : %p , Frere : %p , PremierFils : %p\n\n",tmp->pere,tmp->frere,tmp->premierFils);
   }
   else
     /* Le sommet ajouter est le seul fils du sommet passé en parametre -> c'est son premierFils */
-    pere->premierFils=tmp;
+    pere->premierFils= this;
+  printf("Pere : %p , Frere : %p , PremierFils : %p\n\n",this->pere,this->frere,this->premierFils);
   return this;
 }
 
