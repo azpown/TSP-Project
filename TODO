@@ -1,19 +1,19 @@
 -_-_-_-_-_-_-_-_-_-*-> TODO <-*-_-_-_-_-_-_-_-_-_-_-_-
 
-Remi dit :
-
-moi : J'arrive au bout du TasGen et des délégues associés, je ferais des tests plus solide après avoir fait le module ArbrePlanaireGen (nécessaire pour Prim).
+Remi dit : TasGen fini, je fais prim vite fait (rapide avec les structures deja implémentées :) )
 
 /!\ A FAIRE ABSOLUMENT SVP /!\
-Tib': MAKEFILE fini le plus vite possible,seance vendredi dernier delais.
-ps: pour tes tests, pense a changer les guillemets des inclusions des headers dans les sources (en local pour l'instant).
-Commit les modifications que tu as faites sur l'arborescence au plus vite, sinon on va a coup sur devoir gérée des tas de conflits de version.
 
-/!\ Test pas le dossier Arbre, j'ai pas encore compil' :3
+Tib': On demande au prof' ce qu'il pense du makefile, faut automatisés les tests maintenants !
 
-Wil': Test des modules, faut aller plus vite, pas encore un test finalisé (Je touche pas a l'algo nearest tant que Tib a pas commit ces modifs, va y avoir des conflits sinon)
+Wil': Faut faire les tests ! On est pas en avance sur ça du tout !
+
+Si vous avez le temps (vous l'avez, oui oui), commencez le brute force :D .
+
+--End remisays
 
 Tib dit :
+
 
 
 Wil dit :
