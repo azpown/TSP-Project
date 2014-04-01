@@ -19,6 +19,7 @@ struct TasMinGen
   int taille_tas;
   ptr_compar comparaison;
   ptr_affichage affichage;
+  ptr_affectation affecte;
 };
 
 /*------ DECLARATION FONCTION STATIQUE ------*/
@@ -141,6 +142,16 @@ void* extraireMin(TasMinGen tas)
   entasserTas(tas,0);
   return min;
 }
+
+void diminuerCle(TasMinGen tas, void* elem, void* cle)
+{
+  /* On check qu'on diminue bien la clef ( assert un peu barbare ) */
+  assert(tas->comparaison(elem,cle));
+  affecte(elem,cle);
+}
+
+
+
 
 /*------- Fonction d'accès, pour plus de lisibilité ------*/
 void* sommet(TasMinGen tas, int indice){return tas->sommets[indice];}

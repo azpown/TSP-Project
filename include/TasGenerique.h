@@ -6,6 +6,7 @@
 typedef struct TasMinGen *TasMinGen;
 typedef int (*ptr_compar)(void*,void*);
 typedef void (*ptr_affichage)(void*);
+typedef void (*ptr_affectation)(void* element,void* nouvelle_cle);
 
 void setAffichage(TasMinGen tas,ptr_affichage fonction);
 void setTableau(TasMinGen tas,void** tab,int taille);
