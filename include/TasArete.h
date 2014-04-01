@@ -5,14 +5,17 @@
 #include "Arete.h"
 
 typedef struct TasArete *TasMinArete;
+typedef struct AreteHandle *AreteHandle;
 
 TasMinArete creerTasMinArete(int taille);
 void freeTasArete(TasMinArete tasMin);
+void freeAreteHandle(AreteHandle a);
 bool estVide(TasMinArete tasMin);
-void ajouterArete(TasMinArete tasMin, Arete a);
+AreteHandle ajouterAreteHandle(TasMinArete tasMin, Arete a);
 void entasserTasArete(TasMinArete tasMin, int indice);
 Arete extraireAreteMin(TasMinArete tasMin);
 void affichageTasArete(TasMinArete tasMin);
-
+int indiceTas(AreteHandle areteH);
+Arete getArete(AreteHandle areteH);
 
 #endif

@@ -12,9 +12,15 @@
 /* Refonte du module TasGen, les complexités de vos algorithmes étaient bien souvent enormes par rapport
  * aux valeurs attendues.*/
 
+struct elemHandle
+{
+  void* elem;
+  int handle;
+};
+
 struct TasMinGen
 { 
-  void** sommets;
+  ElemHandle* sommets;
   int taille;
   int taille_tas;
   ptr_compar comparaison;
@@ -24,7 +30,7 @@ struct TasMinGen
 
 /*------ DECLARATION FONCTION STATIQUE ------*/
 static void percolate_haut(TasMinGen tas,int indice);
-static void echanger(void** t,int i,int j);
+static void echanger(ElemHandle* t,int i,int j);
 static void trierTableauTas(TasMinGen tas);
 
 /*------ ACCESSEUR/MUTATEUR ------*/
@@ -33,16 +39,37 @@ void setComparaison(TasMinGen tas,ptr_compar fonction){tas->comparaison=fonction
 void setTailleTas(TasMinGen tas,int taille){tas->taille_tas=taille;}
 int getTailleTas(TasMinGen tas){return tas->taille;}
 
-void setTableau(TasMinGen tas,void** tab,int taille)
+
+/*------ ALLOCATION ------*/
+
+TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage)
 {
-  assert(taille<=tas->taille_tas);
-  for(int i=0;i<taille;i++)
-    /* Attention a free avant */
-    tas->sommets[i]=tab[i];
-  /* On a fait une copie des références, on reorganise le tas
-   * afin qu'il represente un tas valide. */
-  tas->taille=taille;
-  trierTableauTas(tas);
+  TasMinGen tas=malloc(sizeof(struct TasMinGen));	  //initialise un TasMin
+  tas->taille_tas=taille;	                  //initialise le nombre maximum d'éléments du tas
+  tas->taille=-1; //Indice du dernier element !
+  tas->sommets=malloc(taille * sizeof(ElemHandle));
+  tas->comparaison=cmp;
+  tas->affichage=affichage;
+  return tas;
+}
+
+ElemHandle creerElemHandle(void *element,int indice)
+{
+  ElemHandle obj= malloc(sizeof(struct elemHandle));
+  obj->handle=indice;
+  obj->elem=element;
+  return obj;
+}
+
+void freeElemHandle(ElemHandle elem){free(elem);}
+
+
+void freeTasGen(TasMinGen tas)
+{
+  for(int i=0;i<tas->taille+1;i++)
+    freeElemHandle(tas->sommets[i]);
+  free(tas->sommets);
+  free(tas);
 }
 
 /* On ne laisse pas la possibilité au client d'instancier un tas sans fonction de comparaison ni
@@ -53,38 +80,21 @@ void setTableau(TasMinGen tas,void** tab,int taille)
 void affichageTas(TasMinGen tas)
 {
   printf("\tCONTENU DU TAS MIN\n");
-  for(int i=0; i< tas->taille;i++)
-    tas->affichage(sommet(tas,i));
-}
-
-TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_affichage affichage)
-{
-  TasMinGen tas=malloc(sizeof(struct TasMinGen));	  //initialise un TasMin
-  tas->taille_tas=taille;	                  //initialise le nombre maximum d'éléments du tas
-  tas->taille=0;
-  tas->sommets=calloc(taille,sizeof(void*));
-  tas->comparaison=cmp;
-  tas->affichage=affichage;
-  return tas;
+  for(int i=0; i< tas->taille+1;i++)
+    tas->affichage(sommet(tas,i)->elem);
 }
 
 bool estvide(TasMinGen tas)
 {
-  return tas->taille !=0;
-}
-
-void freeTasGen(TasMinGen tas)
-{
-  free(tas->sommets);
-  free(tas);
+  return tas->taille ==-1;
 }
 
 static void percolate_haut(TasMinGen tas,int indice)
 {
-  void* cellule=sommet(tas,indice);
-  void* cellulePere=sommet(tas,pere(indice));
+  ElemHandle cellule=sommet(tas,indice);
+  ElemHandle cellulePere=sommet(tas,pere(indice));
   /* Si le père est plus grand que le fils, on swap */
-  if(indice>0 && tas->comparaison(cellule,cellulePere) < 0)
+  if(indice>0 && tas->comparaison(cellule->elem,cellulePere->elem) < 0)
   {
     /* swap sommet/pere sommet */
     echanger(tas->sommets,indice,pere(indice));
@@ -92,21 +102,24 @@ static void percolate_haut(TasMinGen tas,int indice)
   }
 }
 
-void ajouterSommet(TasMinGen tas, void* elem)
+ElemHandle ajouterSommet(TasMinGen tas, void* element)
 {
   if(tas->taille < tas->taille_tas)
   {
+    tas->taille++;
     /* On ajoute l'elem en tant que feuille */
-    tas->sommets[tas->taille]=elem;
+    ElemHandle tmp = creerElemHandle(element,tas->taille);
+    tas->sommets[tas->taille]=tmp;
     /* On le fait ensuite remonter jusqu'a qu'il soit a une position valide du tas */
     percolate_haut(tas,tas->taille);
-    tas->taille++;
+    return tmp;
   }
   else
   {
     /* Nous n'implementons pas une fonction de rallongement car la taille du tas
      * dans nos algorithmes sera majorée par le nombre de ville.*/
     printf("Tas déjà plein\n");
+    return NULL;
   }
 }
 
@@ -117,10 +130,10 @@ void entasserTas(TasMinGen tas,int indice)
   int droit=filsDroit(indice);
   int min=indice;
   /* Si gauche existe et sommet(gauche)<sommet(indice) */
-  if(gauche<taille && tas->comparaison(sommet(tas,min),sommet(tas,gauche)) >0)
+  if(gauche<taille && tas->comparaison(sommet(tas,min)->elem ,sommet(tas,gauche)->elem) >0)
     min=gauche;
   /* si droit existe et sommet(droit)<min(sommet(indice), sommet(gauche)) */
-  if(droit<taille && tas->comparaison(sommet(tas,min),sommet(tas,droit)) >0)
+  if(droit<taille && tas->comparaison(sommet(tas,min)->elem ,sommet(tas,droit)->elem) >0)
     min=droit;
   /* Si le sommet[indice] est plus petit qu'un de ces fils, on le swap
    * avec le plus petit des deux. */
@@ -133,37 +146,44 @@ void entasserTas(TasMinGen tas,int indice)
 
 void* extraireMin(TasMinGen tas)
 {
-  assert(tas->taille>0);
-  void* min=sommet(tas,0);
+  assert(tas->taille>=0);
+  void* min=sommet(tas,0)->elem;
   tas->taille--;
-  tas->sommets[0]=sommet(tas,tas->taille);
+  freeElemHandle(tas->sommets[0]);
+  tas->sommets[0]->elem=sommet(tas,tas->taille);
   /* On réorganise le tas en O(ln_2(nb_sommet)) vu que le tas est un arbre quasi
    * parfait (donc etage(0)-> 2**0 sommet ... etage i -> 2**i sommet) */
   entasserTas(tas,0);
   return min;
 }
 
-void diminuerCle(TasMinGen tas, void* elem, void* cle)
+void diminuerCle(TasMinGen tas, ElemHandle element, void* cle)
 {
   /* On check qu'on diminue bien la clef ( assert un peu barbare ) */
-  assert(tas->comparaison(elem,cle));
-  affecte(elem,cle);
+  assert(tas->comparaison(element->elem,cle));
+  element->elem=cle;
+  percolate_haut(tas,element->handle);
 }
 
 
-
-
 /*------- Fonction d'accès, pour plus de lisibilité ------*/
-void* sommet(TasMinGen tas, int indice){return tas->sommets[indice];}
+ElemHandle sommet(TasMinGen tas, int indice){return tas->sommets[indice];}
 int pere(int indice){return indice/2;}
 int filsGauche(int indice){return 2*indice+1;}
 int filsDroit(int indice){return 2*indice+2;}
+
+void affecteIndice(ElemHandle element,int indice){element->handle=indice;}
+int indice(ElemHandle element){return element->handle;}
+void* getElem(ElemHandle e){return e->elem;}
 		  
-static void echanger(void** t,int i,int j)
+static void echanger(ElemHandle* t,int i,int j)
 {
-  void* tmp=t[i];
-  t[i]=t[j];
-  t[j]=tmp;
+  void* tmp=t[i]->elem;
+  int tmp_indice=t[i]->handle;
+  t[i]->elem=t[j]->elem;
+  t[i]->handle=t[j]->handle,
+  t[j]->elem=tmp;
+  t[j]->handle=tmp_indice;
 }
 
 /* On reorganise le tas, sous arbre après sous arbre, sachant qu'on commence
