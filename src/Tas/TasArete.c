@@ -7,15 +7,15 @@
 /*------ Déclaration des fonctions statiques ------*/
 static void setAffichageTasMin(void* elem);
 static int setComparaisonTasMin(void* a,void *b);
+static void setMajTasMin(void* old, void* new);
+static int setComparaisonCleTasMin(void* a,void* cle);
 
 struct TasArete
 {
   TasMinGen tas;
 };
 
-/* cette structure est fortement dépendante du tas qui ce charge automatiquement 
- * de la libération de mémoire interne, il faut que le client libere imméditement
- * la mémoire alloué apres extraction. */
+/*L'utilisateur doit free la liste des AreteHandle. */
 struct AreteHandle
 {
   ElemHandle arete;
@@ -26,9 +26,8 @@ struct AreteHandle
 TasMinArete creerTasMinArete(int taille)
 {
   TasMinArete tasMin=malloc(sizeof(struct TasArete));
-  tasMin->tas= creerTasMinGen(taille,setComparaisonTasMin,setAffichageTasMin);
+  tasMin->tas= creerTasMinGen(taille,setComparaisonTasMin,setComparaisonCleTasMin,setAffichageTasMin,setMajTasMin);
   return tasMin;
-  
 }
 
 void freeTasArete(TasMinArete tasMin)
@@ -39,7 +38,7 @@ void freeTasArete(TasMinArete tasMin)
 
 void freeAreteHandle(AreteHandle a)
 {
-  freeArete(getElem(a->arete));
+  freeElemHandle(a->arete);
   free(a);
 }
 
@@ -57,9 +56,9 @@ AreteHandle ajouterAreteHandle(TasMinArete tasMin, Arete a)
   return areteH;
 }
 
-int indiceTas(AreteHandle areteH)
+int indiceAreteHandle(AreteHandle areteH)
 {
-  return indice(areteH->arete);
+  return getIndice(areteH->arete);
 }
 
 Arete extraireAreteMin(TasMinArete tasMin)
@@ -77,6 +76,11 @@ void affichageTasArete(TasMinArete tasMin)
   affichageTas(tasMin->tas);
 }
 
+void diminuerCleArete(TasMinArete tas_a, AreteHandle areteH,double newCle)
+{
+  diminuerCle(tas_a->tas,areteH->arete, (void*) &newCle);
+}
+
 static void setAffichageTasMin(void* elem)
 {
   afficheArete( (Arete) elem);
@@ -87,9 +91,14 @@ static int setComparaisonTasMin(void* a,void *b)
   return comparaisonArete( (Arete) a, (Arete) b);
 }
 
-void diminuerCleArete(TasMinArete tas_a, AreteHandle areteH, Arete newArete)
+static void setMajTasMin(void* oldArete, void* newCle)
 {
-  diminuerCle(tas_a->tas,areteH->arete, (void*) newArete);
+  /* fonction du module arete */
+  setCle(*((double*) newCle),(Arete) oldArete);
 }
 
+static int setComparaisonCleTasMin(void* a,void* cle)
+{
+  return comparaisonAreteCle((Arete) a,*((double*) cle));
+}
 	      

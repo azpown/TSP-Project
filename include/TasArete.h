@@ -10,12 +10,17 @@ typedef struct AreteHandle *AreteHandle;
 TasMinArete creerTasMinArete(int taille);
 void freeTasArete(TasMinArete tasMin);
 void freeAreteHandle(AreteHandle a);
-bool estVide(TasMinArete tasMin);
 AreteHandle ajouterAreteHandle(TasMinArete tasMin, Arete a);
+
+bool estVide(TasMinArete tasMin);
 void entasserTasArete(TasMinArete tasMin, int indice);
 Arete extraireAreteMin(TasMinArete tasMin);
 void affichageTasArete(TasMinArete tasMin);
-int indiceTas(AreteHandle areteH);
+
+int indiceAreteHandle(AreteHandle areteH);
 Arete getArete(AreteHandle areteH);
+
+void diminuerCleArete(TasMinArete tas_a, AreteHandle areteH,double newCle);
+
 
 #endif

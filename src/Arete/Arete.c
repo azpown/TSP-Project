@@ -29,6 +29,16 @@ int comparaisonArete(Arete a,Arete b)
   return 0;
 }
 
+int comparaisonAreteCle(Arete a,double cle)
+{
+  double cmp=a->cle - cle;
+  if(cmp<0)
+    return -1;
+  if(cmp>0)
+    return 1;
+  return 0;
+}  
+
 void freeArete(Arete a){free(a);}
 
 void afficheArete(Arete a)
@@ -40,6 +50,9 @@ double getCle(Arete a){return a->cle;}
 int getDepart(Arete a){return a->depart;}
 int getArrive(Arete a){return a->arrive;}
 
-void setCle(double value,Arete a){a->cle=value;}
+void setCle(double value,Arete a)
+{
+  a->cle=value;
+}
 void setDepart(int depart,Arete a){a->depart=depart;}
 void setArrive(int arrive,Arete a){a->arrive=arrive;}
