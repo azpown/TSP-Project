@@ -84,19 +84,22 @@ Noeud getRacine(ArbrePlanaireGen this){return this->racine;}
 /* Dans notre utilisation de l'arbre pour l'algorithme de prim, la taille de l'arbre
  * est majorée par la dimension de la matrice, pas la peine d'implementé un module
  * de file ou de tableau extensible. */
-void** parcourPrefixe(int taille,ArbrePlanaireGen this)
-{
-  assert(taille>0);
-  void** parcour=calloc(taille,sizeof(void*));
-  Noeud tmp=this->racine;
-  int indice=0;
-  visiterPrefixe(&indice,parcour,tmp);
-  /* On verifie que la taille du parcour correspond au nombre de sommet de l'arbre */
-  assert(taille==indice+1);
-  return parcour;
-}
 
-void freeParcourPrefixe(void** this){free(this);}
+//void** parcourPrefixe(int taille,ArbrePlanaireGen this)
+//{
+//  assert(taille>0);
+//  void** parcour=calloc(taille,sizeof(void*));
+//  Noeud tmp=this->racine;
+//  int indice=0;
+//  visiterPrefixe(&indice,parcour,tmp);
+//  /* On verifie que la taille du parcour correspond au nombre de sommet de l'arbre */
+//  assert(taille==indice+1);
+//  return parcour;
+//}
+
+//void freeParcourPrefixe(void** this){free(this);}
+
+
 
 /* effet de bord sur indice afin de placer l'element a la bonne position dans le tableau*/
 static void visiterPrefixe(int* indice,void** tab,Noeud this)
@@ -120,6 +123,7 @@ static void visite(int* indice,void** tab,Noeud this)
 void affichagePrefixe(ArbrePlanaireGen this)
 {
   affichagePrefixeRecursif(getRacine(this),this->affiche);
+  printf("\n");
 }
 
 /* moins d'acces a la structure en passant f en parametre, mais plus de place sur la pile */

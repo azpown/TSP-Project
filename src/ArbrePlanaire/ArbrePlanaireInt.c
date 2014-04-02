@@ -42,19 +42,19 @@ int getInt(Noeud this)
 }
 
 /* Une copie necessaire, surrement optimisable || pas de deleg pour cette fonction*/
-int* parcourPrefixeInt(int taille,ArbrePlanaireInt this)
-{
-  void** tmp=parcourPrefixe(taille,this->arbre);
-  int* tmp_int=calloc(taille,sizeof(int));
-  int* cast;
-  for(int i=0;i<taille;i++)
-  {
-    cast=(int*) tmp[i];
-    tmp_int[i]=*(cast);
-  } 
-  freeParcourPrefixe(tmp);
-  return tmp_int;
-}
+//int* parcourPrefixeInt(int taille,ArbrePlanaireInt this)
+//{
+//  void** tmp=parcourPrefixe(taille,this->arbre);
+//  int* tmp_int=calloc(taille,sizeof(int));
+//  int* cast;
+//  for(int i=0;i<taille;i++)
+//  {
+//    cast=(int*) tmp[i];
+//    tmp_int[i]=*(cast);
+//  } 
+//  freeParcourPrefixe(tmp);
+//  return tmp_int;
+//}
 
 void affichagePrefixeInt(ArbrePlanaireInt this)
 {

@@ -9,15 +9,18 @@ typedef struct arbrePlanaireGen *ArbrePlanaireGen;
 
 Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet);
 void freeNoeud(Noeud this);
+
+
 ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f);
 void freeArbrePlanaireGen(ArbrePlanaireGen this);
+
 void* getElem(Noeud this);
 Noeud getPremierFils(Noeud this);
 Noeud getPere(Noeud this);
 Noeud getFrere(Noeud this);
 Noeud getRacine(ArbrePlanaireGen this);
-void** parcourPrefixe(int taille,ArbrePlanaireGen this);
-void freeParcourPrefixe(void** this);
+//void** parcourPrefixe(int taille,ArbrePlanaireGen this);
+//void freeParcourPrefixe(void** this);
 void affichagePrefixe(ArbrePlanaireGen this);
 Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem);
 bool estFeuille(Noeud this);

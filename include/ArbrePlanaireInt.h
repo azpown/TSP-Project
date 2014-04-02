@@ -8,7 +8,7 @@ typedef struct arbrePlanaireInt *ArbrePlanaireInt;
 ArbrePlanaireInt creerArbrePlanaireInt();
 void freeArbrePlanaireInt(ArbrePlanaireInt this);
 int getInt(Noeud this);
-int* parcourPrefixeInt(int taille,ArbrePlanaireInt this);
+//int* parcourPrefixeInt(int taille,ArbrePlanaireInt this);
 void affichagePrefixeInt(ArbrePlanaireInt this);
 Noeud ajouterNoeudInt(ArbrePlanaireInt this,Noeud pere,int elem);
 bool estUneFeuille(Noeud this);
