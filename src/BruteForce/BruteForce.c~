@@ -1,0 +1,98 @@
+#include "BruteForce.h"
+#include "Graphe.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+#include <assert.h>
+#include <stdbool.h>
+
+/*------ Déclaration fonction statique ------ */
+static void initialise_true_n(bool* tab,int taille);
+
+
+static void initialise_true_n(bool* tab,int taille)
+{
+  for(int i=0;i<taille;i++)
+    *(tab+i)=true;
+}
+
+
+int sommet_suivant(bool* tab_dispo, Graphe graph, int ville_depart)
+{
+  int taille=get_taille(graph);
+  for (int i=0; i<taille; i++)
+  {
+    if (tab_dispo[i])
+    {
+      tab_dispo[i]=false;
+      return i;
+    }
+  }
+  return ville_depart;
+}
+
+bool* creer_tab_dispo(Graphe graph, int departChemin)
+{
+  int taille=get_taille(graph);
+  bool* tab_dispo= malloc(taille*sizeof(bool));
+  initialise_true_n(tab_dispo, taille);
+  tab_dispo(departChemin)=false;
+  return tab_dispo;
+}
+
+
+double BruteForce(Graphe graph,int departChemin, double distanceAcc)
+{
+  int taille = get_taille(graph);
+  bool* tab_dispo = creer_tab_dispo(graph, departChemin);
+  double distance = 0;
+  int dernierVisite = 0;
+  while (!aucun_dispo(graph, tab_dispo))
+  {
+    for(int i=0;i<taille,i++)
+    {
+	if(distance<distanceAcc)
+	{
+	  distance += distance_ville(graph, dernierVisite, sommet_suivant(tab_dispo, graph, departChemin);
+	  dernierVisite = sommet_suivant(tab_dispo, graph, departChemin);
+	     
+	}
+    }
+    if(distance<distanceAcc)
+    {
+      distanceAcc=distance;
+      distance=0;
+    }
+
+  }
+  return distance;
+}
+
+
+double premierChemin(Graphe graph,int departChemin)
+{
+  double distanceAcc = 0
+  int taille = get_taille(graph);
+  int* tab=malloc(taille*sizeof(int));
+  for (int i=0; i<taille; i++)
+    tab[i] = i;
+  int dernierVisite = departChemin;
+  int plus_court_trajet = 0;
+  for (int j=0; j<taille; j++)
+    if(j != departChemin)
+    {
+      distanceAcc += distance_ville(graph, dernierVisite, j);
+      dernierVisite = j;
+    }
+  distanceAcc += distance_ville(graph, j, departChemin);
+  return distanceAcc;
+}
+
+bool aucun_dispo(Graphe graph, bool* tab_dispo)
+{
+  for (int i=0; i<get_taille(graph); i++)
+    if (tab_dispo[i])
+      return false;
+  return true;
+}

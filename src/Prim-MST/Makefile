@@ -3,7 +3,7 @@ EXEC = testPrim
 CFLAGS = -std=c99 -g -O2
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
-CPPFLAGS= -I ../../include
+CPPFLAGS = -I ../../include
 
 all : ${EXEC}
 
