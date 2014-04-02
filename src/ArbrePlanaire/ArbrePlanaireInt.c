@@ -33,12 +33,12 @@ void freeArbrePlanaireInt(ArbrePlanaireInt this)
 
 void freeInt(Noeud this)
 {
-  free(getElem(this));
+  free(getElement(this));
 }
 
 int getInt(Noeud this)
 {
-  return *((int *)getElem(this));
+  return *((int *)getElement(this));
 }
 
 /* Une copie necessaire, surrement optimisable || pas de deleg pour cette fonction*/

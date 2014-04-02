@@ -70,10 +70,7 @@ void freeArbrePlanaireGen(ArbrePlanaireGen this)
     
 
 /*------ Accesseurs ------*/
-void* getElem(Noeud this)
-{
-  return this->elem;
-}
+void* getElement(Noeud this){return this->elem;}
 
 Noeud getPremierFils(Noeud this){return this->premierFils;}
 Noeud getPere(Noeud this){return this->pere;}
@@ -113,7 +110,7 @@ static void visiterPrefixe(int* indice,void** tab,Noeud this)
   
 static void visite(int* indice,void** tab,Noeud this)
 {
-  tab[*indice]=getElem(this);
+  tab[*indice]=getElement(this);
   *indice++;
 }
 
