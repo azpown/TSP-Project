@@ -39,6 +39,7 @@ void Prim(Graphe g,int depart,double* acc)
     /* On extrait le minimum du tas */
     min=extraireAreteMin(tas);
     *acc+=getCle(min);
+    printf("acc -> %.1lf\n",*acc);
     ville=getArrive(min);
     printf("ville : %d\n",ville);
     /* On ajoute l'entier correspondant au sommet dans l'arbre planaire
