@@ -46,7 +46,7 @@ main(){
   double acc=0;
   printf("le chemin en dur en partant de la ville 1 est : 1 3 5 2 0 6 8 7 9 1\n");
   printf("la distance parcourue est de 46\n");
-  printf("le chemin en dur en partant de la ville 1 et la distance parcourue est de : \n");
+  printf("le chemin en partant de la ville 1 et la distance parcourue est de : \n");
   int* heuristique=HeuristiquePlusProcheVoisin(g,&acc,1);
   afficher(heuristique,get_taille(g)+1);
   printf("%.1lf\n",acc);
