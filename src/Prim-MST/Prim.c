@@ -22,11 +22,9 @@ void Prim(Graphe g,int depart,double* acc)
   /* Contruction du tas min -> Initialisation avec les distances par rapport a départ. */
   for(int i=0;i<taille;i++)
     if(i!=depart)
-    {
       tabH[i]=ajouterAreteHandle(tas,tabA[i]= creerArete(distance_ville(g,depart,i),depart,i));
-      affichageTasArete(tas);
-    }
-  
+  affichageTasArete(tas);
+      
   ArbrePlanaireInt arbre=creerArbrePlanaireInt();
   /* Ce tableau sert pour libérer la mémoire et pour tester l'éligibilité d'une ville dans la routine*/
   Noeud* tabN=calloc(taille,sizeof(Noeud)); 
@@ -40,12 +38,13 @@ void Prim(Graphe g,int depart,double* acc)
   {
     /* On extrait le minimum du tas */
     min=extraireAreteMin(tas);
+    *acc+=getCle(min);
     ville=getArrive(min);
-    
     printf("ville : %d\n",ville);
     /* On ajoute l'entier correspondant au sommet dans l'arbre planaire
      * son pere est le depart de l'arete */
-    tabN[ville]=ajouterNoeudInt(arbre,tabN[getArrive(min)],ville);
+    printf("pere -> %p\n",tabN[getArrive(min)]);
+    tabN[ville]=ajouterNoeudInt(arbre,tabN[getDepart(min)],ville);
      
     for(int i=0;i<taille;i++)
     {
@@ -54,11 +53,15 @@ void Prim(Graphe g,int depart,double* acc)
        * est plus petite que la précédente, on actualise. */
       if(!tabN[i] && (distance_ville(g,ville,getArrive(getArete(tabH[i]))) < getCle(getArete(tabH[i]))))
       {
+	printf("cle init : %.1lf --> %.1lf\n",getCle(getArete(tabH[i])),distance_ville(g,ville,getArrive(getArete(tabH[i]))));
 	setDepart(ville,getArete(tabH[i]));
 	/* On diminue la clef, le tas se reorganise en conséquence. */
-	diminuerCleArete(tas,tabH[i],distance_ville(g,ville,i));
+	diminuerCleArete(tas,tabH[i],distance_ville(g,ville,getArrive(getArete(tabH[i]))));
       }
     }
+    affichageTasArete(tas);
   }
+  *acc+=distance_ville(g,getCle(min),depart);
   affichagePrefixeInt(arbre);
+  printf("%d --> Taille chemin : %.1lf\n",depart,*acc);
 }
