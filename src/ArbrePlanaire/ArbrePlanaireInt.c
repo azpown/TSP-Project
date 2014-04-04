@@ -33,28 +33,13 @@ void freeArbrePlanaireInt(ArbrePlanaireInt this)
 
 void freeInt(Noeud this)
 {
-  free(getElem(this));
+  free(getElement(this));
 }
 
 int getInt(Noeud this)
 {
-  return *((int *)getElem(this));
+  return *((int *)getElement(this));
 }
-
-/* Une copie necessaire, surrement optimisable || pas de deleg pour cette fonction*/
-//int* parcourPrefixeInt(int taille,ArbrePlanaireInt this)
-//{
-//  void** tmp=parcourPrefixe(taille,this->arbre);
-//  int* tmp_int=calloc(taille,sizeof(int));
-//  int* cast;
-//  for(int i=0;i<taille;i++)
-//  {
-//    cast=(int*) tmp[i];
-//    tmp_int[i]=*(cast);
-//  } 
-//  freeParcourPrefixe(tmp);
-//  return tmp_int;
-//}
 
 void affichagePrefixeInt(ArbrePlanaireInt this)
 {

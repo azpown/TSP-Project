@@ -1,53 +1,64 @@
 #include <stdlib.h>
-#include <ArbrePlanaireInt.h>
+#include <assert.h>
+#include <stdio.h> 
+#include <ArbrePlanaireInt.h> 
+#include <Arete.h>
 #include <TasArete.h>
 #include <Graphe.h>
+#include <Prim.h>
 
 /* Effet de bord de acc <- contient la taille du cycle */
-int* Prim(Graphe g, int depart,int* acc)
+void Prim(Graphe g,int depart,double* acc)
 {
-  int taille=get_taille(g);
+  /*------ Allocation de la mémoire necessaire et Init.------*/
+  *acc=0;
+  const int taille=get_taille(g);
+  assert(depart<taille);
   /* On crée les tableaux des références pour modification dans la routine et free */
-  Arete* ref_arete=malloc(taille-1*sizeof(Arete));
-  Noeud* ref_noeud=malloc(taille*sizeof(Noeud));
-
-  /* tab_dispo initialiser a false */
-  bool* tab_dispo=calloc(taille,sizeof(bool*));
-
-  TasMinArete tas=creerTasMinArete(taille);
-  ArbrePlanaireInt arbre=creerArbrePlanaireInt();
-
-  /* --Phase d'initialisation-- */
-  
-  /* Creation de la racine de l'arbre : depart */
-  ref_noeud[0]=ajouterNoeudInt(this,NULL,depart);
-  tab_dispo[0]=!tab_dispo[0];
+  TasMinArete tas = creerTasMinArete(taille);
+  AreteHandle* tabH=malloc(taille*sizeof(AreteHandle));
+  Arete* tabA =malloc(taille*sizeof(Arete));
   
   /* Contruction du tas min -> Initialisation avec les distances par rapport a départ. */
   for(int i=0;i<taille;i++)
     if(i!=depart)
-      ajouterArete(tas,ref_arete[i]=creerArete(distance_ville(depart,i),depart,i));
+    {
+      tabH[i]=ajouterAreteHandle(tas,tabA[i]= creerArete(distance_ville(g,depart,i),depart,i));
+      affichageTasArete(tas);
+    }
   
+  ArbrePlanaireInt arbre=creerArbrePlanaireInt();
+  /* Ce tableau sert pour libérer la mémoire et pour tester l'éligibilité d'une ville dans la routine*/
+  Noeud* tabN=calloc(taille,sizeof(Noeud)); 
+  /* Creation de la racine de l'arbre : depart */
+  tabN[0]=ajouterNoeudInt(arbre,NULL,depart); 
+
   /* Routine de traitement */
-  int cpt=1;
   Arete min;
+  int ville;
   while(!estVide(tas))
   {
+    /* On extrait le minimum du tas */
     min=extraireAreteMin(tas);
-    int ville=getArrive(min);
-
-    tab_dispo[ville]=true;
-
+    ville=getArrive(min);
+    
+    printf("ville : %d\n",ville);
+    /* On ajoute l'entier correspondant au sommet dans l'arbre planaire
+     * son pere est le depart de l'arete */
+    tabN[ville]=ajouterNoeudInt(arbre,tabN[getArrive(min)],ville);
+     
     for(int i=0;i<taille;i++)
+    {
       /* !tab_dispo car le tableau est initialisé a false 
        * Si la ville n'a pas été ajoutée et que la distance par rapport a ville
        * est plus petite que la précédente, on actualise. */
-      if(!tab_dispo[i] && (distance_vile(g,ville,i) < getCle(ref_arete[i]))   
+      if(!tabN[i] && (distance_ville(g,ville,getArrive(getArete(tabH[i]))) < getCle(getArete(tabH[i]))))
       {
-	setDepart(ville,ref_arete[i]);
-	setCle(getCle(ref_arete[i]))
-    
-  
-  
+	setDepart(ville,getArete(tabH[i]));
+	/* On diminue la clef, le tas se reorganise en conséquence. */
+	diminuerCleArete(tas,tabH[i],distance_ville(g,ville,i));
+      }
+    }
+  }
+  affichagePrefixeInt(arbre);
 }
-

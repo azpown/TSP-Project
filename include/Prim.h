@@ -1,7 +1,9 @@
 #ifndef _PRIM
 #define _PRIM
 
-int* Prim(Graphe g, int depart,int* acc)
+#include <Graphe.h>
+
+void Prim(Graphe g, int depart,double* acc);
 
 
 

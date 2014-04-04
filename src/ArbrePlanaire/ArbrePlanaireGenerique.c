@@ -70,10 +70,7 @@ void freeArbrePlanaireGen(ArbrePlanaireGen this)
     
 
 /*------ Accesseurs ------*/
-void* getElem(Noeud this)
-{
-  return this->elem;
-}
+void* getElement(Noeud this){return this->elem;}
 
 Noeud getPremierFils(Noeud this){return this->premierFils;}
 Noeud getPere(Noeud this){return this->pere;}
@@ -84,22 +81,6 @@ Noeud getRacine(ArbrePlanaireGen this){return this->racine;}
 /* Dans notre utilisation de l'arbre pour l'algorithme de prim, la taille de l'arbre
  * est majorée par la dimension de la matrice, pas la peine d'implementé un module
  * de file ou de tableau extensible. */
-
-//void** parcourPrefixe(int taille,ArbrePlanaireGen this)
-//{
-//  assert(taille>0);
-//  void** parcour=calloc(taille,sizeof(void*));
-//  Noeud tmp=this->racine;
-//  int indice=0;
-//  visiterPrefixe(&indice,parcour,tmp);
-//  /* On verifie que la taille du parcour correspond au nombre de sommet de l'arbre */
-//  assert(taille==indice+1);
-//  return parcour;
-//}
-
-//void freeParcourPrefixe(void** this){free(this);}
-
-
 
 /* effet de bord sur indice afin de placer l'element a la bonne position dans le tableau*/
 static void visiterPrefixe(int* indice,void** tab,Noeud this)
@@ -113,7 +94,7 @@ static void visiterPrefixe(int* indice,void** tab,Noeud this)
   
 static void visite(int* indice,void** tab,Noeud this)
 {
-  tab[*indice]=getElem(this);
+  tab[*indice]=getElement(this);
   *indice++;
 }
 
@@ -142,15 +123,12 @@ static void affichagePrefixeRecursif(Noeud this,ptr_affichage f)
 Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
 {
   Noeud this= creerNoeud(elem,pere,NULL,NULL);
-  printf("Adresse de la cellule : %p\n",this);
   if(!pere)
   {
-    printf("Pas de pere\n\n");
     a->racine=this;
     return this;
   }
   Noeud tmp= getPremierFils(pere);
-  printf("PremierFils du pere : %p\n",tmp);
   /* Traitement different dans le cas ou this a deja des fils ou non */
   if(tmp)
   {
@@ -160,12 +138,10 @@ Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
       tmp=getFrere(tmp);
     /* Il faut ajouter le noeud crée comme frere du dernier fils du sommet passé en parametre */
     tmp->frere=this;
-    printf("FRERE DE LA CELLULE : Pere : %p , Frere : %p , PremierFils : %p\n\n",tmp->pere,tmp->frere,tmp->premierFils);
   }
   else
     /* Le sommet ajouter est le seul fils du sommet passé en parametre -> c'est son premierFils */
     pere->premierFils= this;
-  printf("Pere : %p , Frere : %p , PremierFils : %p\n\n",this->pere,this->frere,this->premierFils);
   return this;
 }
 

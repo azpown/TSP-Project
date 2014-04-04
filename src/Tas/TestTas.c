@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <Arete.h>
 #include <TasArete.h>
@@ -5,9 +6,9 @@
 static bool test1()
 {
   /* Test le module de création,taille, free */
-  TasMinArete testTas = creerTasMinArete(5);
-  AreteHandle tab[5];
-  Arete tab_a[5];
+  TasMinArete testTas = creerTasMinArete(10);
+  AreteHandle* tab=malloc(10*sizeof(AreteHandle));
+  Arete* tab_a =malloc(10*sizeof(Arete));
   tab[0]=ajouterAreteHandle(testTas,tab_a[0] = creerArete(10,2,5));
   affichageTasArete(testTas);
   tab[1]=ajouterAreteHandle(testTas,tab_a[1] = creerArete(2,2,7));
@@ -18,7 +19,9 @@ static bool test1()
   affichageTasArete(testTas);
   tab[4]=ajouterAreteHandle(testTas,tab_a[4] = creerArete(7,2,9));
   affichageTasArete(testTas);
-  
+  for(int i=5;i<10;i++)
+    tab[i]=ajouterAreteHandle(testTas,tab_a[i]= creerArete(42,2,10-i));
+
   printf("\n------ TEST EXTRACTION ------\n\n");
   printf("Arete extraite :\t");
   afficheArete(extraireAreteMin(testTas));
@@ -41,7 +44,10 @@ static bool test1()
     freeAreteHandle(tab[i]);
     freeArete(tab_a[i]);
   }
+  free(tab);
+  free(tab_a);
   freeTasArete(testTas);
+  
   
   printf("Ce programme marche niquel, faut automatiser tout ça maintenant :)\n");
   return true;

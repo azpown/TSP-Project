@@ -14,7 +14,7 @@ void freeNoeud(Noeud this);
 ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f);
 void freeArbrePlanaireGen(ArbrePlanaireGen this);
 
-void* getElem(Noeud this);
+void* getElement(Noeud this);
 Noeud getPremierFils(Noeud this);
 Noeud getPere(Noeud this);
 Noeud getFrere(Noeud this);
