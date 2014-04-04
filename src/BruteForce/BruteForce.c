@@ -23,7 +23,7 @@ int sommet_suivant(bool* tab_dispo, Graphe graph, int ville_depart) // Retourne 
   int taille=get_taille(graph);
   for (int i=0; i<taille; i++)
   {
-    if (tab_dispo[i])
+    if (tab_dispo[i] && i!=ville_depart)
     {
       tab_dispo[i]=false; // marque dans le tableau que le sommet renvoyé va être visité
       return i;
@@ -64,7 +64,7 @@ int* BruteForce(Graphe graph,int departChemin, double distanceAcc)// retourne le
       if(distance<distanceAcc)//si le chemin est plus long ou aussi long que celui de distance distanceAcc on passe au else qui effectue le retour en arrière
       {
 	distance += distance_ville(graph, dernierVisite, sommet_suivant(tab_dispo, graph, departChemin));
-	dernierVisite = sommet_suivant(tab_dispo, graph, departChemin);
+	dernierVisite = sommet_suivant(tab_dispo, graph,dernierVisite);
 	dernier_Visite[nbAjouts_Dernier_Visite] = dernierVisite;
 	nbAjouts_Dernier_Visite ++;
 	tab_dispo[dernierVisite]=false;
@@ -77,18 +77,42 @@ int* BruteForce(Graphe graph,int departChemin, double distanceAcc)// retourne le
       {
 	for (int j = aRetirer; j>0 ; j--)
 	{
-	  tab_dispo[retourEnArriere[aRetirer]]=true;
-	  aRetirer --;
+	  if (retourEnArriere[aRetirer]==departChemin)
+	  {
+	    if (retourEnArriere[aRetirer-1]==dernierVisite)
+	      aRetirer--;
+	    tab_dispo[retourEnArriere[aRetirer-1]]=true;
+	    distance -= distance_ville(graph, retourEnArriere[aRetirer-1], retourEnArriere[aRetirer]);
+	    aRetirer -=2;
+	   }
+	  if (retourEnArriere[aRetirer]==dernierVisite)
+	      aRetirer--;
+	  else
+	  {
+	    distance -= distance_ville(graph, retourEnArriere[aRetirer-1], retourEnArriere[aRetirer]);
+	    tab_dispo[retourEnArriere[aRetirer]]=true;
+	    aRetirer --;
+	  }
 	  cptSommetsChemin--;
 	  nbAjouts_Dernier_Visite--;
 	}
       }
     }
     if(distance<distanceAcc){// effectue un nouveau test en cas d'arrivée à la fin de la boucle for et que la distance de parcours soit supérieure ou égale à distanceAcc suite au dernier ajout
+      //   for(int i=1;i<taille;i++)
+      //	for(int j=0;j<taille;j++)
+      //  chemin_le_plus_court[i]=dernier_Visite[j];
+      chemin_le_plus_court[cptSommetsChemin]=dernierVisite;
       distanceAcc=distance;
       distance = 0;
     }
+  } 
+  if(distance<distanceAcc){// effectue un nouveau test en cas d'arrivée à la fin de la boucle for et que la distance de parcours soit supérieure ou égale à distanceAcc suite au dernier ajout
+    for(int i=1;i<taille;i++)
+      for(int j=0;j<taille;j++)
+	chemin_le_plus_court[i]=dernier_Visite[j];
   }
+  chemin_le_plus_court[taille+1]=departChemin;
   return chemin_le_plus_court;
 }
 
