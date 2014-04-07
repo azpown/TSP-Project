@@ -10,7 +10,6 @@ typedef struct arbrePlanaireGen *ArbrePlanaireGen;
 Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet);
 void freeNoeud(Noeud this);
 
-
 ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f);
 void freeArbrePlanaireGen(ArbrePlanaireGen this);
 
