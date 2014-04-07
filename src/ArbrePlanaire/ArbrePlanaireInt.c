@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include <ArbrePlanaireInt.h>
 
 struct arbrePlanaireInt
@@ -8,6 +9,9 @@ struct arbrePlanaireInt
 };
 
 static int* homogeneise(int n);
+static void remplirTab(Noeud this,int* tab,int* indice,int taille);
+static void ajouter(Noeud this,int* tab,int* indice);
+
 
 /*------ Allocation ------*/
 
@@ -67,4 +71,24 @@ void afficheInt(void* elem)
   printf("%d -> ",*((int *)elem));
 }
 
-  
+void tableauArbreInt(ArbrePlanaireInt this,int* tab,int taille)
+{
+  int indice=0;
+  remplirTab(getRacine(this->arbre),tab,&indice,taille);
+}
+
+static void remplirTab(Noeud this,int* tab,int* indice,int taille)
+{
+  assert(*indice<taille);
+  ajouter(this,tab,indice);
+  if(!estFeuille(this))
+    remplirTab(getPremierFils(this),tab,indice,taille);
+  if(getFrere(this))
+    remplirTab(getFrere(this),tab,indice,taille);
+}
+
+static void ajouter(Noeud this,int* tab,int* indice)
+{
+  tab[*indice]=(int) *((int*) getElement(this));
+  *(indice)+=1;
+}
