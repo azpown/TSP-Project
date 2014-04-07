@@ -63,6 +63,7 @@ bool estUneFeuille(Noeud this)
 
 void supprimerNoeudInt(ArbrePlanaireInt a,Noeud this)
 {
+  freeInt(this);
   supprimerNoeud(a->arbre,this);
 }
   

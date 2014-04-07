@@ -13,10 +13,10 @@ int main()
   tab[3]=ajouterNoeudInt(this,tab[1],4);
   printf("Affichage avant suppression :  ");
   affichagePrefixeInt(this);
-  printf("Affichage apres suppression de 3:  ");
-  supprimerNoeudInt(this,tab[2]);
+  printf("Affichage apres suppression de 4:  ");
+  supprimerNoeudInt(this,tab[3]);
   affichagePrefixeInt(this);
-  for(int i=0;i<4;i++)
+  for(int i=0;i<3;i++)
     freeInt(tab[i]);
   freeArbrePlanaireInt(this);
   printf("Ce programme marche niquel, faut automatiser tout ça maintenant :)\n");
