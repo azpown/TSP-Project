@@ -19,8 +19,6 @@ Noeud getPremierFils(Noeud this);
 Noeud getPere(Noeud this);
 Noeud getFrere(Noeud this);
 Noeud getRacine(ArbrePlanaireGen this);
-//void** parcourPrefixe(int taille,ArbrePlanaireGen this);
-//void freeParcourPrefixe(void** this);
 void affichagePrefixe(ArbrePlanaireGen this);
 Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem);
 bool estFeuille(Noeud this);
