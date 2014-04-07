@@ -3,10 +3,6 @@
 
 #include <Graphe.h>
 
-void Prim(Graphe g, int depart,double* acc);
-
-
-
-
+int* Prim(Graphe g, int depart,double* acc);
 
 #endif
