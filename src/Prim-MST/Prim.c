@@ -23,14 +23,12 @@ int* Prim(Graphe g,int depart,double* acc)
   for(int i=0;i<taille;i++)
     if(i!=depart)
       tabH[i]=ajouterAreteHandle(tas,tabA[i]= creerArete(distance_ville(g,depart,i),depart,i));
-  affichageTasArete(tas);
   
   ArbrePlanaireInt arbre=creerArbrePlanaireInt();
   /* Ce tableau sert pour libérer la mémoire et pour tester l'éligibilité d'une ville dans la routine*/
-  Noeud* tabN=calloc(taille,sizeof(Noeud)); 
+  Noeud* tabN=calloc(taille+1,sizeof(Noeud)); 
   /* Creation de la racine de l'arbre : depart */
   tabN[0]=ajouterNoeudInt(arbre,NULL,depart); 
-
 
   /* Routine de traitement */
   Arete min;
@@ -61,7 +59,6 @@ int* Prim(Graphe g,int depart,double* acc)
 
   *acc=0;
 
-  affichagePrefixeInt(arbre);
   /* Création du tableau pour le retour */
   int *tab=malloc(taille+1 *sizeof(int));
   /* On remplie le tableau avec les valeurs correspondantes dans l'arbre */
@@ -70,7 +67,9 @@ int* Prim(Graphe g,int depart,double* acc)
   for(int i=0;i<taille;i++)
   {
     *acc+=distance_ville(g,tab[i],tab[i+1]);
+    printf("%d -> ",tab[i]);
   }
+  printf("%d\n",tab[taille]);
   printf("Taille chemin : %.1lf\n",*acc);
   return tab;
 }

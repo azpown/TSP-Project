@@ -31,7 +31,6 @@ Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet)
   Noeud this=malloc(sizeof(struct noeud));
   assert(this!=NULL);
   this->elem=element;
-  printf("elem : %d\n",*(int *)this->elem);
   this->pere=parent;
   this->premierFils=aine;
   this->frere=cadet;

@@ -1,0 +1,5 @@
+Dans build,pour check les tests:
+
+cmake ..
+make
+ctest
