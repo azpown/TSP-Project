@@ -7,6 +7,7 @@ target_link_libraries(Prim Arbre Tas)
 
 add_library(NN NearestNeighbour/NearestNeighbour.c Graphe/Graphe.c)
 
+add_subdirectory(Arete)
 add_subdirectory(Input)
 add_subdirectory(ArbrePlanaire)
 add_subdirectory(Tas)

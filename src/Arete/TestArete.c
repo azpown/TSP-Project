@@ -9,12 +9,13 @@ int main()
   afficheArete(testArete);
   afficheArete(testAreteBis);
   /* attendu : 0 */
-  printf("%d\n",comparaisonAreteCle(testArete,5.0));
+  printf("5.0 == 5.0 -> %d\n",comparaisonAreteCle(testArete,5.0));
   setCle(50,testArete);
   /* attendu : 1 */
-  printf("%d\n",comparaisonAreteCle(testArete,25.0));
+  printf("50 == 25 -> %d\n",comparaisonAreteCle(testArete,25.0));
+  printf("50 == 100 -> %d\n",comparaisonAreteCle(testArete,100.0));
   freeArete(testArete);
-  //freeArete(testAreteBis);
+  freeArete(testAreteBis);
   return EXIT_SUCCESS;
 }
   
