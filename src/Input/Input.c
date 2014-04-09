@@ -113,6 +113,7 @@ Input open_TSP_file(char* nom_file)
 /*------ ALLOCATION/LIBERATION MEMOIRE ------*/
 static Input alloc_init_input(char * nom)
 {
+  /* On alloue et on initialise a 0 les champs de la structure */
   Input myStruct=malloc(sizeof(struct input));
   myStruct->nom_file=nom; /* Viens de argv -> pas de free*/
   myStruct->nom=myStruct->type=myStruct->commentaire=myStruct->edge_weight_type=myStruct->edge_weight_format=myStruct->display_data_type=NULL;
@@ -123,13 +124,17 @@ static Input alloc_init_input(char * nom)
 
 static char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
 {
+  /* On alloue la taille du champ (taille-pattern) */
   char* alloc = malloc(sizeof(char) * (taille_ligne-taille_pattern));
+  /* on effectue la copie dans alloc */
   strcpy(alloc,ligne_lue+taille_pattern);
-  *(alloc+taille_ligne-taille_pattern-1)='\0'; /* On supprime le retour chariot */
+  /* On supprime le retour chariot */
+  *(alloc+taille_ligne-taille_pattern-1)='\0';
   return alloc;
 }
  
-/* nom_file vient de la console, et taille n'est pas allouer dynamiquement */
+/* nom_file vient de la console, et taille n'est pas allouer dynamiquement 
+ * on libère un à un les champs*/
 void free_input(Input input)
 {
   free(input->nom);

@@ -8,6 +8,7 @@
 #include <Graphe.h>
 #include <Prim.h>
 
+
 /* Effet de bord de acc <- contient la taille du cycle */
 int* Prim(Graphe g,int depart,double* acc)
 {

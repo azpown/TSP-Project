@@ -170,7 +170,11 @@ int pere(int indice){return indice/2;}
 int filsGauche(int indice){return 2*indice+1;}
 int filsDroit(int indice){return 2*indice+2;}
 
-void setIndice(int indice,ElemHandle element){element->handle=indice;}
+void setIndice(int indice,ElemHandle element)
+{
+  assert(indice>=0);
+  element->handle=indice;
+}
 int getIndice(ElemHandle element){return element->handle;}
 void* getElem(ElemHandle e){return e->elem;}
 void setElem(void * obj,ElemHandle element){element->elem=obj;}
