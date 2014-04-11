@@ -16,7 +16,7 @@ static void free_erreur(FILE* file, char* line_ptr,Input input);
 static void affiche_erreur();
 static bool verif_champ_entree(char* ligne_ptr, const char* champ_attendu, const char* pattern);
 static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pattern,bool erreur_possible,const char* chaine_attendu,const char* message_erreur,Input input);
-static char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue);
+char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue);
 static void parsing_champs(FILE* file,Input input);
 static void affectation_display_data(int indice,double x,double y,Input input);
 static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input input);
@@ -114,22 +114,20 @@ Input open_TSP_file(char* nom_file)
 static Input alloc_init_input(char * nom)
 {
   /* On alloue et on initialise a 0 les champs de la structure */
-  Input myStruct=malloc(sizeof(struct input));
+  Input myStruct=calloc(1,sizeof(struct input));
   myStruct->nom_file=nom; /* Viens de argv -> pas de free*/
-  myStruct->nom=myStruct->type=myStruct->commentaire=myStruct->edge_weight_type=myStruct->edge_weight_format=myStruct->display_data_type=NULL;
-  myStruct->dimension=0;
-  myStruct->edge_weight_matrix=myStruct->display_data=NULL;
   return myStruct;
 }
 
-static char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
+char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
 {
   /* On alloue la taille du champ (taille-pattern) */
-  char* alloc = malloc(sizeof(char) * (taille_ligne-taille_pattern));
+  int taille_alloc=taille_ligne-taille_pattern;
+  char* alloc = malloc(sizeof(char) * taille_alloc);
   /* on effectue la copie dans alloc */
-  strcpy(alloc,ligne_lue+taille_pattern);
+  strncpy(alloc,ligne_lue+taille_pattern,taille_alloc);
   /* On supprime le retour chariot */
-  *(alloc+taille_ligne-taille_pattern-1)='\0';
+  *(alloc+taille_alloc-1)='\0'; 
   return alloc;
 }
  
@@ -139,15 +137,20 @@ void free_input(Input input)
 {
   free(input->nom);
   free(input->commentaire);
+  free(input->type);
+  free(input->edge_weight_type);
+  free(input->edge_weight_format);
+  free(input->display_data_type);
   for(int i=0 ; i<input->dimension ; i++)
   {
-    if(input->edge_weight_matrix != NULL)
+    if(input->edge_weight_matrix)
       free(input->edge_weight_matrix[i]);
-    if(input->display_data != NULL)
+    if(input->display_data)
       free(input->display_data[i]);
   }
   free(input->edge_weight_matrix);
   free(input->display_data);
+  free(input);
 }
 
 static void free_erreur(FILE* file, char* line_ptr,Input input)
@@ -189,7 +192,7 @@ static bool verif_champ_entree(char* ligne_ptr, const char* champ_attendu, const
 
 static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pattern,bool erreur_possible,const char* chaine_attendu,const char* message_erreur,Input input)
 {
-  /* On ignore le "%ms" systématiquement passer avec pattern */
+  /* On ignore le "%XX" systématiquement passé avec pattern */
   int taille = strlen(pattern)-3;
   if(flag && !strncmp(ligne_ptr,pattern,taille)) /*voir commentaire fonction verif_champ_entree*/
   {
@@ -200,7 +203,7 @@ static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pa
       if(!verif_champ_entree(ligne_ptr,chaine_attendu,pattern))
       {
 	error(0,0,message_erreur);
-	/* free_erreur libère propremment la mémoire avant lancer un exit(FAILURE), 
+	/* free_erreur libère propremment la mémoire avant de lancer un exit(FAILURE), 
 	 * tous les OS ne faisant par forcement bien leur travail  ...*/
 	free_erreur(imput_file,ligne_ptr,input);
       }
@@ -323,6 +326,7 @@ static void parsing_champs(FILE* file,Input input)
     affiche_erreur();
     free_erreur(file,ligne_ptr,input);
   }
+  free(ligne_ptr);
   /* Parsing reussi.*/
 }
 
