@@ -8,22 +8,28 @@
 #include <assert.h>
 
 /*------ Déclaration fonction statique ------ */
-static int rand_a_b(int a,int b);
-static void initialise_true_n(bool* tab,int taille);
+static int randAB(int a,int b);
+static void initialiseTrueN(bool* tab,int taille);
 
-static int rand_a_b(int a,int b)
+static int randAB(int a,int b)
 {
-  srand(time(NULL)); /* Initialisation de rand */
+  static bool first = true;
+  if(first)
+  {
+    /* Initialisation de rand */
+    srand(time(NULL)); /* Initialisation de rand */
+    first=false;
+  }
   return rand()%(b-a) +a; /* Tire un nombre dans l'intervalle [a,b[ */
 }
 
-static void initialise_true_n(bool* tab,int taille)
+static void initialiseTrueN(bool* tab,int taille)
 {
   for(int i=0;i<taille;i++)
     *(tab+i)=true;
 }
 
-int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
+int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
 /* Le type sommet sera surrement implémenté plus tard, pour une question de lisibilité.*/
 {
   /* effet de bord sur acc passé en parametre. */
@@ -33,7 +39,7 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc)
   double tmp=-1;
   for(int i=0;i<taille;i++)
   {
-    if(tab_dispo[i]==true)
+    if(tabDispo[i]==true)
     {
       tmp=distance_ville(graph,sommet,i);
       if(tmp<distance || distance == -1)
@@ -54,8 +60,8 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChem
   /* Allocation du tableau de retour (taille + ville depart). */
   int* tab=malloc(taille+1*sizeof(double));
 
-  bool* tab_a_parcourir= malloc(taille*sizeof(bool));
-  initialise_true_n(tab_a_parcourir,taille);
+  bool* tabAParcourir= malloc(taille*sizeof(bool));
+  initialiseTrueN(tabAParcourir,taille);
   /* On crée un tableau de bool,pour savoir quels sont les sommets déjà dans le chemin.*/
 
   int alloue= 1; //Nombre de ville deja visitée
@@ -63,12 +69,12 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChem
   /* On tire une ville aléatoirement, je mettrai sans doute un paramètre ville depart plus tard.*/
   int dernierVisite=departChemin;
   tab[alloue-1]=dernierVisite;
-  tab_a_parcourir[dernierVisite]=false;
+  tabAParcourir[dernierVisite]=false;
   while (alloue < taille)
   {
-    dernierVisite=plusProcheVoisin(dernierVisite,tab_a_parcourir,graph,distanceAcc);
+    dernierVisite=plusProcheVoisin(dernierVisite,tabAParcourir,graph,distanceAcc);
     alloue++;
-    tab_a_parcourir[dernierVisite]=false;
+    tabAParcourir[dernierVisite]=false;
     tab[alloue-1]=dernierVisite;
   }
   /* Il faut relier le chemin a la ville de départ maintenant.*/

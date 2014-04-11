@@ -1,7 +1,9 @@
-add_executable(TestParseur testInput.c )
-target_link_libraries (TestParseur Input)
+add_executable(TestParseur1 TestInput1.c )
+target_link_libraries (TestParseur1 Input)
+add_executable(TestParseur2 TestInput2.c )
+target_link_libraries (TestParseur2 Input)
 
-add_test(t-parseur1 TestParseur ../../../tsp_files/exemple10.tsp)
+add_test(t-parseur1 TestParseur1 ../../../tsp_files/exemple10.tsp)
 set_tests_properties (t-parseur1
   PROPERTIES PASS_REGULAR_EXPRESSION "-- Données d'entrées --"
   PASS_REGULAR_EXPRESSION "nom_file : ../../tsp_files/exemple10.tsp"
@@ -35,3 +37,6 @@ set_tests_properties (t-parseur1
   PASS_REGULAR_EXPRESSION "9 ->	9.0	3.0"
   PASS_REGULAR_EXPRESSION "10 ->	10.0	8.0")
   
+add_test(t-parseur2 TestParseur2)
+set_tests_properties (t-parseur2 
+  PROPERTIES PASS_REGULAR_EXPRESSION "OK")

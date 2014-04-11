@@ -45,6 +45,11 @@ void afficher_graphe(Graphe g)
   }
 }
 
+double get_double(Graphe g,int i,int j)
+{
+  return g->matrice[i][j];
+}
+
 double distance_ville(Graphe graphe,int s1,int s2)
 { 
   return graphe->matrice[s1][s2];
