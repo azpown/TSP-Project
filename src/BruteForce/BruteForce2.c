@@ -1,12 +1,12 @@
-#include <BruteForce.h>
-#include <Graphe.h>
+#include "BruteForce.h"
+#include "Graphe.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
 #include <stdbool.h>
-#include <ArbrePlanaireInt.h>
-#include <ArbrePlanaireGenerique.h>
+#include "ArbrePlanaireInt.h"
+#include "ArbrePlanaireGenerique.h"
 
 
 
@@ -17,7 +17,7 @@ static void initialise_true_n(bool* tab,int taille);
 static void initialise_true_n(bool* tab,int taille) // Initialise un tableau de booléens à true
 {
   for(int i=0;i<taille;i++)
-    *(tab+i)=true;
+    tab[i]=true;
 }
 
 
@@ -64,9 +64,9 @@ double parcoursSimple(Graphe graph){
 
 
 
-double calculDistanceParcours(Graphe graph, int* parcours){
+double calculDistanceParcours(Graphe graph,int taille, int* parcours){
   double distance = 0;
-  int taille=get_taille(graph);
+  //int taille=get_taille(graph);
   for(int i=1 ; i<=taille; i++)
   {
     if (parcours[i])
@@ -79,10 +79,10 @@ double calculDistanceParcours(Graphe graph, int* parcours){
 
 
 
-int* BruteForce2 (Graphe graph, int nbVilles, int* parcours,bool* libre, double distanceParcours)
+void BruteForce2 (Graphe graph, int nbVilles, int* parcours,bool* libre, double distanceParcours,int *parcoursFinal)
 {
   int taille=get_taille(graph);
-  int* parcoursFinal = malloc(taille+1*sizeof(int));//tableau contenant le trajet le plus court au final
+
   int i=nbVilles;
   while(i<taille)
   {
@@ -92,31 +92,29 @@ int* BruteForce2 (Graphe graph, int nbVilles, int* parcours,bool* libre, double 
     int* nouveauChemin = malloc(taille+1*sizeof(int));
     for (int k=0; k<taille; k++)
       nouveauChemin[k]= parcours[k];
-    if (calculDistanceParcours(graph, nouveauChemin)<distanceParcours && nbVilles==taille-1)
+    if (calculDistanceParcours(graph,nbVilles, nouveauChemin)<distanceParcours && nbVilles==taille-1)
     {
-      distanceParcours=calculDistanceParcours(graph, nouveauChemin);
+      distanceParcours=calculDistanceParcours(graph,nbVilles, nouveauChemin);
       for(int l=0; l<=taille; l++)
 	parcoursFinal[l]=nouveauChemin[l];
     }
     nouveauChemin[nbVilles] = sommet_suivant(tabDispo,graph);
     nbVilles ++;
-    BruteForce2(graph,nbVilles,nouveauChemin,tabDispo,distanceParcours); 
+    BruteForce2(graph,nbVilles,nouveauChemin,tabDispo,distanceParcours,parcoursFinal); 
     free(tabDispo);
     free(nouveauChemin);
   }
-  if (calculDistanceParcours(graph, parcoursFinal)<distanceParcours)
-  {
-    free(parcours);
-    return parcoursFinal;
-  }
-  free(parcoursFinal);
-  return parcours;
+  if (calculDistanceParcours(graph, taille+1, parcoursFinal)<distanceParcours)
+    free(parcours);  
 }
 
-int* euristiqueBruteForce2 (Graphe graph){
+int* algorithmeBruteForce2 (Graphe graph){
   int taille=get_taille(graph);
   bool* libre = creer_tab_dispo(1);
   int* parcours = malloc(taille+1*sizeof(int));
   parcours[0]=0;
-  return BruteForce2(graph, 1, parcours, libre, parcoursSimple(graph));
+  double distance=parcoursSimple(graph);
+  int* parcoursFinal = malloc(taille+1*sizeof(int));//tableau contenant le trajet le plus court au final
+  BruteForce2(graph, 1, parcours, libre, distance,parcoursFinal);
+  return parcoursFinal;
 }

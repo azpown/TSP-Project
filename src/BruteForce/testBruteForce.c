@@ -1,12 +1,12 @@
-#include <BruteForce.h>
-#include <Graphe.h>
+#include "BruteForce.h"
+#include "Graphe.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
 #include <assert.h>
-#include <Input.h>
+#include "Input.h"
 
 void
 afficher(int* t, int taille){
@@ -48,11 +48,11 @@ main(){
   printf("le chemin en dur en partant de la ville 0 est : \n");
   printf("la distance parcourue est de \n");
   printf("le chemin obtenu en partant de la ville 0 et la distance parcourue est de : \n");
-  int* euristique=euristiqueBruteForce2(g);
-  afficher(euristique,get_taille(g)+1);
+  int* heuristique=algorithmeBruteForce2(g);
+  afficher(heuristique,get_taille(g)+1);
   printf("%.1lf\n",acc);
   printf("est ce que tous les sommets sont différents ?\n");
-  Unicite(euristique,g);
+  Unicite(heuristique,g);
   printf("\n");
   return EXIT_SUCCESS;
 }	
