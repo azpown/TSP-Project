@@ -1,4 +1,3 @@
-add_executable(TestPrim TestPrim.c)
-target_link_libraries(TestPrim Prim Input)
+add_executable(TestNearest1 TestNearest.c)
+target_link_libraries(TestNearest1 Input NN FonctionTest)
 
-add_test(t-prim1 TestPrim ../../../tsp_files/exemple10.tsp)

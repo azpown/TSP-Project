@@ -62,15 +62,11 @@ int* Prim(Graphe g,int depart,double* acc)
 
   /* Création du tableau pour le retour */
   int *tab=malloc(taille+1 *sizeof(int));
-  /* On remplie le tableau avec les valeurs correspondantes dans l'arbre */
+  /* On remplie le tableau avec les valeurs correspondantes dans l'arbre 
+  * avec un parcour prefixe de ce dernier */
   tableauArbreInt(arbre,tab,taille);
   tab[taille]=depart;
   for(int i=0;i<taille;i++)
-  {
     *acc+=distance_ville(g,tab[i],tab[i+1]);
-    printf("%d -> ",tab[i]);
-  }
-  printf("%d\n",tab[taille]);
-  printf("Taille chemin : %.1lf\n",*acc);
   return tab;
 }

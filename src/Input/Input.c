@@ -11,6 +11,7 @@
 
 /* Déclaration des fonctions statiques */
 
+static bool est_symetrique(double** mat,int dim);
 static Input alloc_init_input(char * nom);
 static void free_erreur(FILE* file, char* line_ptr,Input input);
 static void affiche_erreur();
@@ -123,6 +124,8 @@ char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
 {
   /* On alloue la taille du champ (taille-pattern) */
   int taille_alloc=taille_ligne-taille_pattern;
+  if(taille_alloc==0)
+    return NULL;
   char* alloc = malloc(sizeof(char) * taille_alloc);
   /* on effectue la copie dans alloc */
   strncpy(alloc,ligne_lue+taille_pattern,taille_alloc);
@@ -135,8 +138,10 @@ char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
  * on libère un à un les champs*/
 void free_input(Input input)
 {
-  free(input->nom);
-  free(input->commentaire);
+  if(input->nom)
+    free(input->nom);
+  if(input->commentaire)
+    free(input->commentaire);
   free(input->type);
   free(input->edge_weight_type);
   free(input->edge_weight_format);
@@ -226,15 +231,14 @@ static void parsing_champs(FILE* file,Input input)
      * si true, on parse.
      * On utilise la fonction est_valide surtout pour des raisons de lisibilité,
      * Une fonction vraiment générique étant difficilement réalisable. */
-    
+
+
     /*------- NAME -------*/
     if(est_valide(!input->nom,file,ligne_ptr,"NAME: %42",false,NULL,NULL,input))
     {
       /* On pourrait allouer directement la mémoire avec sscanf, mais le code est peu-etre
        * plus lisible en passant par alloc_chaine*/
       input->nom=alloc_chaine(taille_ligne,6,ligne_ptr);
-      if(!input->nom)
-	input->nom=alloc_chaine(6,0,"NoName");
       continue;
       /* Une ligne ne peut etre associé a au plus un champs, pas la peine d'évaluer d'autres expressions.*/
     }
@@ -251,8 +255,6 @@ static void parsing_champs(FILE* file,Input input)
     if(est_valide(!input->commentaire,file,ligne_ptr,"COMMENT: %42",false,NULL,NULL,input))
     {
       input->commentaire=alloc_chaine(taille_ligne,9,ligne_ptr);
-      if(!input->commentaire)
-	input->commentaire=alloc_chaine(6,0,"NoComm");
       continue;
     }
 	  
@@ -412,8 +414,24 @@ static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
       free_erreur(file,ligne_ptr,input);
     }
   }
+  if(!est_symetrique(input->edge_weight_matrix,taille))
+  {
+    error(0,0,"Erreur matrice: Matrice non symétrique.");
+    free_erreur(file,ligne_ptr,input);
+  }
 }
 
+static bool est_symetrique(double** mat,int dim)
+{
+  /* On parcoure la matrice sous la diagonale */
+  for(int i=0;i<dim;i++)
+    for(int j=0;j<dim;j++)
+      /* si a_ij != a_ji , la matrice n'est pas valide. */
+      if(mat[i][j]!=mat[j][i])
+	 return false;
+  return true;
+}
+	 
 
 
 	  

@@ -18,6 +18,9 @@ int main()
     printf("OK");
   else
     printf("ECHEC");
+  free_input(in);
+  free_graphe(g);
+  return EXIT_SUCCESS;
 }
   
   

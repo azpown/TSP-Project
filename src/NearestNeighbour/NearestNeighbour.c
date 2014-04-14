@@ -58,15 +58,13 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChem
   *(distanceAcc)=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
-  int* tab=malloc(taille+1*sizeof(double));
+  int* tab=malloc((taille+1)*sizeof(int));
 
   bool* tabAParcourir= malloc(taille*sizeof(bool));
   initialiseTrueN(tabAParcourir,taille);
   /* On crée un tableau de bool,pour savoir quels sont les sommets déjà dans le chemin.*/
 
   int alloue= 1; //Nombre de ville deja visitée
-
-  /* On tire une ville aléatoirement, je mettrai sans doute un paramètre ville depart plus tard.*/
   int dernierVisite=departChemin;
   tab[alloue-1]=dernierVisite;
   tabAParcourir[dernierVisite]=false;
@@ -77,6 +75,7 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChem
     tabAParcourir[dernierVisite]=false;
     tab[alloue-1]=dernierVisite;
   }
+  free(tabAParcourir);
   /* Il faut relier le chemin a la ville de départ maintenant.*/
   *(distanceAcc)+=distance_ville(graph,dernierVisite,departChemin);
   /* distanceAcc contient la distance du chemin a la fin du parcour. */
