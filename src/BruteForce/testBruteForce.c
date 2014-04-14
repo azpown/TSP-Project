@@ -1,4 +1,4 @@
-#include <NearestNeighbour.h>
+#include <BruteForce.h>
 #include <Graphe.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,25 +33,26 @@ int Unicite(int* t,Graphe graph)
   free(tab);
   printf("Les villes sont toutes différentes");
   return 1;
-}	
-     
-	      
-  
+}
+
+
+
 int
-main(int argc,char* argv[]){
-  Input matrice=open_TSP_file(argv[1]);
+main(){
+  Input matrice=open_TSP_file("exemple10.tsp");
   Graphe g=cree_graphe(get_dimension(matrice),get_edge_weight_matrix(matrice));
   afficher_graphe(g);
   printf("\n\n");
+  printf("%f\n",parcoursSimple(g));
   double acc=0;
-  printf("le chemin en dur en partant de la ville 1 est : 1 3 5 2 0 6 8 7 9 1\n");
-  printf("la distance parcourue est de 46\n");
-  printf("le chemin en partant de la ville 1 et la distance parcourue est de : \n");
-  int* heuristique=HeuristiquePlusProcheVoisin(g,&acc,1);
-  afficher(heuristique,get_taille(g)+1);
+  printf("le chemin en dur en partant de la ville 0 est : \n");
+  printf("la distance parcourue est de \n");
+  printf("le chemin obtenu en partant de la ville 0 et la distance parcourue est de : \n");
+  int* euristique=euristiqueBruteForce2(g);
+  afficher(euristique,get_taille(g)+1);
   printf("%.1lf\n",acc);
   printf("est ce que tous les sommets sont différents ?\n");
-  Unicite(heuristique,g);
+  Unicite(euristique,g);
   printf("\n");
   return EXIT_SUCCESS;
-}
+}	
