@@ -1,3 +1,8 @@
+/**
+ * \file testNearest.c
+ * \brief Programme de test.
+ */
+
 #include <NearestNeighbour.h>
 #include <Graphe.h>
 #include <stdlib.h>
@@ -8,11 +13,21 @@
 #include <assert.h>
 #include <Input.h>
 
+
+
+/**
+ * \brief La fonction afficher est juste créée pour afficher tous les éléments du tableau mis en paramètre jusqu'à la case voulu
+ */
 void
 afficher(int* t, int taille){
   for (int i=0; i<taille;i++)
     printf("%d ",t[i]);
 }
+
+
+/**
+ * \brief La fonction Unicite prend en paramètre un trableau d'entiers et un graphe et va vérifier si un même élément du graphe est présent plusieur fois ou non dans le tableau et va afficher si certaines sont identiques ou non.
+ */
 
 int Unicite(int* t,Graphe graph)
 {
@@ -35,7 +50,11 @@ int Unicite(int* t,Graphe graph)
   return 1;
 }	
      
-	      
+
+
+/**
+ * \brief La fonction main est là pour tester les fonctions dans NearestNeighbour en écrivant tout d'abord le chemin en dur (fait à la main) et qui retournera le chemin de l'algorithme ainsi que sa distance totale.
+ */
   
 int
 main(){
