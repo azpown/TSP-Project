@@ -1,3 +1,11 @@
+/**
+ * \file main.c
+ * \brief Programme permettant de passer un fichier Tsp en un Input.
+ * Ce programme fait le parsing.
+ */
+
+
+
 /* La fonction getline est dans une extension GNU, d'où la ligne suivante.*/
 #define _GNU_SOURCE
 #include <Input.h>
@@ -8,6 +16,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+
+
+
+/**
+ * \brief Déclaration des fonctions statiques.
+ * Les fonctions statiques ne sont pas nécessaire dans le .h car seul ce fichier les utilisera.
+ */
+
+
 
 /* Déclaration des fonctions statiques */
 
@@ -22,6 +39,14 @@ static void parsing_champs(FILE* file,Input input);
 static void affectation_display_data(int indice,double x,double y,Input input);
 static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input input);
 static void parsing_matrice(FILE* nom_file,char* ligne_ptr,size_t taille_alloc,Input input);
+
+
+
+
+/**
+ * \struct input
+ * \brief structure contenant tous les éléments nécessaires au parsing.
+ */
 
 /* Structure contenant les différents champs a la fin du parsing */
 struct input
@@ -38,19 +63,75 @@ struct input
   double**    display_data;
 };
 
+
+
 /*------ ACCESSEUR ------*/
 
+/**
+ * \brief Fonction retournant le nom du fichier.
+ */
+
 char* get_nom_file(Input input){return input->nom_file;}
+
+/**
+ * \brief Fonction retournant le nom.
+ */
+
 char* get_nom(Input input){return input->nom;}
+
+/**
+ * \brief Fonction retournant le type.
+ */
+
 char* get_type(Input input){return input->type;}
+
+/**
+ * \brief Fonction retournant le commentaire.
+ */
+
 char* get_commentaire(Input input){return input->commentaire;}
+
+/**
+ * \brief Fonction retournant la dimension.
+ */
+
 int   get_dimension(Input input){return input->dimension;}
+
+/**
+ * \brief Fonction retournant la taille du type.
+ */
+
 char* get_edge_weight_type(Input input){return input->edge_weight_type;}
+
+/**
+ * \brief Fonction retournant la taille du format.
+ */
+
 char* get_edge_weight_format(Input input){return input->edge_weight_format;}
+
+/**
+ *\brief Retourne le champs display_data_type (ex: TWOD_DISPLAY) du fichier .tsp qui a servi à générer l'instance d'Input en paramètre.
+*/
+
 char* get_display_data_type(Input input){return input->display_data_type;}
+
+/**
+ * \brief Fonction retournant la taille de la matrice.
+ */
+
 double** get_edge_weight_matrix(Input input){return input->edge_weight_matrix;}
+
+/**
+ *\brief Retourne la matrice d'affichage du fichier .tsp qui a servi à générer l'instance d'Input en paramètre.
+*/
+
 double** get_display_data(Input input){return input->display_data;}
 
+
+
+/**
+ * \brief Fonction affichant les données du Input passé en paramètre.
+ */
 
 void print_input_data(Input input)
 {
@@ -91,6 +172,12 @@ void print_input_data(Input input)
     printf("\n");
 }
 
+
+
+/**
+ * \brief Fonction transformant la chaine de caractères passée en paramètre en Input.
+ * Cette fonction passe le fichier Tsp en un Input.
+ */
 
 Input open_TSP_file(char* nom_file)
 {    

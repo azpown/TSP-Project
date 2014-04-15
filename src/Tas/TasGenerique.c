@@ -34,6 +34,9 @@ struct TasMinGen
 static void percolate_haut(TasMinGen tas,int indice);
 static void echanger(ElemHandle* t,int i,int j);
 static void trierTableauTas(TasMinGen tas);
+static int pere(int indice);
+static int filsGauche(int indice);
+static int filsDroit(int indice);
 
 /*------ ACCESSEUR/MUTATEUR ------*/
 int getTailleTas(TasMinGen tas){return tas->taille;}

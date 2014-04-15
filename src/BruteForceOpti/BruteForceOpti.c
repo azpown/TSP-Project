@@ -1,3 +1,11 @@
+/**
+ * \file BruteForceOpti.c
+ * \brief Programme mettant en place un heuristique de Bruteforce optimisé.
+ */
+
+
+
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -7,6 +15,14 @@
 #include <NearestNeighbour.h>
 #include <Input.h>
 #include <BruteForceOpti.h>
+
+
+
+/**
+ * \brief Déclaration des fonctions statiques.
+ * Les fonctions statiques ne sont pas nécessaire dans le .h car seul ce fichier les utilisera.
+ */
+
 
 /*------ Declaration des fonctions statiques ------*/
 static void copieTableauInt(int* tabSrc,int* tabDst,int taille);
@@ -21,7 +37,21 @@ static void BruteForceOptiRecursif(Graphe g,
 				   int* meilleurChemin);
 
 
+
+
+
 /*------ Implémentation des fonctions du module ------*/
+
+
+
+
+/**
+ * \brief Fonction appliquant le brute force optimisé.
+ * Cette fonction appelle la fonction BruteForceOptimise.qui va chercher tous les chemins possible en 
+ * ne testant que les chemins aillant la distance parcourue la plus courte et ne poursuit pas un 
+ * chemin si sa distance est supérieur ou égale à la distance passé en paramètre. 
+ */
+
 
 int* BruteForceOpti(Graphe g,double* acc)
 {
@@ -47,6 +77,21 @@ int* BruteForceOpti(Graphe g,double* acc)
 
   return meilleurChemin;
 }
+
+
+
+
+/**
+ * \brief Fonction appliquant le brute force mais de manière optimisée.
+ * \param g Graphique correspondant à la matrice Tsp.
+ * \param distanceChemin Double contenant la distance du chemin.
+ * \param tabEstVisite Tableau de booléens servant à savoir si le sommet a été visité ou non.
+ * \param meilleurChemin Tableau d'entiers contenant l'ordre des villes pour lequel on a la distance la plus petite.
+ * Cette fonction recherche tous les chemins possibles en ne testant que les chemins aillants la distance parcourue 
+ * la plus courte et ne poursuit pas un chemin si sa distance est supérieur ou égale à la distance passée en paramètre. 
+ */
+
+
 
 static void BruteForceOptiRecursif(Graphe g,
 				   int indicePrecedent,
@@ -101,12 +146,25 @@ static void BruteForceOptiRecursif(Graphe g,
 }
   
 
+
+/**
+ * \brief Fonction affichant le tableau passé en paramètre de longueur taille.
+ */
+
+
 static void afficherTab(int* tab, int taille)
 {
   for(int i=0;i<taille;i++)
       printf("%d : %d\n",i,tab[i]);
   printf("\n");
 }
+
+
+/**
+ * \brief Fonction copiant le tableau d'entiers tabSrc dans le tableau d'entiers tabDst d'une longueur taille..
+ */
+
+
 
 static void copieTableauInt(int* tabSrc,int* tabDst,int taille)
 {

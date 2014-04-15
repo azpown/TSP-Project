@@ -1,8 +1,24 @@
+/**
+ * \file TestInput2.c
+ * \brief Programme de tests.
+ */
+
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <Graphe.h>
 #include <Input.h>
+
+
+/**
+ * \brief Fonction de tests.
+ * Test effectué sur exemple10.tsp.
+ */
+
+
 
 int main()
 {

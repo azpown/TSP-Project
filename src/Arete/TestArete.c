@@ -1,7 +1,19 @@
+/**
+ * \file TestArete.c
+ * \brief Programme de tests.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <Arete.h>
 
+
+
+
+/**
+ * \brief Fonction permettant d'effectuer des test pour vérifier les fonctions du fichier Arete.c.
+ */
 int main()
 {
   Arete testArete=creerArete(5.0,0,10);
