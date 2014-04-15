@@ -14,6 +14,7 @@
 
 /**
  * \brief Fonction permettant d'utiliser l'heuristique NearestNeighbour avec n'importe quelle matrice Tsp.
+ * \param argv[] Chaine de caractères qui contient la matrice pour laquelle on souhaite effectuer l'algorithme de Prim.
  */
 
 
