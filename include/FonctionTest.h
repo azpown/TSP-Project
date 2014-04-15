@@ -16,13 +16,12 @@ typedef int* (*HeuristiqueSansDepart)(Graphe g,double* acc);
 void testBaseHeuristiqueAD(char* nomFichier,int depart,HeuristiqueAvecDepart H);
 void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H);
 bool estDimensionValide(double dim,double meilleureDistance);
-
+void afficheCycle(int* tabCycle,int taille,double valeur);
 /**
  * \brief retourne la validité du parcours entré en paramètre.
  * \param tabCycle un tableau d'entiers représentant un parcours de villes.
 */
 bool estCycleValide(int* tabCycle,int taille);
-
 void freeHeurisque(Graphe g,int* tabCycle);
 Graphe getGraphe(char* nomFichier);
 

@@ -13,7 +13,7 @@
 #include <Graphe.h>
 #include <Input.h>
 
-/* Ces deux fonctions ne sont pas si facilement factorisable, les heurisques
+/* Ces deux fonctions ne sont pas si facilement xfactorisable, les heurisques
  * pouvant avoir des signatures différentes.
  * On va néanmois appliquer cette fonction a chaque heuristique, il est donc
  * utile de créé ces fonctions de factorisation des modules de tests.*/

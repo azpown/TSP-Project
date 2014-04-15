@@ -14,19 +14,16 @@
 
 /**
  * \brief Fonction permettant d'utiliser l'heuristique NearestNeighbour avec n'importe quelle matrice Tsp.
- * \param argv[] Chaine de caractères qui contient la matrice pour laquelle on souhaite effectuer l'algorithme de Prim.
+ * \param argv[] Tableau de char* contenant le chemin du fichier tsp a parser et la ville de départ.
  */
-
-
 int main (int argc,char* argv[])
 {
-  Input in=open_TSP_file(argv[1]);
-  Graphe g=cree_graphe(get_dimension(in),get_edge_weight_matrix(in));
-  double acc=0;
-  int* resultat=HeuristiquePlusProcheVoisin(g,&acc,0);
-  afficheCycle(resultat,get_dimension(in),acc);
-  free_input(in);
-  free_graphe(g);
-  free(resultat);
+  if(argc =! 3)
+  {
+    printf("Usage : ./<NomExec> <CheminTspFile> <VilleDepart>\n");
+    return EXIT_FAILURE;
+  }    
+  testBaseHeuristiqueAD(argv[1],atoi(argv[2]),HeuristiquePlusProcheVoisin);
   return EXIT_SUCCESS;
 }
+

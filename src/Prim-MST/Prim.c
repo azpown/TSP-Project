@@ -45,7 +45,7 @@ int* Prim(Graphe g,int depart,double* acc)
   /* Ce tableau sert pour libérer la mémoire et pour tester l'éligibilité d'une ville dans la routine*/
   Noeud* tabN=calloc(taille+1,sizeof(Noeud)); 
   /* Creation de la racine de l'arbre : depart */
-  tabN[0]=ajouterNoeudInt(arbre,NULL,depart); 
+  tabN[depart]=ajouterNoeudInt(arbre,NULL,depart); 
 
   /* Routine de traitement */
   Arete min;

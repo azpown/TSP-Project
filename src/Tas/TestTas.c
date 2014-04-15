@@ -51,7 +51,6 @@ static bool test1()
   
   printf("Ce programme marche niquel, faut automatiser tout ça maintenant :)\n");
   return true;
-  
 }
   
 int main()
