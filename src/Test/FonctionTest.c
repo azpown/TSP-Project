@@ -1,3 +1,11 @@
+/**
+ * \file FonctionTest.c
+ * \brief Programme de tests.
+ *
+ * Programme de test qui vérifie les solutions des algorithmes.
+ *
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -35,6 +43,14 @@ void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H)
   freeHeurisque(g,resultat);
 }
 
+
+
+/**
+ *\brief Fonction vérifiant si la solution est un cycle ayant qu'une seule fois chaque ville (sauf la première et la dernière qui doivent etre identique).
+ *\param tabCyble Tableau contenant des entiers correspondants aux villes.
+ *\param taille Entier correspondant à la taille du tableau tabCycle.
+ */
+
 bool estCycleValide(int* tabCycle,int taille)
 {
   bool* estPresentUneSeuleFois=calloc(taille,sizeof(bool));
@@ -54,11 +70,21 @@ bool estCycleValide(int* tabCycle,int taille)
   return tabCycle[0]==tabCycle[taille];     
 }
 
+/**
+ *\brief Fonction vérifiant si la solution revoie un resultat possible.
+ *\param dim Double contenant une distance.
+ *\param meilleureDistance Double contenant la distance du chemin min. d'un graphe.
+ */
 bool estDimensionValide(double dim,double meilleureDistance)
 {
-  /* On verifie que la distance est compris etre la meilleure distance et la plus petite possible */
+  /* On verifie que la distance est compris entre la meilleure distance et la plus petite possible */
   return dim >= meilleureDistance && dim>0;
 }
+
+
+/**
+ *\brief Fonction qui affiche le tableau(cycle) en paramètre avec sa valeur.
+ */
 
 void afficheCycle(int* tabCycle,int taille,double valeur)
 {

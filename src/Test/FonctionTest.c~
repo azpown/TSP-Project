@@ -1,6 +1,22 @@
+/**
+ * \file FonctionTest.c
+ * \brief Programme de tests.
+ *
+ * Programme de test qui vérifie les solutions des algorithmes.
+ *
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+
+
+
+/**
+ *\brief Fonction vérifiant si la solution est un cycle ayant qu'une seule fois chaque ville (sauf la première et la dernière).
+ *\param tabCyble Tableau contenant des entiers correspondants aux villes.
+ *\param taille Entier correspondant à la taille du tableau tabCycle
+ */
 
 bool estCycleValide(int* tabCycle,int taille)
 {
@@ -19,11 +35,21 @@ bool estCycleValide(int* tabCycle,int taille)
   return tabCycle[0]==tabCycle[taille];
 }
 
+
+/**
+ *\brief Fonction vérifiant si la solution a une meilleur dimension.
+ */
+
 bool estDimensionValide(double dim,double meilleureDistance,int nbVille)
 {
-  /* On verifie que la distance est compris etre la meilleure distance et la plus petite possible */
+  /* On verifie que la distance est compris entre la meilleure distance et la plus petite possible */
   return dim <= meilleureDistance && dim>0;
 }
+
+
+/**
+ *\brief Fonction qui affiche le tableau(cycle) en paramètre avec sa valeur.
+ */
 
 void afficheCycle(int* tabCycle,int taille,double valeur)
 {
