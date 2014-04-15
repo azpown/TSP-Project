@@ -1,3 +1,10 @@
+/**
+ * \file NearestNeighbour.c
+ * \brief Programme mettant en place l'heuristique de NearestNeighbour.
+ * Programme créant l'heuristique de NearestNeighbour.
+ *
+ */
+
 #include <NearestNeighbour.h>
 #include <Graphe.h>
 #include <stdlib.h>
@@ -11,6 +18,11 @@
 static int randAB(int a,int b);
 static void initialiseTrueN(bool* tab,int taille);
 
+
+/**
+ * \brief Fonction permettant de générer un nombre aléatoire entre les entiers a et b.
+ */
+
 static int randAB(int a,int b)
 {
   static bool first = true;
@@ -23,11 +35,26 @@ static int randAB(int a,int b)
   return rand()%(b-a) +a; /* Tire un nombre dans l'intervalle [a,b[ */
 }
 
+
+/**
+ * \brief Fonction permettant d'initialiser un tableau de booléens à True.
+ */
+
 static void initialiseTrueN(bool* tab,int taille)
 {
   for(int i=0;i<taille;i++)
     *(tab+i)=true;
 }
+
+
+/**
+ * \brief Fonction permettant de retourner le voisin ayant la distance la plus proche de celui où l'on est.
+ * \param sommet Entier correspondant au numéro du sommet actuel dans le graphe.
+ * \param tabDispo Tableau de booléan servant à savoir la liste des villes qui n'ont pas été visitées.
+ * \param graph Représente la matrice TSP.
+ * \param acc Tableau de double contenant les distance des villes.
+ */
+
 
 int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
 /* Le type sommet sera surrement implémenté plus tard, pour une question de lisibilité.*/
@@ -52,6 +79,15 @@ int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
   *acc +=distance;
   return min;
 }
+
+
+
+/**
+ * \brief Fonction permettant de retourner un tableau de voisin ayant la distance la plus proche avec son précédent.
+ * \param distanceAcc Tableau de booléens contenant les distances entre les villes.
+ * \param departChemin Entier correspondant à la ville de départ.
+ * \param graph Représente la matrice TSP.
+ */
 
 int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChemin)
 {
