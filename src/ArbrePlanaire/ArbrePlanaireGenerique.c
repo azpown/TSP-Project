@@ -44,7 +44,7 @@ void freeNoeud(Noeud this)
 
 ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f)
 {
-  /* retourne un arbre planaire vide, le premier appel de ajouter fils ce fait avec pere==NULL */
+  /* retourne un arbre planaire vide, le premier appel de ajouter fils se fait avec pere==NULL */
   ArbrePlanaireGen this=malloc(sizeof(struct arbrePlanaireGen));
   this->racine=NULL;
   this->affiche=f;
@@ -135,7 +135,7 @@ Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
     while(getFrere(tmp))
       /* Tant qu'il y a un frere, on itere. */
       tmp=getFrere(tmp);
-    /* Il faut ajouter le noeud crée comme frere du dernier fils du sommet passé en parametre */
+    /* Il faut ajouter le noeud créé comme frere du dernier fils du sommet passé en parametre */
     tmp->frere=this;
   }
   else
@@ -165,7 +165,7 @@ void supprimerNoeud(ArbrePlanaireGen a,Noeud this)
   {
     while(getFrere(tmp)!=this)
       tmp=getFrere(tmp);
-    /* Si le sommet n'est pas le premier fils, alors le frere de son frere precedant deviens 
+    /* Si le sommet n'est pas le premier fils, alors le frere de son frere precedant devient 
      * le frere du sommet a détruire. */
     tmp->frere=getFrere(this);
   }

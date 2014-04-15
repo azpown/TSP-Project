@@ -4,12 +4,20 @@
 #include "Graphe.h"
 #include <stdbool.h>
 
-
-int sommet_suivant(bool* tab_dispo, Graphe graph);
-bool* creer_tab_dispo(int nombreSommets);
+/**
+ * \b retourne la distance parcourue lors d'un parcours.
+*/
 double calculDistanceParcours(Graphe graph,int taille, int* parcours);
-void BruteForce2 (Graphe graph, int nbVilles, int* parcours,bool* libre, double distanceParcours,int* parcoursFinal);
+
+
+/**
+ * \b effectue l'algorithme force brute sur le graphe rentré en paramètre et renvoie le parcours optimal.
+*/
 int* algorithmeBruteForce2 (Graphe graph);
+
+/**
+ *\b retourne la distance parcourue lors du parcours [0,1,2,3, ... ,0]
+*/
 double parcoursSimple(Graphe graph);
 
 #endif
