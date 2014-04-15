@@ -1,7 +1,22 @@
+/**
+ * \file TestInput3.c
+ * \brief Programme de tests.
+ */
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <Graphe.h>
 #include <Input.h>
+
+
+
+/**
+ * \brief Fonction de tests.
+ * Test effectué sur noDim.tsp.
+ */
+
 
 int main()
 {

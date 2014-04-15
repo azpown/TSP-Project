@@ -1,8 +1,22 @@
+/**
+ * \file TestInput4.c
+ * \brief Programme de tests.
+ */
+
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <Graphe.h>
 #include <Input.h>
+
+
+/**
+ * \brief Fonction de tests.
+ * Test effectué sur notSymmetrical.tsp.
+ */
 
 int main()
 {

@@ -1,7 +1,23 @@
+/**
+ * \file TestInput1.c
+ * \brief Programme de tests.
+ */
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <Graphe.h>
 #include <Input.h>
+
+
+/**
+ * \brief Fonction de tests.
+ * \param argv[] Chaine de caractère correspondant au fichier Tsp.
+ * Cette fonction test les fonctions présentent dans Input.c sur le fichier
+ * Tsp passé en paramètre.
+ */
+
 
 int main (int argc,char* argv[])
 {
