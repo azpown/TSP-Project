@@ -5,11 +5,11 @@
 bool estCycleValide(int* tabCycle,int taille)
 {
   bool* estPresentUneSeuleFois=calloc(taille,sizeof(bool));
-  for(int i=1;i<taille;i++)
+  for(int i=0;i<taille;i++)
   {
     /* On verifie que chaque ville est presente seule fois*/
-    if(tabCycle[i]>=0 && tabCycle[i]<taille &&!estPresentUneSeuleFois[tabCycle[i]])
-      estPresentUneSeuleFois[i]=true;
+    if(tabCycle[i]>=0 && tabCycle[i]<taille && !estPresentUneSeuleFois[tabCycle[i]])
+      estPresentUneSeuleFois[tabCycle[i]]=true;
     else
       free(estPresentUneSeuleFois);
       return false;

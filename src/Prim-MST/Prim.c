@@ -48,8 +48,8 @@ int* Prim(Graphe g,int depart,double* acc)
       if(i!=depart && !tabN[getArrive(getArete(tabH[i]))] && (distance_ville(g,ville,getArrive(getArete(tabH[i]))) < getCle(getArete(tabH[i]))))
       {
 	/* !tab_dispo car le tableau est initialisé a false 
-       * Si la ville n'a pas été ajoutée et que la distance par rapport a ville
-       * est plus petite que la précédente, on actualise. */
+	 * Si la ville n'a pas été ajoutée et que la distance par rapport a ville
+	 * est plus petite que la précédente, on actualise. */
 
 	setDepart(ville,getArete(tabH[i]));
 	/* On diminue la clef, le tas se reorganise en conséquence. */
@@ -61,12 +61,25 @@ int* Prim(Graphe g,int depart,double* acc)
   *acc=0;
 
   /* Création du tableau pour le retour */
-  int *tab=malloc(taille+1 *sizeof(int));
+  int *tab=malloc((taille+1) *sizeof(int));
   /* On remplie le tableau avec les valeurs correspondantes dans l'arbre 
   * avec un parcour prefixe de ce dernier */
-  tableauArbreInt(arbre,tab,taille);
+  tableauArbreInt(arbre,tab,taille+1);
   tab[taille]=depart;
   for(int i=0;i<taille;i++)
+  {
     *acc+=distance_ville(g,tab[i],tab[i+1]);
+    if(i!=depart)
+    {
+      freeAreteHandle(tabH[i]);
+      freeArete(tabA[i]);
+    }
+    freeInt(tabN[i]);
+  }
+  freeArbrePlanaireInt(arbre);
+  freeTasArete(tas);
+  free(tabN);
+  free(tabH);
+  free(tabA);
   return tab;
 }

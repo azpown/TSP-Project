@@ -9,9 +9,8 @@
 #include <BruteForceOpti.h>
 
 /*------ Declaration des fonctions statiques ------*/
-static void afficherTab(int* tab, int taille);
 static void copieTableauInt(int* tabSrc,int* tabDst,int taille);
-static void swap(int i,int j,int* tab);
+static void afficherTab(int* tab, int taille);
 static void BruteForceOptiRecursif(Graphe g,
 				   int indicePrecedent,
 				   int profondeur,
@@ -43,13 +42,10 @@ int* BruteForceOpti(Graphe g,double* acc)
   free(tabEstVisite); 
   free(tabChemin); 
 
-  printf("meilleureDistance : %.1lf\n",meilleureDistance);
+  /* On affecte via effet de bord la meilleure distance a acc */
   *acc=meilleureDistance;
 
-  int* tabReturn = malloc(taille+1 * sizeof(int));
-  copieTableauInt(meilleurChemin,tabReturn,taille+1);
-  //free(meilleurChemin);
-  return tabReturn;
+  return meilleurChemin;
 }
 
 static void BruteForceOptiRecursif(Graphe g,
@@ -105,12 +101,6 @@ static void BruteForceOptiRecursif(Graphe g,
 }
   
 
-static void copieTableauInt(int* tabSrc,int* tabDst,int taille)
-{
-  for(int i=0;i<taille;i++)
-    tabDst[i]=tabSrc[i];
-}
-
 static void afficherTab(int* tab, int taille)
 {
   for(int i=0;i<taille;i++)
@@ -118,3 +108,10 @@ static void afficherTab(int* tab, int taille)
   printf("\n");
 }
 
+static void copieTableauInt(int* tabSrc,int* tabDst,int taille)
+{
+  for(int i=0;i<taille;i++)
+    tabDst[i]=tabSrc[i];
+}
+
+  
