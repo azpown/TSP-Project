@@ -1,0 +1,9 @@
+Bonjour,
+
+Depuis la dernière séance nous avons créé les dossiers pour l'arborescence du projet pour le Makefile en test de la derniere séance ainsi que la correction de certaines fonctions pour améliorer leur complexité. Le parseur est fonctionnel même s'il manque des tests.
+
+Nous allons donc faire plusieurs executables test pour nos algorithmes et avancer dans les algorithmes à faire pour le projet, notament l'arbre couvrant de poid min avec l'aglo de prim.
+
+Cordialement,
+Wilfried.
+
