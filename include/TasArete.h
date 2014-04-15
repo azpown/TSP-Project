@@ -65,7 +65,7 @@ Arete getArete(AreteHandle areteH);
  * \ elle fait en sorte que le tas reste un tas min en échangeant les sommets reliés par l'arete si besoin.
  * \pre la fonction s'arrête si la clé entrée en paramètre n'est pas infèrieure à la clé contenue dans la donnée membre
  * \ arete de areteH.
- * \post les deux sommets reliés par l'arete de areteH sont échangés si
+ * \post les deux sommets reliés par l'arete de areteH sont échangés si c'est nécessaire pour que le tas reste min.
 */
 void diminuerCleArete(TasMinArete tas_a, AreteHandle areteH,double newCle);
 
