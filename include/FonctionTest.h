@@ -13,6 +13,10 @@
 typedef int* (*HeuristiqueAvecDepart)(Graphe g,int depart,double* acc);
 typedef int* (*HeuristiqueSansDepart)(Graphe g,double* acc);
 
+/**
+ * \brief 
+ * \param nomFichier chaîne de caractères représentant le nom d'un fichier contenant un graphe
+*/
 void testBaseHeuristiqueAD(char* nomFichier,int depart,HeuristiqueAvecDepart H);
 void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H);
 bool estCycleValide(int* tabCycle,int taille);

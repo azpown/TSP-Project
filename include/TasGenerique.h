@@ -3,6 +3,12 @@
 
 #include <stdbool.h>
 
+/**
+ * \file TasGenerique.h
+ * \author Delmas Rémi
+ * \brief Module de manipulation de la matrice de distance.
+*/
+
 typedef struct TasMinGen *TasMinGen;
 typedef struct elemHandle *ElemHandle;
 typedef int (*ptr_compar)(void*,void*);
