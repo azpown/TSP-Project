@@ -1,8 +1,22 @@
+/**
+ * \file TestPrim2.c
+ * \brief Programme de tests de l'algorithme Prim.
+ */
+
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <Input.h>
 #include <Prim.h>
 #include <FonctionTest.h>
+
+/**
+ * \brief Fonction de test de l'algorithme Prim sur le fichier Tsp exemple10.tsp.
+ */
+
+
 
 int main ()
 {
