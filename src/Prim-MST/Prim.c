@@ -1,3 +1,9 @@
+/**
+ * \file Prim.c
+ * \brief Programme implémentant l'algorithme de Prim.
+ */
+
+
 #include <stdlib.h>
 #include <malloc.h>
 #include <assert.h>
@@ -7,6 +13,16 @@
 #include <TasArete.h>
 #include <Graphe.h>
 #include <Prim.h>
+
+
+
+/**
+ * \brief Algorithme de Prim servant à créer un arbre de poids minimum.
+ * \param g Graphe représentant la matrice.
+ * \param depart Entier représentant la ville de départ du graphe g.
+ * \param acc Tableau de booléens contenant la distance des villes.
+ */
+
 
 
 /* Effet de bord de acc <- contient la taille du cycle */

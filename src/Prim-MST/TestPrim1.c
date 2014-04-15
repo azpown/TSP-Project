@@ -1,8 +1,23 @@
+/**
+ * \file TestPrim1.c
+ * \brief Programme de tests de l'algorithme Prim.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <Input.h>
 #include <Prim.h>
 #include <FonctionTest.h>
+
+
+
+/**
+ * \brief Fonction de tests de l'algorithme Prim.
+ * \param argv[] Chaine de caractères qui contient la matrice pour laquelle on souhaite effectuer l'algorithme de Prim.
+ */
+
+
 
 int main (int argc,char* argv[])
 {
