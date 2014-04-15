@@ -1,14 +1,36 @@
+/**
+ * \file Graphe.c
+ * \brief Programme mettant en place un graphe correspondant à une matrice.
+ */
+
+
+
 #include <Graphe.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
 
+
+
+/**
+ * \struct graphe
+ * \brief Crée un graphe aillant pour longueur taille et en paramètre des doubles contenus dans matrice.
+ */
+
+
 struct graphe 
 {
   int taille;
   double** matrice;
 };
+
+
+/**
+ * \struct graphe
+ * \brief Crée un graphe aillant pour longueur len et contient des doubles contenus dans matrice.
+ * \param mat Tableau de tableau (tableau "2D") contenant des doubles.
+ */
 
 Graphe cree_graphe(int len,double** mat)
 {
@@ -25,6 +47,11 @@ Graphe cree_graphe(int len,double** mat)
   return g;
 }
 
+
+/**
+ * \brief Fonction permettant la suppression d'un graphe.
+ */
+
 void free_graphe(Graphe graphe)
 {
   for(int i=0;i<graphe->taille;i++)
@@ -32,6 +59,11 @@ void free_graphe(Graphe graphe)
   free(graphe->matrice);
   free(graphe);
 }
+
+
+/**
+ * \brief Fonction permettant d'afficher le graphe passé en paramètre.
+ */
 
 void afficher_graphe(Graphe g)
 {
@@ -45,15 +77,31 @@ void afficher_graphe(Graphe g)
   }
 }
 
+
+/**
+ * \brief Fonction retournant le double se situant à la position[i][j] .
+ */
+
+
 double get_double(Graphe g,int i,int j)
 {
   return g->matrice[i][j];
 }
 
+
+/**
+ * \brief Fonction retournant la distance se situant à la position[s1][s2].
+ */
+
 double distance_ville(Graphe graphe,int s1,int s2)
 { 
   return graphe->matrice[s1][s2];
 }
+
+
+/**
+ * \brief Fonction retournant la taille du graphe passé en paramètre.
+ */
 
 int get_taille(Graphe graphe)
 {
