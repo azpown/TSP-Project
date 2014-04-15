@@ -1,3 +1,11 @@
+/**
+ * \file TestBrut.c
+ * \brief Programme de test.
+ */
+
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -7,6 +15,14 @@
 #include <Input.h>
 #include <BruteForceOpti.h>
 #include <FonctionTest.h>
+
+
+
+
+/**
+ * \brief Fonction permettant de tester des fonctions implémenté dans le fichier BruteForceOpti.c.
+ */
+
 
 int main()
 {
