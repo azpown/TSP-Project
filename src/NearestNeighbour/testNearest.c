@@ -38,8 +38,8 @@ int Unicite(int* t,Graphe graph)
 	      
   
 int
-main(int argc,char* argv[]){
-  Input matrice=open_TSP_file(argv[1]);
+main(){
+  Input matrice=open_TSP_file('../../tsp_files');
   Graphe g=cree_graphe(get_dimension(matrice),get_edge_weight_matrix(matrice));
   afficher_graphe(g);
   printf("\n\n");
