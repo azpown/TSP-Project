@@ -19,7 +19,6 @@ typedef int* (*HeuristiqueSansDepart)(Graphe g,double* acc);
 */
 void testBaseHeuristiqueAD(char* nomFichier,int depart,HeuristiqueAvecDepart H);
 void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H);
-bool estCycleValide(int* tabCycle,int taille);
 bool estDimensionValide(double dim,double meilleureDistance);
 
 /**
@@ -28,9 +27,6 @@ bool estDimensionValide(double dim,double meilleureDistance);
 */
 bool estCycleValide(int* tabCycle,int taille);
 
-
-bool estDimensionValide(double dim,double meilleureDistance,int nbVille);
-void afficheCycle(int* tabCycle,int taille,double valeur);
 void freeHeurisque(Graphe g,int* tabCycle);
 Graphe getGraphe(char* nomFichier);
 
