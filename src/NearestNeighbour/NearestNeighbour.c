@@ -55,7 +55,6 @@ static void initialiseTrueN(bool* tab,int taille)
  * \param acc Tableau de double contenant les distance des villes.
  */
 
-
 int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
 /* Le type sommet sera surrement implémenté plus tard, pour une question de lisibilité.*/
 {
@@ -89,8 +88,9 @@ int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
  * \param graph Représente la matrice TSP.
  */
 
-int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChemin)
+int* HeuristiquePlusProcheVoisin(Graphe graph,int departChemin,double* distanceAcc)
 {
+  printf("done");
   *(distanceAcc)=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
@@ -116,6 +116,7 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChem
   *(distanceAcc)+=distance_ville(graph,dernierVisite,departChemin);
   /* distanceAcc contient la distance du chemin a la fin du parcour. */
   tab[alloue]=departChemin;
+  printf("done");
   return tab;
 }
 

@@ -152,7 +152,6 @@ void print_input_data(Input input)
 	if(input->edge_weight_matrix[i])
 	{
 	  for(int j = 0 ; j<input->dimension ; j++)
-	    if(input->edge_weight_matrix[i][j])
 	      printf("%.1lf\t", input->edge_weight_matrix[i][j]);
 	  printf("\n");
 	}

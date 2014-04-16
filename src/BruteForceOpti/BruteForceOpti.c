@@ -58,7 +58,7 @@ int* BruteForceOpti(Graphe g,double* acc)
   double meilleureDistance=0;
   int taille=get_taille(g);
   /* On initialise le meilleur chemin et la meilleur distance comme celle de NearestNeigbourg */
-  int* meilleurChemin=HeuristiquePlusProcheVoisin(g,&meilleureDistance,0);
+  int* meilleurChemin=HeuristiquePlusProcheVoisin(g,0,&meilleureDistance);
 
   /* Création d'un tableau de chemin*/
   int* tabChemin=calloc(taille+1,sizeof(int));

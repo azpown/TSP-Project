@@ -22,7 +22,8 @@ int main (int argc,char* argv[])
   {
     printf("Usage : ./<NomExec> <CheminTspFile> <VilleDepart>\n");
     return EXIT_FAILURE;
-  }    
+  }
+  printf("oihdeid");
   testBaseHeuristiqueAD(argv[1],atoi(argv[2]),HeuristiquePlusProcheVoisin);
   return EXIT_SUCCESS;
 }

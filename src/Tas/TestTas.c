@@ -47,9 +47,6 @@ static bool test1()
   free(tab);
   free(tab_a);
   freeTasArete(testTas);
-  
-  
-  printf("Ce programme marche niquel, faut automatiser tout ça maintenant :)\n");
   return true;
 }
   

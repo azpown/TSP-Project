@@ -15,6 +15,6 @@ int plusProcheVoisin(int sommet,bool* tab_dispo,Graphe graph,double* acc);
  * \param depart entier en 0 et nombre_de_ville désignant la ville de depart du cycle.
  * \post le tableau doit etre free après traitement par le client.
  */
-int* HeuristiquePlusProcheVoisin(Graphe graph,double* distanceAcc,int departChemin);
+int* HeuristiquePlusProcheVoisin(Graphe graph,int departChemin,double* distanceAcc);
 
 #endif

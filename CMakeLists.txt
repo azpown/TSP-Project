@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 
-project (TSP)
+project (TSP C)
 
-add_definitions(-std=c99 -O2)
+add_definitions(-std=c99 -g)
 #option de gcc
 
 set (CMAKE_INSTALL_PREFIX .)

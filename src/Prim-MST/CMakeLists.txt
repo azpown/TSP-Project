@@ -13,8 +13,8 @@ add_test(t-prim-2approx-valide-ex10 TestPrim2 ../../../tsp_files/exemple10.tsp 4
 set_tests_properties (t-prim-cycle-distance-valide
   PROPERTIES PASS_REGULAR_EXPRESSION "OK")
 
-# On prend l'entier directement supérieure au poid du chemin min
-add_test(t-prim-2approx-valide-ch130 TestPrim2 ../../../tsp_files/ch130.tsp 6110)
+# On prend l'entier directement supérieur au poid du chemin min
+add_test(t-prim-2approx-valide-bays29 TestPrim2 ../../../tsp_files/bays29.tsp 2000)
 set_tests_properties (t-prim-cycle-distance-valide
   PROPERTIES PASS_REGULAR_EXPRESSION "OK")
 

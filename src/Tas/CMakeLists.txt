@@ -1,8 +1,8 @@
 add_executable(TestTas TestTas.c)
 target_link_libraries(TestTas Tas)
 
-add_test(t-tas1 TestTas)
-set_tests_properties (t-tas1
+add_test(t-tas-ajout-destruction-modifKey TestTas)
+set_tests_properties (t-tas-ajout-destruction-modifKey
   PROPERTIES PASS_REGULAR_EXPRESSION "CONTENU DU TAS MIN
 Depart: 2	Arrive: 5	Cle: 10.0
 	CONTENU DU TAS MIN
