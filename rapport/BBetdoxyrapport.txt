@@ -1,0 +1,39 @@
+﻿  \newpage
+ \section {Génération de la documentation}
+
+Pour la générisation automatique de la documentation nous avons décidé d'utiliser  Doxygen par l'intermédiaire de la commande doxywizard car il est simple d'utilisation et fonctionne parfaitement.
+Nous avons ainsi  pu préciser dans le pdf obtenu après compilation du makefile généré par doxywizard le nom, la version et le langage utilisé pour le projet. La création automatique de la table des matières permet d'accéder facilement aux informations dont on a la nécessité.
+Cette documentation contient les informations indispensables pour qu'un utilisateur extérieur au projet puisse utiliser ses diverses fonctionnalités, il contient notament les données membres des structures implémentées, les descriptions des fonctions et les informations pour leur utilisation (les paramètres qu'elles prennent, à quoi correspond l'objet qu'elles renvoient, ....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  \newpage
+
+Branch and bound :
+
+  \section {Branch and Bound}
+
+ \subsection{Principe}
+L'algorithme Branch and bound est une amélioration du Brute Force. Plutôt que parcourir et tester tous les parcours possibles comme sa version simplifiée, il calcule à tout instant la distance du parcours qu'il teste et avorte le test si la distance parcourue au moment t dépasse la distance la plus courte enregistrée pour un parcours complet. Cet algorithme épargne ainsi des tests à l'utilisateur et diminue grandement la complexité en temps et en mémoire par rapport à Brute Force.
+
+ \subsection{pseudo-code}
+
+
+
+
