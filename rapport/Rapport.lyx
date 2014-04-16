@@ -1,0 +1,1154 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language french
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Rapport projet EDD - TSP
+\end_layout
+
+\begin_layout Author
+Delmas Rémi
+\end_layout
+
+\begin_layout Date
+16 avril 2014
+\end_layout
+
+\begin_layout Standard
+Adresse du dépôt git : https://github.com/azpown/TSP-Project
+\end_layout
+
+\begin_layout Standard
+HowToCompile : cd build;cmake;(ctest)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Introduction
+\end_layout
+
+\begin_layout Standard
+Le problème du voyageur de commerce (TSP) est un problème mathématique qui
+ consiste, étant donné un ensemble de villes séparées par des distances
+ données, à trouver le plus court chemin qui relie toutes les villes.
+ Ce problème est un problème NP-complet, il n'existe pour l'instant aucun
+ algorithme de résolution d'un tel problème en temps polynomial, tous les
+ algorithmes actuels ayant des temps exponentiel par rapport a la taille
+ des données d'entrée.
+\end_layout
+
+\begin_layout Standard
+Aussi, la nécessité d'avoir des solutions approchées en temps polynomial
+ apparait immédiatement, l'obtention d'une solution exacte sur des instances
+ trop volumineuse n'étant pas envisageable.
+\end_layout
+
+\begin_layout Standard
+Nous avons donc, au cour de ce projet, dévellopé deux heuristiques , NearestNeig
+hbour et MinimumSpanningTree, ainsi qu'un algorithme de fournissant la solution
+ exacte a une instance donnée.
+\end_layout
+
+\begin_layout Standard
+Dans ce projet, nous avons utilisés des fichiers stockant les instances
+ de ce problème au format TSPLIB95, un autre aspect de ce projet a également
+ été de réaliser un parseur pour ce type de fichier, nous restreignant néanmois
+ a certaines instances ayant des attributs spécifiques.
+\end_layout
+
+\begin_layout Part*
+Table des matières
+\end_layout
+
+\begin_layout Section
+Méthodes pour l'organisation
+\end_layout
+
+\begin_layout Subsection
+Le dépot de travail
+\end_layout
+
+\begin_layout Standard
+Afin de pouvoir travailler en simultané sur le même projet avec les différents
+ membres du groupe, nous avons choisit de mettre en place un dépot git,
+ sur la plateforme GitHub, dont l'architecture est disponible en annexe.
+\end_layout
+
+\begin_layout Standard
+Dans la forme, le fonctionnement de git est assez similaire a celui de svn,
+ mais pas dans la manière dont sont stockées les données.
+ Nous avons choisis git surtout car nous connaisions ces fonctionnalités,
+ et nous nous étions déjà servis pour de précédents projets.
+\end_layout
+
+\begin_layout Standard
+Ce dépot est organisé en différents dossiers, les principaux étant 
+\family typewriter
+src
+\family default
+ et 
+\family typewriter
+include
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Un dossier 
+\family typewriter
+build
+\family default
+ est disponible sur le dépôt, pour que ne pas encombrer la racine de ce
+ dernier avec les différents fichiers générés par le Makefile.
+\end_layout
+
+\begin_layout Subsubsection*
+include
+\end_layout
+
+\begin_layout Standard
+Ce dossier contient uniquement les headers des différents fichiers sources.
+ Ce dossier est tag dans le CMakeLists comme étant le dossier où trouver
+ les headers lors de la compilation.
+\end_layout
+
+\begin_layout Subsubsection*
+src
+\end_layout
+
+\begin_layout Standard
+Ce dossier contient les répertoires où sont les différents fichiers sources,
+ ainsi que les tests.
+ Il contient également les différents CMakeLists, permettant une génération
+ des Makefile et l'automatisation des tests.
+\end_layout
+
+\begin_layout Subsection
+La construction logicielle
+\end_layout
+
+\begin_layout Standard
+Dans un premier temps, nous avons implémentés plusieurs Makefile afin de
+ généré nos éxécutables.
+\end_layout
+
+\begin_layout Standard
+Cependant, leurs conception est assez hardu (afin d'avoir des makefiles
+ génériques), et l'exécution automatique des tests peu lisibles.
+\end_layout
+
+\begin_layout Standard
+Nous avons ensuite, face a cette difficultée,choisit de mettre en place
+ un systeme de construction logicielle basée sur cmake, nous permettant
+ une compilation sans soucis, et l'utilisation de ctest, très pratique pour
+ lancer les tests unitaires.
+\end_layout
+
+\begin_layout Standard
+Un CMakeLists.txt est présent dans le dépôt, indiquand les options de compilation
+, le dossier source des header, et le dossier destination des library.
+\end_layout
+
+\begin_layout Standard
+Ce fichiers va lancé le CMakeLists de src, qui va créé les library, les
+ déplacés dans le dossier <fichierCourant>/lib et lancer les CMakeLists
+ des sous-dossiers de src, qui seront chargés de creer les tests, et de
+ fournir les EXPECTED_VALUES qui détermineront le bon fonctionnement ou
+ non des différents tests.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setlength{
+\backslash
+unitlength}{3mm} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{picture}(50,15) 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(0,5){$CMakeList.txt$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,7){$depot$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(10,5){
+\backslash
+vector(1,0){5}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(17,5){$CMakeList.txt$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(20,7){$src$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(27,5){
+\backslash
+vector(1,0){5}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(27,5){
+\backslash
+vector(1,1){5}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(27,5){
+\backslash
+vector(1,-1){5}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(33,5){$...$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(33,10){$CMakeList.txt$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(33,0){$CMakeList.txt$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(33,12){$sous
+\backslash
+ dossier 
+\backslash
+ src$}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+thinlines
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{picture}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Parcour cmake
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Génération de la documentation
+\end_layout
+
+\begin_layout Standard
+Pour la générisation automatique de la documentation nous avons décidé d'utilise
+r Doxygen par l'intermédiaire de la commande doxywizard car il est simple
+ d'utilisation et fonctionne parfaitement.
+ Nous avons ainsi pu préciser dans le pdf obtenu après compilation du makefile
+ généré par doxywizard le nom, la version et le langage utilisé pour le
+ projet.
+ La création automatique de la table des matières permet d'accéder facilement
+ aux informations dont on a la nécessité.
+ Cette documentation contient les informations indispensables pour qu'un
+ utilisateur extérieur au projet puisse utiliser ses diverses fonctionnalitées,
+ il contient notament les données membres des structures implémentées, les
+ descriptions des fonctions et les informations pour leur utilisation (les
+ paramètres qu'elles prennent, à quoi correspond l'objet qu'elles renvoient,
+ ....
+\end_layout
+
+\begin_layout Subsection
+Méthodes de communication
+\end_layout
+
+\begin_layout Standard
+Durant la début de réalisation du projet, il nous est arrivé de ne pas pouvoir
+ communiquer les uns avec les autres, et que deux membres du trînome travaillent
+ sur le même algorithme, gachant ainsi du temps qui aurait pût mieux être
+ utilisé.
+\end_layout
+
+\begin_layout Standard
+Nous avons donc mis en place un fichier texte TODO sur le dépot, régulièrement
+ mis à jour, contenant le travail que l'on a effectué, nos différentes remarques
+ sur l'avancement du projet et la travail de chacun avant de pouvoir communiquer
+ par des moyens plus standarts.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename capture-TODO.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+capture d'écran de TODO
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Présentation des structures usuelles.
+\end_layout
+
+\begin_layout Standard
+Il a fallut implémenté plusieurs structures de données afin d'effectuer
+ les différents traitement aboutissant aux divers algorithmes.
+\end_layout
+
+\begin_layout Standard
+Les structures abordées dans ce paragraphe n'ont pas vraiment d'interêt
+ algorithmique, cependant, elle sont incontournables dans notre projet car
+ omniprésente.
+ 
+\end_layout
+
+\begin_layout Subsection
+Graphe
+\end_layout
+
+\begin_layout Standard
+Il s'agit d'une structure de basse, utilisée dans la plupart de nos modules,
+ contenant :
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\small},numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+int taille_matrice_données;
+\end_layout
+
+\begin_layout Plain Layout
+
+double** matrice_données; 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cette structure sert aux passages des données aux différents modules, évitant
+ ainsi de manipuler deux élements toujours associés.
+\end_layout
+
+\begin_layout Subsection
+Arete
+\end_layout
+
+\begin_layout Standard
+Cette structure contient:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\small},numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+int ville_depart;
+\end_layout
+
+\begin_layout Plain Layout
+
+int ville_arrivée;
+\end_layout
+
+\begin_layout Plain Layout
+
+double distance_ville_depart_ville_arrivée
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Elle nous permet d'évitée le passage de plusieurs paramètres, rendant le
+ code bien plus lisible.
+\end_layout
+
+\begin_layout Standard
+Nos conteneurs ont été implémenté via délégation d'un module générique,
+ notre objectifs étant d'avoir le moins de duplication de code possible
+ entre les différentes heuristiques.
+\end_layout
+
+\begin_layout Standard
+De plus, l'ajout d'une heuristique utilisant un conteneur déjà implémenté
+ sera bien plus aisée.
+\end_layout
+
+\begin_layout Section
+Fonctionnement des algorithmes 
+\end_layout
+
+\begin_layout Subsection
+Nearest Neighbour
+\end_layout
+
+\begin_layout Standard
+Le Principe de l'algorithme de NearestNeigbour est de parcourir un graphe
+ en passant par le voisin le plus proche du sommet actuel successivement
+ sans repasser par la même ville sauf pour la première et la dernière qui
+ sont identique pour faire un cycle puis de retourner la distance totale
+ obtenue.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename NN.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Illustration Nearest Neighbour en cour
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Pseudo-code de l'algorithme:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\small},numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+NearestNeigbour:		
+\end_layout
+
+\begin_layout Plain Layout
+
+acc=0;
+\end_layout
+
+\begin_layout Plain Layout
+
+ville_precedement_NN=depart;
+\end_layout
+
+\begin_layout Plain Layout
+
+Tant que ville_valide_restante
+\end_layout
+
+\begin_layout Plain Layout
+
+	acc+=distance(ville_precedement_NN, pp_voisin(ville_precedement_NN));
+\end_layout
+
+\begin_layout Plain Layout
+
+	ville_precedement_NN=plus_proche_voisin(ville_precedement_NN);
+\end_layout
+
+\begin_layout Plain Layout
+
+fin Tant que;	  	 		
+\end_layout
+
+\begin_layout Plain Layout
+
+acc+=distance(dernierVisite,ville_precedement_NN);
+\end_layout
+
+\begin_layout Plain Layout
+
+return chemin_des_sommets_succesivement_visité;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Nearest Neighbour
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dans la pratique, cet algorithme renvoie souvent des résultats très proches
+ du chemin minimal (~+30%) et est très rapide, même sur des instances imposantes.
+\end_layout
+
+\begin_layout Subsection
+Prim - MinimumSpanningTree
+\end_layout
+
+\begin_layout Standard
+L 'algorithme de Prim est un algorithme qui permet de trouver un arbre couvrant
+ minimal dans un graphe connexe (c'est à dire que tous ses sommets sont
+ liés) valué et non-orienté.
+ 
+\end_layout
+
+\begin_layout Standard
+Il part d'un sommet arbitraire puis fait grossir A 0 en y adjoignant une
+ arête de poids minimal qui le laisse connexe et sans cycle
+\end_layout
+
+\begin_layout Standard
+Avec un parcour prefixe de cet arbre, on garentit 
+\begin_inset Formula $tailleChemin<2*tailleCheminMinimal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 220px-Minimum_spanning_tree.svg.png
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Arbre couvrant poid minimal
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cet algorithme forme un nouvel arbre sur l'ensemble des sommets du graphe
+ initial, tel que la somme des poids de ces arêtes soit minimale càd, ayant
+ une distance minimale.
+\end_layout
+
+\begin_layout Standard
+Nous avons fait le choix d'implémenté cette algorithme, car sa compléxitée
+ théorique avec un tas min est très bonne : 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $O(nombreSommet²)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Tas min
+\end_layout
+
+\begin_layout Standard
+Pour obtenir une telle complexitée, il faut utiliser un tas min comme file
+ de prioritée afin de déterminer quelle arete doit etre ajouter au Minimum
+ Spanning Tree.
+\end_layout
+
+\begin_layout Standard
+La clé de chaque element stocké dans le tas est donc susceptible de changer,
+ et donc la position de ce dernier dans le tas également.
+\end_layout
+
+\begin_layout Standard
+Nous n'avons dans un premier temps pas pris en compte ce paramètre, ce qui
+ nous a considérablement ralentit dans l'implémentation du module.
+\end_layout
+
+\begin_layout Standard
+En plus de la structure du tas classique, il faut donc stocker avec chaque
+ élément l'indice du tableau du tas où sont stockés ces deux derniers, on
+ appelle un tel objet handle.
+\end_layout
+
+\begin_layout Standard
+La structures des elements référencés dans le tas générique n'est donc pas
+ :
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\small},numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+void* element_a_stock;
+\end_layout
+
+\end_inset
+
+mais plutot :
+\begin_inset listings
+lstparams "basicstyle={\small},numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+void* element_a_stock;
+\end_layout
+
+\begin_layout Plain Layout
+
+int handle_sur_tableau; /* compris entre 0 et taille_tas */
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Arbre 
+\begin_inset Quotes eld
+\end_inset
+
+Planaire
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+L'implémentation de l'arbre nous permet de stock le Minimum Spanning Tree.
+ Nous appelons un arbre 
+\begin_inset Quotes eld
+\end_inset
+
+planaire
+\begin_inset Quotes erd
+\end_inset
+
+ un arbre stockant des noeuds de la forme:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\small},numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+type Noeud:
+\end_layout
+
+\begin_layout Plain Layout
+
+	void* element_a_stock;
+\end_layout
+
+\begin_layout Plain Layout
+
+	Noeud* Noeud_pere;
+\end_layout
+
+\begin_layout Plain Layout
+
+	Noeud* Noeud_premier_fils;
+\end_layout
+
+\begin_layout Plain Layout
+
+	Noeud* Noeud_frere;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+où un pere accede a ces fils via acces a son fils puis aux freres de ce
+ dernier jusqu'a obtenir le fils choisis.
+\end_layout
+
+\begin_layout Standard
+Notre arbre délégué devant contenir des entiers, nous avons dût mettre en
+ place un mécanisme afin de pouvoir stocker des types non pointeur.
+\end_layout
+
+\begin_layout Standard
+Nous allouons donc la mémoire de l'int a stock, puis nous stockons sa référence
+ dans le tableau.
+ Le mécanisme inverse doit etre effectué afin de pouvoir lire l'entier a
+ la sortie et libérer la mémoire allouer.
+\end_layout
+
+\begin_layout Subsubsection
+Pseudo-code de l'algorithme
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\small},language=C,numbers=left,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Prim-MST:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+a = choisir_arete_min_depuis(depart,tab_arete_disponible);
+\end_layout
+
+\begin_layout Plain Layout
+
+ajouter(a,tas_min,0) // (arete,tas,clée);
+\end_layout
+
+\begin_layout Plain Layout
+
+Pour chaque s tel que s != a 
+\end_layout
+
+\begin_layout Plain Layout
+
+	ajouter(a,tas_min,distance(a,s));
+\end_layout
+
+\begin_layout Plain Layout
+
+Tant que !est_vide_tas(tas_min)
+\end_layout
+
+\begin_layout Plain Layout
+
+	s=extraire_min(tas);
+\end_layout
+
+\begin_layout Plain Layout
+
+	ajout_arbre(Arbre_int,get_depart(s),get_arive(s)) // (arbre,pere,elem)
+\end_layout
+
+\begin_layout Plain Layout
+
+	Pour tout voisin v de s: //(càd tout le monde,d'ou la compléxité)
+\end_layout
+
+\begin_layout Plain Layout
+
+		Si v !appartient_tas(tas) && distance(s,v) < cle(tas_min,v): // Handle
+ nécces.
+\end_layout
+
+\begin_layout Plain Layout
+
+			set_depart_arete(v,get_arrive(s)); // Modification de l'arete
+\end_layout
+
+\begin_layout Plain Layout
+
+			diminuer_cle_tas(tas_min,v,distance(s,v));
+\end_layout
+
+\begin_layout Plain Layout
+
+		fin Si;
+\end_layout
+
+\begin_layout Plain Layout
+
+	fin Pour;
+\end_layout
+
+\begin_layout Plain Layout
+
+fin Tant que;
+\end_layout
+
+\begin_layout Plain Layout
+
+return parcour_prefixe(Arbre);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Prim - MST
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+L'algorithme est relativement rapide, cependant, son implémentation n'est
+ pas chose aisée, car elle passe par l'implémentation de deux conteneurs.
+\end_layout
+
+\begin_layout Standard
+Il est prouvé qu'il s'agit d'une 2-approximation, cependant, ces résultats
+ sont bien souvent moins bon que Nearest Neighbour.
+\end_layout
+
+\begin_layout Subsection
+Brute Force Branch&Bound
+\end_layout
+
+\begin_layout Standard
+L'algorithme Branch and Bound est une amélioration du Brute Force naïf classique
+, connu dans beaucoup de domaine de l'informatique (ex : réseau).
+ Plutôt que parcourir et tester tous les parcours possibles comme sa version
+ simplifiée, il calcule à tout instant la distance du parcours qu'il teste
+ et avorte le test si la distance parcourue au moment l'on dépasse la distance
+ la plus courte enregistrée pour un parcours complet.
+ Cet algorithme épargne ainsi des tests à l'utilisateur et diminue grandement
+ le temps d'exécution par rapport à un brute Brute Force naïf.
+ Sa complexitée n'est en revanche pas polynomiale, des tests sur de grande
+ instance (+1000) deviennent extrèmement compliqués, meme sur des machines
+ puissantes et en parallélisant les parcours (une utilisation du GPU serait
+ particulièrement intérésante).
+\end_layout
+
+\begin_layout Standard
+Le pseudo-code de cet algorithme récursif étant assez générique, nous ne
+ l'expliciterons pas ici.
+\end_layout
+
+\begin_layout Standard
+notre algorithme effectue un parcours d'un tableau de booléen ou l'indice
+ du boolean indique si la ville est déja dans le chemin ou pas, en mettant
+ indisponibles les villes sur lesquelles il est déjà passé, tout en vérifiant
+ à chaque instant que la meilleure distance enregistrée et inférieure a
+ celle du chemin en cour.
+\end_layout
+
+\begin_layout Standard
+A la fin du travail de l'appel, on remet le tableau dans son état avant
+ son appel afin de restaurer le contexte de l'appellant (et ainsi avec un
+ complexitée en espace minimale).
+\end_layout
+
+\begin_layout Section
+Parsing
+\end_layout
+
+\begin_layout Standard
+Nous avons travaillé dans ce projet avec des fichers d'instance de type
+ TSP, d'où la nécessité de la création d'un fichier servant à l'implémentation
+ d'un parser qui va récuperer les différents champs du-dit fichier.
+ Les différents champs doivent etre présent afin de valider le parsing,
+ sinon un message d'erreur s'affiche sur la sortie d'erreur standarts, et
+ la mémoire est libérer.
+ Il faut se servir des accesseurs (les get) pour acceder à ces données par
+ la suite.
+\end_layout
+
+\begin_layout Standard
+Notre parseur se basse sur les fonctions getline (C++) et sscanf (allocation
+ dynamique de mémoire via %ms) afin de récupérer efficacement le contenue
+ du fichier cible.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename extsp
+	scale 50
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Exemple fichier .tsp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
