@@ -18,20 +18,17 @@
 
 
 
-
 /**
- * \brief Fonction permettant de tester des fonctions implémenté dans le fichier BruteForceOpti.c.
+ * \brief Fonction permettant d'utiliser l'heuristique BruteForceOpti avec n'importe quelle matrice Tsp.
+ * \param argv[] Tableau de char* contenant le chemin du fichier tsp a parser.
  */
-
-
-int main()
+int main (int argc,char* argv[])
 {
-  Input in=open_TSP_file("../../../tsp_files/exemple10.tsp");
-  Graphe g= cree_graphe(get_dimension(in),get_edge_weight_matrix(in));
-  double acc=0;
-  int* BF = BruteForceOpti(g,&acc);
-  afficheCycle(BF,get_dimension(in),acc);
-  free_input(in);
-  free_graphe(g);
-  free(BF);
+  if(argc =! 2)
+  {
+    printf("Usage : ./<NomExec> <CheminTspFile> \n");
+    return EXIT_FAILURE;
+  }
+  testBaseHeuristiqueSD(argv[1], BruteForceOpti);
+  return EXIT_SUCCESS;
 }

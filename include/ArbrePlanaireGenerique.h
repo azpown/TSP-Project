@@ -23,6 +23,7 @@ Noeud creerNoeud(void* element,Noeud parent,Noeud aine,Noeud cadet);
 
 /**
  * \brief Libère l'espace mémoire alloué à un noeud.
+ * \pre L'utilisateur doit avoir effacé le contenu du noeud.
 */
 void freeNoeud(Noeud this);
 
@@ -34,7 +35,8 @@ void freeNoeud(Noeud this);
 ArbrePlanaireGen creerArbrePlanaireGen(ptr_affichage f);
 
 /**
- * \brief Libère l'espace mémoire alloué à un arbre planaire générique après avoir détruit l'arborescence de la racine.
+ * \brief Libère l'espace mémoire alloué à un arbre planaire générique après avoir détruit l'arbre récursivement.
+ * \pre L'utilisateur doit avoir effacé le contenu de l'arbre.
 */
 void freeArbrePlanaireGen(ArbrePlanaireGen this);
 

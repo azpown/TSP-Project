@@ -19,6 +19,7 @@ ArbrePlanaireInt creerArbrePlanaireInt();
 
 /**
  * \brief Libère l'espace mémoire alloué à un arbrePlanaireInt.
+ * \pre Avant d'appeler cette fonction, il faut avoir libéré les valeurs contenues dans l'arbre.
 */
 void freeArbrePlanaireInt(ArbrePlanaireInt this);
 

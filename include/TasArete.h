@@ -19,12 +19,14 @@ typedef struct AreteHandle *AreteHandle;
 TasMinArete creerTasMinArete(int taille);
 
 /**
- * \brief Libère l'espace mémoire alloué à un tas min contenant des arêtes
+ * \brief Libère l'espace mémoire alloué à un tas min contenant des arêtes après avoir libéré les aretes contenues.
 */
 void freeTasArete(TasMinArete tasMin);
 
 /**
  * \brief Libère l'espace mémoire alloué à une areteHandle contenant des elemHandle (une structure contenant un pointeur générique et un int).
+ * \ Avant de libérer la mémoire allouée à l'areteHandle, la fonction appelle freeArete pour d'abord libéré l'espace alloué à la donnée membre
+ * \ arete qui appartient à l'areteHandle a.
 */
 void freeAreteHandle(AreteHandle a);
 

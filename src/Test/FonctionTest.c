@@ -27,7 +27,7 @@ void testBaseHeuristiqueAD(char* nomFichier,int depart,HeuristiqueAvecDepart H)
     printf("OK\n");
   else
     printf("ECHEC");
-  freeHeurisque(g,resultat);
+  freeHeuristique(g,resultat);
 }
 
 void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H)
@@ -40,7 +40,7 @@ void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H)
     printf("OK\n");
   else
     printf("ECHEC");
-  freeHeurisque(g,resultat);
+  freeHeuristique(g,resultat);
 }
 
 
@@ -105,7 +105,7 @@ Graphe getGraphe(char* nomFichier)
     return g;
 }
 
-void freeHeurisque(Graphe g,int* tabCycle)
+void freeHeuristique(Graphe g,int* tabCycle)
 {
   free_graphe(g);
   free(tabCycle);

@@ -51,6 +51,7 @@ ElemHandle creerElemHandle(void *element,int indice);
 
 /**
  * \b Libère la mémoire allouée à un ElemHandle.  
+ * \pre avant l'appel de cette fonction, il faut avoir libéré l'espace mémoire alloué à la donnée membre elem de l'elemHandle.
 */
 void freeElemHandle(ElemHandle elem);
 
@@ -61,7 +62,8 @@ void freeElemHandle(ElemHandle elem);
 TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_compar cmpCle,ptr_affichage affichage,ptr_maj majCle);
 
 /**
- * \b Libère l'espace mémoire alloué à un tas min générique. 
+ * \b Libère l'espace mémoire alloué à un tas min générique après avoir libéré l'espace mémoire alloué au tableau contenant les sommets du tas. 
+
 */
 void freeTasGen(TasMinGen tas);
 

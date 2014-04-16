@@ -38,8 +38,9 @@ bool estCycleValide(int* tabCycle,int taille);
 
 /**
  * \brief Libère la mémoire allouée au Graphe g et celle allouée au tableau contenant le parcours obtenu suite à l'execution d'un heuristique.
+ * \ Cette fonction est appelé uniquement après l'execution d'un test.
 */
-void freeHeurisque(Graphe g,int* tabCycle);
+void freeHeuristique(Graphe g,int* tabCycle);
 
 /**
  * \brief Retourne le Graphe contenu dans un fichier TSP.
