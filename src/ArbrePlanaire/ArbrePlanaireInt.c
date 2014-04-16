@@ -27,13 +27,13 @@ static int* homogeneise(int n);
 
 /**
  * \brief Fonction qui rempli un tableau.
- * Rempli un tableau à l'aide d'éléments présent dans un arbre
+ * Rempli un tableau à l'aide d'éléments présent dans un noeud.
  */
 
 static void remplirTab(Noeud this,int* tab,int* indice,int taille);
 
 /**
- * \brief Fonction qui 
+ * \brief Fonction qui ajoute un noeud dans un tableau.
  */
 
 static void ajouter(Noeud this,int* tab,int* indice);
