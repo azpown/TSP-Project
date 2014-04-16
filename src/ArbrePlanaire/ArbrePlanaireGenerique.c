@@ -10,7 +10,7 @@
 #include <ArbrePlanaireGenerique.h>
 
 /* structure représentant un noeud d'arbre, le premier fils est pointé,
- *les autres sont accessible via accès au frere successif. */
+ *les autres sont accessibles via les frères du premier fils de manière successive. */
 struct noeud
 {
   void* elem;
@@ -86,7 +86,7 @@ static void detruireArbo(Noeud this)
     return;
   detruireArbo(getPremierFils(this));
   detruireArbo(getFrere(this));
-  /* Ici, le sommet est donc une feuille sans frere */
+  /* Ici, le sommet est donc une feuille sans frère */
   freeNoeud(this);
 }
 
@@ -107,10 +107,10 @@ Noeud getRacine(ArbrePlanaireGen this){return this->racine;}
 
 /*------ Parcour ------ */
 /* Dans notre utilisation de l'arbre pour l'algorithme de prim, la taille de l'arbre
- * est majorée par la dimension de la matrice, pas la peine d'implementé un module
+ * est majorée par la dimension de la matrice, pas la peine d'implementer un module
  * de file ou de tableau extensible. */
 
-/* effet de bord sur indice afin de placer l'element a la bonne position dans le tableau*/
+/* effet de bord sur indice afin de placer l'élément à la bonne position dans le tableau*/
 static void visiterPrefixe(int* indice,void** tab,Noeud this)
 {
   visite(indice,tab,this);
@@ -135,7 +135,7 @@ void affichagePrefixe(ArbrePlanaireGen this)
   printf("\n");
 }
 
-/* moins d'acces a la structure en passant f en parametre, mais plus de place sur la pile */
+/* moins d'accès à la structure en passant f en paramètre, mais plus de place sur la pile */
 static void affichagePrefixeRecursif(Noeud this,ptr_affichage f)
 {
   f(this->elem);
@@ -157,18 +157,18 @@ Noeud ajouterFils(ArbrePlanaireGen a,Noeud pere,void* elem)
     return this;
   }
   Noeud tmp= getPremierFils(pere);
-  /* Traitement different dans le cas ou this a deja des fils ou non */
+  /* Traitement différent dans le cas où this a déjà des fils ou non */
   if(tmp)
   {
-    /* On entre ici si getPremierFils designe un sommet -> deja un fils */
+    /* On entre ici si getPremierFils désigne un sommet -> deja un fils */
     while(getFrere(tmp))
-      /* Tant qu'il y a un frere, on itere. */
+      /* Tant qu'il y a un frère, on itère. */
       tmp=getFrere(tmp);
-    /* Il faut ajouter le noeud créé comme frere du dernier fils du sommet passé en parametre */
+    /* Il faut ajouter le noeud créé comme frère du dernier fils du sommet passé en paramètre */
     tmp->frere=this;
   }
   else
-    /* Le sommet ajouter est le seul fils du sommet passé en parametre -> c'est son premierFils */
+    /* Le sommet ajouté est le seul fils du sommet passé en paramètre -> c'est son premierFils */
     pere->premierFils= this;
   return this;
 }
@@ -187,15 +187,15 @@ void supprimerNoeud(ArbrePlanaireGen a,Noeud this)
   }
   Noeud tmp= getPremierFils(getPere(this));
   if(tmp==this)
-    /* Si le sommet a enlever de l'arbre est le premier fils du pere, alors son frere devient
-     * premier fils du pere. */
+    /* Si le sommet à enlever de l'arbre est le premier fils du père, alors son frère devient
+     * premier fils du père. */
     getPere(this)->premierFils=getFrere(this);
   else
   {
     while(getFrere(tmp)!=this)
       tmp=getFrere(tmp);
-    /* Si le sommet n'est pas le premier fils, alors le frere de son frere precedant devient 
-     * le frere du sommet a détruire. */
+    /* Si le sommet n'est pas le premier fils, alors le frère de son frère precedent devient 
+     * le frère du sommet a détruire. */
     tmp->frere=getFrere(this);
   }
   /* Module générique, donc l'utilisateur doit free l'elem de this. */

@@ -16,7 +16,7 @@
  * - a==b
  * - a>b */
 
-/* Refonte du module TasGen, les complexités de vos algorithmes étaient bien souvent enormes par rapport
+/* Refonte du module TasGen, les complexités de vos algorithmes étaient bien souvent énormes par rapport
  * aux valeurs attendues.*/
 
 struct elemHandle
@@ -47,7 +47,7 @@ static int filsDroit(int indice);
 /*------ ACCESSEUR/MUTATEUR ------*/
 
 /**
- * \b Retourne le nombre d'élément contenu dans le tas min
+ * \b Retourne le nombre d'élément contenus dans le tas min
 */
 
 int getTailleTas(TasMinGen tas){return tas->taille;}
@@ -58,7 +58,7 @@ TasMinGen creerTasMinGen(int taille,ptr_compar cmp,ptr_compar cmpCle,ptr_afficha
 {
   TasMinGen tas=malloc(sizeof(struct TasMinGen));	  //initialise un TasMin
   tas->taille_tas=taille;	                  //initialise le nombre maximum d'éléments du tas
-  tas->taille=-1; //Indice du dernier element !
+  tas->taille=-1; //Indice du dernier élément !
   tas->sommets=malloc(taille * sizeof(ElemHandle));
   tas->comparaison=cmp;
   tas->comparaisonCle=cmpCle;
@@ -87,7 +87,7 @@ void freeTasGen(TasMinGen tas)
 }
 
 /* On ne laisse pas la possibilité au client d'instancier un tas sans fonction de comparaison ni
- * d'affichage (moins de traintement d'erreurs, et pas d'utilité dans le cadre de ce projet */
+ * d'affichage (moins de traitement d'erreurs, et pas d'utilité dans le cadre de ce projet */
 
 /* On affiche le tas tel qu'il est dans la mémoire <-> tableau 1D
  *c'est au module utilisant le délégué de faire un affichage perso.  */
@@ -124,14 +124,14 @@ ElemHandle ajouterSommet(TasMinGen tas, void* element)
     /* On ajoute l'elem en tant que feuille */
     ElemHandle tmp = creerElemHandle(element,tas->taille);
     tas->sommets[tas->taille]=tmp;
-    /* On le fait ensuite remonter jusqu'a qu'il soit a une position valide du tas */
+    /* On le fait ensuite remonter jusqu'a qu'il soit à une position valide du tas */
     percolate_haut(tas,tas->taille);
     return tmp;
   }
   else
   {
-    /* Nous n'implementons pas une fonction de rallongement car la taille du tas
-     * dans nos algorithmes sera majorée par le nombre de ville.*/
+    /* Nous n'implémentons pas une fonction de rallongement car la taille du tas
+     * dans nos algorithmes sera majorée par le nombre de villes.*/
     printf("Tas déjà plein\n");
     return NULL;
   }
@@ -149,7 +149,7 @@ void entasserTas(TasMinGen tas,int indice)
   /* si droit existe et sommet(droit)<min(sommet(indice), sommet(gauche)) */
   if(droit<taille && tas->comparaison(getElem(sommet(tas,min)),getElem(sommet(tas,droit))) >0)
     min=droit;
-  /* Si le sommet[indice] est plus petit qu'un de ces fils, on le swap
+  /* Si le sommet[indice] est plus petit qu'un de ses fils, on le swap
    * avec le plus petit des deux. */
   if(min != indice)
   {
@@ -203,9 +203,9 @@ static void echanger(ElemHandle* t,int i,int j)
   setIndice(tmp_indice,t[i]);
 }
 
-/* On reorganise le tas, sous arbre après sous arbre, sachant qu'on commence
- * à l'indice taille/2 car tout les sommets avec des indices supérieur
- * sont des feuilles (arbre q-parfait. */
+/* On réorganise le tas, sous arbre après sous arbre, sachant qu'on commence
+ * à l'indice taille/2 car tout les sommets avec des indices supérieurs
+ * sont des feuilles (arbre quasi-parfait). */
 static void trierTableauTas(TasMinGen tas)
 {
   for(int i=tas->taille;i<=0;i--)

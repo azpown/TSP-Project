@@ -21,7 +21,7 @@
 
 /**
  * \brief Déclaration des fonctions statiques.
- * Les fonctions statiques ne sont pas nécessaire dans le .h car seul ce fichier les utilisera.
+ * Les fonctions statiques ne sont pas nécessaires dans le .h car seul ce fichier les utilisera.
  */
 
 
@@ -59,13 +59,13 @@ static void affiche_erreur();
 
 /**
  * \brief Fonction qui vérifie le champ entré.
- * Retourne si le champ passé en paramètre est celle attendu ou non.
+ * Retourne si le champ passé en paramètre est celui attendu ou non.
  */
 
 static bool verif_champ_entree(char* ligne_ptr, const char* champ_attendu, const char* pattern);
 
 /**
- * \brief Fonction vérifie si tout est correct.
+ * \brief Fonction qui vérifie si tout est correct.
  * \param line_ptr est un pointeur sur une ligne.
  * \param input instance de type Input à afficher.
  */
@@ -98,7 +98,7 @@ static void affectation_display_data(int indice,double x,double y,Input input);
 
 /**
  * \brief Fonction qui parse le display.
- * \param line_ptr est un pointeur sur une ligne(lu avec getline ).
+ * \param line_ptr est un pointeur sur une ligne(lu avec getline).
  * \param input instance de type Input à afficher.
  */
 
@@ -251,7 +251,7 @@ void print_input_data(Input input)
 
 
 /**
- * \brief Fonction transformant la chaine de caractères passée en paramètre en Input.
+ * \brief Fonction transformant la chaîne de caractères passée en paramètre en Input.
  * Cette fonction passe le fichier Tsp en un Input.
  */
 
@@ -259,7 +259,7 @@ Input open_TSP_file(char* nom_file)
 {    
     FILE* file = NULL;
     file = fopen(nom_file,"r");
-    /*On ouvre le fichier a parser en lecture seule */
+    /*On ouvre le fichier à parser en lecture seule */
     if(file == NULL)
     {
         perror("Probleme d'ouverture du fichier "); 
@@ -279,13 +279,13 @@ static Input alloc_init_input(char * nom)
 {
   /* On alloue et on initialise a 0 les champs de la structure */
   Input myStruct=calloc(1,sizeof(struct input));
-  myStruct->nom_file=nom; /* Viens de argv -> pas de free*/
+  myStruct->nom_file=nom; /* Vient de argv -> pas de free*/
   return myStruct;
 }
 
 char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
 {
-  /* On alloue la taille du champ (taille-pattern) */
+  /* On alloue la taille du chams (taille-pattern) */
   int taille_alloc=taille_ligne-taille_pattern;
   if(taille_alloc==0)
     return NULL;
@@ -297,7 +297,7 @@ char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue)
   return alloc;
 }
  
-/* nom_file vient de la console, et taille n'est pas allouer dynamiquement 
+/* nom_file vient de la console, et taille n'est pas allouée dynamiquement 
  * on libère un à un les champs*/
 void free_input(Input input)
 {
@@ -323,9 +323,9 @@ void free_input(Input input)
 
 static void free_erreur(FILE* file, char* line_ptr,Input input)
 {
-  /* Libère la mémoire utilisé par le buffer si une erreur survient, 
+  /* Libère la mémoire utilisée par le buffer si une erreur survient, 
    * ferme le flux, et libère la mémoire de la structure, si des champs ne sont
-   * pas initialiser, on fait free(NULL) ce qui est une expression valide.*/
+   * pas initialisés, on fait free(NULL) ce qui est une expression valide.*/
 
   free_input(input);
   free(line_ptr);
@@ -355,7 +355,7 @@ static bool verif_champ_entree(char* ligne_ptr, const char* champ_attendu, const
     return false;
 }
 
-/* Amélioration envisageable : passer un tableau de couple(chaine_attendu,fonction de modification du comportement du programme),
+/* Amélioration envisageable : passer un tableau de couple(chaine_attendue,fonction de modification du comportement du programme),
  * afin gérer plusieurs formats.*/
 
 static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pattern,bool erreur_possible,const char* chaine_attendu,const char* message_erreur,Input input)
@@ -364,7 +364,7 @@ static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pa
   int taille = strlen(pattern)-3;
   if(flag && !strncmp(ligne_ptr,pattern,taille)) /*voir commentaire fonction verif_champ_entree*/
   {
-    /* Dans le cas où un pattern à été localiser, si le champ suivant est incorrect
+    /* Dans le cas où un pattern à été localisé, si le champ suivant est incorrect
      * On va donner une erreur et quitter le programme */
     if(erreur_possible)
     {
@@ -384,13 +384,13 @@ static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pa
 static void parsing_champs(FILE* file,Input input)
 {     
   ssize_t taille_ligne;
-  bool bool_section; // Permet d'éco. un strcmp.
+  bool bool_section; // Permet d'économiser un strcmp.
   char* ligne_ptr = NULL;
   size_t taille_alloc = 0; /* correspond a un entier signé.*/
 
   while((taille_ligne=getline(&ligne_ptr,&taille_alloc,file)) != EOF)/* EOF généralement égal a -1*/
   {
-    /* On verifie sur chaque ligne si des paramètres valides sont insérer
+    /* On vérifie sur chaque ligne si des paramètres valides sont insérés
      * si true, on parse.
      * On utilise la fonction est_valide surtout pour des raisons de lisibilité,
      * Une fonction vraiment générique étant difficilement réalisable. */
@@ -399,11 +399,11 @@ static void parsing_champs(FILE* file,Input input)
     /*------- NAME -------*/
     if(est_valide(!input->nom,file,ligne_ptr,"NAME: %42",false,NULL,NULL,input))
     {
-      /* On pourrait allouer directement la mémoire avec sscanf, mais le code est peu-etre
+      /* On pourrait allouer directement la mémoire avec sscanf, mais le code est peut-être
        * plus lisible en passant par alloc_chaine*/
       input->nom=alloc_chaine(taille_ligne,6,ligne_ptr);
       continue;
-      /* Une ligne ne peut etre associé a au plus un champs, pas la peine d'évaluer d'autres expressions.*/
+      /* Une ligne ne peut être associée a plus d'un champs, pas la peine d'évaluer d'autres expressions.*/
     }
         
     /*------ TYPE -------*/
@@ -586,7 +586,7 @@ static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
 
 static bool est_symetrique(double** mat,int dim)
 {
-  /* On parcoure la matrice sous la diagonale */
+  /* On parcourt la matrice sous la diagonale */
   for(int i=0;i<dim;i++)
     for(int j=0;j<dim;j++)
       /* si a_ij != a_ji , la matrice n'est pas valide. */

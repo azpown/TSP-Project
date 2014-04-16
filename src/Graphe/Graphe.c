@@ -15,7 +15,7 @@
 
 /**
  * \struct graphe
- * \brief Crée un graphe aillant pour longueur taille et en paramètre des doubles contenus dans matrice.
+ * \brief Crée un graphe ayant pour longueur taille et en paramètre des doubles contenus dans une matrice.
  */
 
 
@@ -28,7 +28,7 @@ struct graphe
 
 /**
  * \struct graphe
- * \brief Crée un graphe aillant pour longueur len et contient des doubles contenus dans matrice.
+ * \brief Crée un graphe ayant pour longueur len et contient des doubles contenus dans une matrice.
  * \param mat Tableau de tableau (tableau "2D") contenant des doubles.
  */
 

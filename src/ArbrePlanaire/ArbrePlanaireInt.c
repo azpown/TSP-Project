@@ -1,6 +1,6 @@
 /**
  * \file ArbrePlanaireGenerique.c
- * \brief Fichier source qui contient les fonctions mettant en place un arbre planaire d'entier.
+ * \brief Fichier source qui contient les fonctions mettant en place un arbre planaire d'entiers.
  */
 
 
@@ -19,15 +19,13 @@ struct arbrePlanaireInt
 /*------ Declaration des fonctions statiques ------*/
 
 /**
- * \brief Fonction qui alloue de la mémoire.
- * alloue de la mémorie d'un taille n.
+ * \brief Fonction qui encapsule l'entier entré en paramètre et homogénéise le tableau.
  */
 
 static int* homogeneise(int n);
 
 /**
- * \brief Fonction qui rempli un tableau.
- * Rempli un tableau à l'aide d'éléments présent dans un noeud.
+ * \brief Fonction qui remplit un tableau à l'aide d'éléments présent dans un noeud.
  */
 
 static void remplirTab(Noeud this,int* tab,int* indice,int taille);
@@ -76,7 +74,7 @@ void affichagePrefixeInt(ArbrePlanaireInt this)
   affichagePrefixe(this->arbre);
 }
 
-/* Cette fonction assure l'homogéneité de la structure deleguée */
+/* Cette fonction assure l'homogéneité de la structure déléguée */
 Noeud ajouterNoeudInt(ArbrePlanaireInt this,Noeud pere,int elem)
 {
   return ajouterFils(this->arbre,pere,(void*) homogeneise(elem));

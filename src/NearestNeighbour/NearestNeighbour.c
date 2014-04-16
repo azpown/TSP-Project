@@ -56,9 +56,9 @@ static void initialiseTrueN(bool* tab,int taille)
  */
 
 int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
-/* Le type sommet sera surrement implémenté plus tard, pour une question de lisibilité.*/
+/* Le type sommet sera sûrement implémenté plus tard, pour une question de lisibilité.*/
 {
-  /* effet de bord sur acc passé en parametre. */
+  /* effet de bord sur acc passé en paramètre. */
   int taille=get_taille(graph);
   int min=-1;
   double distance=-1;
@@ -82,7 +82,7 @@ int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
 
 
 /**
- * \brief Fonction permettant de retourner un tableau de voisin ayant la distance la plus proche avec son précédent.
+ * \brief Fonction permettant de retourner un tableau de voisins ayant la distance la plus proche avec la ville précédente.
  * \param distanceAcc Tableau de booléens contenant les distances entre les villes.
  * \param departChemin Entier correspondant à la ville de départ.
  * \param graph Représente la matrice TSP.
@@ -100,7 +100,7 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,int departChemin,double* distanceA
   initialiseTrueN(tabAParcourir,taille);
   /* On crée un tableau de bool,pour savoir quels sont les sommets déjà dans le chemin.*/
 
-  int alloue= 1; //Nombre de ville deja visitée
+  int alloue= 1; //Nombre de ville deja visitées
   int dernierVisite=departChemin;
   tab[alloue-1]=dernierVisite;
   tabAParcourir[dernierVisite]=false;
@@ -114,7 +114,7 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,int departChemin,double* distanceA
   free(tabAParcourir);
   /* Il faut relier le chemin a la ville de départ maintenant.*/
   *(distanceAcc)+=distance_ville(graph,dernierVisite,departChemin);
-  /* distanceAcc contient la distance du chemin a la fin du parcour. */
+  /* distanceAcc contient la distance du chemin a la fin du parcours. */
   tab[alloue]=departChemin;
   printf("done");
   return tab;

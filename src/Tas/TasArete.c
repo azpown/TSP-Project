@@ -20,7 +20,7 @@
 static void setAffichageTasMin(void* elem);
 
 /**
- * \brief Fonction qui compare deux arretes.
+ * \brief Fonction qui compare deux arêtes.
  */
 
 static int setComparaisonTasMin(void* a,void *b);
@@ -32,7 +32,7 @@ static int setComparaisonTasMin(void* a,void *b);
 static void setMajTasMin(void* old, void* new);
 
 /**
- * \brief Fonction qui compare une arête à la clé et une arête a.
+ * \brief Fonction qui compare une clé à la clé d'une arête a.
  */
 
 static int setComparaisonCleTasMin(void* a,void* cle);

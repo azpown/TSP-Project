@@ -135,3 +135,4 @@ void setDepart(int depart,Arete a){a->depart=depart;}
 
 
 void setArrive(int arrive,Arete a){a->arrive=arrive;}
+

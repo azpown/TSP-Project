@@ -20,7 +20,7 @@
 
 /**
  * \brief Déclaration des fonctions statiques.
- * Les fonctions statiques ne sont pas nécessaire dans le .h car seul ce fichier les utilisera.
+ * Les fonctions statiques ne sont pas nécessaires dans le .h car seul ce fichier les utilisera.
  */
 
 
@@ -47,9 +47,9 @@ static void BruteForceOptiRecursif(Graphe g,
 
 /**
  * \brief Fonction appliquant le brute force optimisé.
- * Cette fonction appelle la fonction BruteForceOptimise.qui va chercher tous les chemins possible en 
- * ne testant que les chemins aillant la distance parcourue la plus courte et ne poursuit pas un 
- * chemin si sa distance est supérieur ou égale à la distance passé en paramètre. 
+ * Cette fonction appelle la fonction BruteForceOptimise.qui va chercher tous les chemins possibles en 
+ * ne testant que les chemins ayant la distance parcourue la plus courte et ne poursuit pas un 
+ * chemin si sa distance est supérieure ou égale à la distance passée en paramètre. 
  */
 
 
@@ -57,7 +57,7 @@ int* BruteForceOpti(Graphe g,double* acc)
 {
   double meilleureDistance=0;
   int taille=get_taille(g);
-  /* On initialise le meilleur chemin et la meilleur distance comme celle de NearestNeigbourg */
+  /* On initialise le meilleur chemin et la meilleure distance comme celle de NearestNeigbour */
   int* meilleurChemin=HeuristiquePlusProcheVoisin(g,0,&meilleureDistance);
 
   /* Création d'un tableau de chemin*/
@@ -87,8 +87,8 @@ int* BruteForceOpti(Graphe g,double* acc)
  * \param distanceChemin Double contenant la distance du chemin.
  * \param tabEstVisite Tableau de booléens servant à savoir si le sommet a été visité ou non.
  * \param meilleurChemin Tableau d'entiers contenant l'ordre des villes pour lequel on a la distance la plus petite.
- * Cette fonction recherche tous les chemins possibles en ne testant que les chemins aillants la distance parcourue 
- * la plus courte et ne poursuit pas un chemin si sa distance est supérieur ou égale à la distance passée en paramètre. 
+ * Cette fonction recherche tous les chemins possibles en ne testant que les chemins ayant la distance parcourue 
+ * la plus courte et ne poursuit pas un chemin si sa distance est supérieure ou égale à la distance passée en paramètre. 
  */
 
 
@@ -110,21 +110,21 @@ static void BruteForceOptiRecursif(Graphe g,
   /* printf("Valeur en cour : %.1lf - Profondeur : %d\n",distanceChemin,profondeur); */
   if(distanceChemin >= *(meilleureDistance))
   {
-    /* Remet l'indice precedent comme disponible pour le retour d'appel 
-     * Si l'on est rentré, on a donc un chemin qui sera forcement plus long que
+    /* Remet l'indice précédent comme disponible pour le retour d'appel 
+     * Si l'on est rentré, on a donc un chemin qui sera forcément plus long que
      * le meilleurChemin car la distance entre deux ville est strictement positive */
     tabEstVisite[indicePrecedent]=false;
     return;
   }
 
-  /* Cas où il faut refermé le chemin pour faire le cycle attendu */
+  /* Cas où il faut refermer le chemin pour faire le cycle attendu */
   if(profondeur == taille)
   {
     distanceChemin+=distance_ville(g,indicePrecedent,tabChemin[0]);
     if (distanceChemin < *(meilleureDistance))
     {
       *(meilleureDistance)=distanceChemin;
-      /* Pas besoin de copié jusqu'a l'indice taille sachant que cette valeur est déja 0 */
+      /* Pas besoin de copier jusqu'à l'indice taille sachant que cette valeur est déja 0 */
       copieTableauInt(tabChemin,meilleurChemin,taille);
     }
   }

@@ -14,7 +14,7 @@
 /**
  * \brief Fonction de tests.
  * \param argv[] Chaine de caractère correspondant au fichier Tsp.
- * Cette fonction test les fonctions présentent dans Input.c sur le fichier
+ * Cette fonction teste les fonctions présentes dans Input.c sur le fichier
  * Tsp passé en paramètre.
  */
 

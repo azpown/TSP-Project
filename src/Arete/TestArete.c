@@ -12,7 +12,7 @@
 
 
 /**
- * \brief Fonction permettant d'effectuer des test pour vérifier les fonctions du fichier Arete.c.
+ * \brief Fonction permettant d'effectuer des tests pour vérifier les fonctions du fichier Arete.c.
  */
 int main()
 {

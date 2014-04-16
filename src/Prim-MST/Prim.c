@@ -56,7 +56,7 @@ int* Prim(Graphe g,int depart,double* acc)
     min=extraireAreteMin(tas);
     ville=getArrive(min);
     /* On ajoute l'entier correspondant au sommet dans l'arbre planaire
-     * son pere est le depart de l'arete */
+     * son père est le départ de l'arête */
     tabN[ville]=ajouterNoeudInt(arbre,tabN[getDepart(min)],ville);
 
     for(int i=0;i<taille;i++)
@@ -64,7 +64,7 @@ int* Prim(Graphe g,int depart,double* acc)
       if(i!=depart && !tabN[getArrive(getArete(tabH[i]))] && (distance_ville(g,ville,getArrive(getArete(tabH[i]))) < getCle(getArete(tabH[i]))))
       {
 	/* !tab_dispo car le tableau est initialisé a false 
-	 * Si la ville n'a pas été ajoutée et que la distance par rapport a ville
+	 * Si la ville n'a pas été ajoutée et que la distance par rapport à ville
 	 * est plus petite que la précédente, on actualise. */
 
 	setDepart(ville,getArete(tabH[i]));
@@ -79,7 +79,7 @@ int* Prim(Graphe g,int depart,double* acc)
   /* Création du tableau pour le retour */
   int *tab=malloc((taille+1) *sizeof(int));
   /* On remplie le tableau avec les valeurs correspondantes dans l'arbre 
-  * avec un parcour prefixe de ce dernier */
+  * avec un parcours prefixe de ce dernier */
   tableauArbreInt(arbre,tab,taille+1);
   tab[taille]=depart;
   for(int i=0;i<taille;i++)

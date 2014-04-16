@@ -11,7 +11,7 @@
 #include <Graphe.h>
 
 /**
- * \brief Fonction de test de l'algorithme Prim sur un fichier TSP, vérifiant qu'il s'agit bien d'une 2 approximation. La valeur passée en 3ème parametre doit etre valide, sous peine d'avoir un test sans intêret.
+ * \brief Fonction de test de l'algorithme Prim sur un fichier TSP, vérifiant qu'il s'agit bien d'une 2 approximation. La valeur passée en 3ème paramètre doit être valide, sous peine d'avoir un test sans intêret.
  */
 int main (int argc,char* argv[])
 {
@@ -23,7 +23,7 @@ int main (int argc,char* argv[])
   Graphe g= getGraphe(argv[1]);
   double acc=0;
   double min = (double) atoi(argv[2]);
-  /* On verifie qu'il s'agit d'une 2 approximation et que la distance est valide */
+  /* On vérifie qu'il s'agit d'une 2 approximation et que la distance est valide */
   for(int i=0;i<get_taille(g);i++)
   {
     acc=0;

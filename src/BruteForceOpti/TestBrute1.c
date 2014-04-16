@@ -20,7 +20,7 @@
 
 /**
  * \brief Fonction permettant d'utiliser l'heuristique BruteForceOpti avec n'importe quelle matrice Tsp.
- * \param argv[] Tableau de char* contenant le chemin du fichier tsp a parser.
+ * \param argv[] Tableau de char* contenant le chemin du fichier tsp à parser.
  */
 int main (int argc,char* argv[])
 {

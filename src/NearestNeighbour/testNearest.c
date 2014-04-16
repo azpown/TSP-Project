@@ -16,7 +16,7 @@
 
 
 /**
- * \brief La fonction afficher est juste créée pour afficher tous les éléments du tableau mis en paramètre jusqu'à la case voulu
+ * \brief La fonction afficher est juste créée pour afficher tous les éléments du tableau mis en paramètre jusqu'à la case voulue
  */
 void
 afficher(int* t, int taille){
@@ -26,7 +26,7 @@ afficher(int* t, int taille){
 
 
 /**
- * \brief La fonction Unicite prend en paramètre un trableau d'entiers et un graphe et va vérifier si un même élément du graphe est présent plusieur fois ou non dans le tableau et va afficher si certaines sont identiques ou non.
+ * \brief La fonction Unicite prend en paramètre un tableau d'entiers et un graphe et va vérifier si un même élément du graphe est présent plusieurs fois ou non dans le tableau et va afficher si certaines sont identiques ou non.
  */
 
 int Unicite(int* t,Graphe graph)
