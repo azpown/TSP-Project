@@ -27,8 +27,8 @@ int main()
   printf("50 == 25 -> %d\n",comparaisonAreteCle(testArete,25.0));
   /* attendu : -1 */ 
   printf("50 == 100 -> %d\n",comparaisonAreteCle(testArete,100.0));
-  freeArete(testArete);
-  freeArete(testAreteBis);
+  freeArete(testArete);/* libère la mémoire de testArete. */
+  freeArete(testAreteBis);/* libère la mémoire de testAreteBis. */
   return EXIT_SUCCESS;
 }
   

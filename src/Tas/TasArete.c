@@ -1,3 +1,9 @@
+/**
+ * \file TasArete.c
+ * \brief Programme mettant en place un graphe correspondant à une matrice.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -5,9 +11,30 @@
 #include <TasArete.h>
 
 /*------ Déclaration des fonctions statiques ------*/
+
+
+/**
+ * \brief Fonction qui affiche l'arête elem.
+ */
+
 static void setAffichageTasMin(void* elem);
+
+/**
+ * \brief Fonction qui compare deux arretes.
+ */
+
 static int setComparaisonTasMin(void* a,void *b);
+
+/**
+ * \brief Fonction qui affecte une nouvelle clé à l'arête.
+ */
+
 static void setMajTasMin(void* old, void* new);
+
+/**
+ * \brief Fonction qui compare une arête à la clé et une arête a.
+ */
+
 static int setComparaisonCleTasMin(void* a,void* cle);
 
 struct TasArete

@@ -28,16 +28,93 @@
 
 /* Déclaration des fonctions statiques */
 
+
+/**
+ * \brief Fonction qui test si la dimension de la matrice est symétrique.
+ */
+
 static bool est_symetrique(double** mat,int dim);
+
+/**
+ * \brief Fonction qui alloue de la mémoire et initialise à 0 les champs de la structure .
+ */
+
 static Input alloc_init_input(char * nom);
+
+/**
+ * \brief Fonction qui libère la mémoire de la structure.
+ * \param line_ptr est un pointeur sur une ligne.
+ * \param input instance de type Input à afficher.
+ */
+
 static void free_erreur(FILE* file, char* line_ptr,Input input);
+
+/**
+ * \brief Fonction qui affiche les erreurs.
+ * Affiche si c'est une erreur de lecture ou d'entrée.
+ */
+
 static void affiche_erreur();
+
+
+/**
+ * \brief Fonction qui vérifie le champ entré.
+ * Retourne si le champ passé en paramètre est celle attendu ou non.
+ */
+
 static bool verif_champ_entree(char* ligne_ptr, const char* champ_attendu, const char* pattern);
+
+/**
+ * \brief Fonction vérifie si tout est correct.
+ * \param line_ptr est un pointeur sur une ligne.
+ * \param input instance de type Input à afficher.
+ */
+
 static bool est_valide(bool flag,FILE* imput_file,char* ligne_ptr,const char* pattern,bool erreur_possible,const char* chaine_attendu,const char* message_erreur,Input input);
+
+/**
+ * \brief Fonction qui alloue de la mémoire.
+ * Alloue de la mémoire de la taille du champ taille-pattern.
+ */
+
 char* alloc_chaine(ssize_t taille_ligne,int taille_pattern,char* ligne_lue);
+
+/**
+ * \brief Fonction qui parse les champs.
+ * \param input instance de type Input à afficher.
+ */
+
 static void parsing_champs(FILE* file,Input input);
+
+
+/**
+ * \brief Fonction qui alloue de la mémoire.
+ * \param input instance de type Input à afficher.
+ * Alloue de la mémoire à display_data du input.
+ */
+
 static void affectation_display_data(int indice,double x,double y,Input input);
+
+
+/**
+ * \brief Fonction qui parse le display.
+ * \param line_ptr est un pointeur sur une ligne(lu avec getline ).
+ * \param input instance de type Input à afficher.
+ */
+
+
+
 static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input input);
+
+
+
+/**
+ * \brief Fonction qui parse la matrice.
+ * \param line_ptr est un pointeur sur une ligne(lu avec getline ).
+ * \param input instance de type Input à afficher.
+ */
+
+
 static void parsing_matrice(FILE* nom_file,char* ligne_ptr,size_t taille_alloc,Input input);
 
 
@@ -421,7 +498,7 @@ static void parsing_champs(FILE* file,Input input)
 
 static void affectation_display_data(int indice,double x,double y,Input input)
 {
-  input->display_data[indice]=malloc(2*sizeof(double));
+  input->display_data[indice]=malloc(2*sizeof(double)); 
   input->display_data[indice][0]=x;
   input->display_data[indice][1]=y;
 }

@@ -1,3 +1,9 @@
+/**
+ * \file TasFenerique.c
+ * \brief Programme servant à créer un tas.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -39,6 +45,11 @@ static int filsGauche(int indice);
 static int filsDroit(int indice);
 
 /*------ ACCESSEUR/MUTATEUR ------*/
+
+/**
+ * \b Retourne le nombre d'élément contenu dans le tas min
+*/
+
 int getTailleTas(TasMinGen tas){return tas->taille;}
 
 /*------ ALLOCATION ------*/
