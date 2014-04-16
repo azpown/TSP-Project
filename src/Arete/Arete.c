@@ -1,6 +1,6 @@
 /**
  * \file Arete.c
- * \brief Programme générant des arêtes.
+ * \brief Fichier source qui contient les fonctions générant des arêtes.
  */
 
 

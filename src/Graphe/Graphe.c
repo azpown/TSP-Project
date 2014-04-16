@@ -1,6 +1,6 @@
 /**
  * \file Graphe.c
- * \brief Programme mettant en place un graphe correspondant à une matrice.
+ * \brief Fichier source qui contient les fonctions mettant en place un graphe correspondant à une matrice.
  */
 
 

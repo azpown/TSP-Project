@@ -1,6 +1,6 @@
 /**
  * \file BruteForceOpti.c
- * \brief Programme mettant en place un heuristique de Bruteforce optimisé.
+ * \brief Fichier source qui contient les fonctions mettant en place un heuristique de Bruteforce optimisé.
  */
 
 

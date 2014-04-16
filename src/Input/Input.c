@@ -1,6 +1,6 @@
 /**
  * \file main.c
- * \brief Programme permettant de passer un fichier Tsp en un Input.
+ * \brief Fichier source qui contient les fonctions permettant de passer un fichier Tsp en un Input.
  * Ce programme fait le parsing.
  */
 

@@ -1,6 +1,6 @@
 /**
  * \file Prim.c
- * \brief Programme implémentant l'algorithme de Prim.
+ * \brief Fichier source qui contient les fonctions implémentant l'algorithme de Prim.
  */
 
 

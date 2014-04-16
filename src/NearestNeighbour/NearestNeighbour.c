@@ -1,6 +1,6 @@
 /**
  * \file NearestNeighbour.c
- * \brief Programme mettant en place l'heuristique de NearestNeighbour.
+ * \brief Fichier source qui contient les fonctions mettant en place l'heuristique de NearestNeighbour.
  * Programme créant l'heuristique de NearestNeighbour.
  *
  */

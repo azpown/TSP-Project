@@ -1,6 +1,6 @@
 /**
  * \file TasFenerique.c
- * \brief Programme servant à créer un tas.
+ * \brief Fichier source qui contient les fonctions servant à créer un tas.
  */
 
 

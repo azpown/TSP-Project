@@ -1,3 +1,10 @@
+/**
+ * \file ArbrePlanaireGenerique.c
+ * \brief Fichier source qui contient les fonctions mettant en place un arbre planaire d'entier.
+ */
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -8,8 +15,27 @@ struct arbrePlanaireInt
   ArbrePlanaireGen arbre;
 };
 
+
+/*------ Declaration des fonctions statiques ------*/
+
+/**
+ * \brief Fonction qui alloue de la mémoire.
+ * alloue de la mémorie d'un taille n.
+ */
+
 static int* homogeneise(int n);
+
+/**
+ * \brief Fonction qui rempli un tableau.
+ * Rempli un tableau à l'aide d'éléments présent dans un arbre
+ */
+
 static void remplirTab(Noeud this,int* tab,int* indice,int taille);
+
+/**
+ * \brief Fonction qui 
+ */
+
 static void ajouter(Noeud this,int* tab,int* indice);
 
 

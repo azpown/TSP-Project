@@ -1,3 +1,9 @@
+/**
+ * \file ArbrePlanaireGenerique.c
+ * \brief Fichier source qui contient les fonctions mettant en place un Arbre planaire générique.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -20,9 +26,32 @@ struct arbrePlanaireGen
 };
 
 /*------ Declaration des fonctions statiques ------*/
+
+/**
+ * \brief Fonction qui marque les sommets visités.
+ * Met le sommet this dans le tableau tab à l'indice indice.
+ */
+
 static void visite(int* indice,void** tab,Noeud this);
+
+/**
+ * \brief Fonction qui parcours un arbre.
+ * Parcours l'arbre de manière préfixe.
+ */
+
 static void visiterPrefixe(int* indice,void** tab,Noeud this);
+
+/**
+ * \brief Fonction qui libère la mémoire alouée au noeud.
+ * Détruit le noeud this en libérant sa mémoire.
+ */
+
 static void detruireArbo(Noeud this);
+
+/**
+ * \brief Fonction qui affiche le parcours préfixe..
+ */
+
 static void affichagePrefixeRecursif(Noeud this,ptr_affichage f);
 
 /*------ Allocation ------*/
@@ -57,7 +86,7 @@ static void detruireArbo(Noeud this)
     return;
   detruireArbo(getPremierFils(this));
   detruireArbo(getFrere(this));
-  /* Ici, la sommet est donc une feuille sans frere */
+  /* Ici, le sommet est donc une feuille sans frere */
   freeNoeud(this);
 }
 

@@ -1,6 +1,6 @@
 /**
  * \file TasArete.c
- * \brief Programme mettant en place un graphe correspondant à une matrice.
+ * \brief Fichier source qui contient les fonctions qui manipulent la matrice de distance.
  */
 
 
