@@ -9,7 +9,11 @@
 #include "ArbrePlanaireGenerique.h"
 
 
+void BruteForce2 (Graphe graph, int nbVilles, int* parcours,bool* libre, double distanceParcours,int* parcoursFinal);
 
+bool* creer_tab_dispo(int nombreSommets);
+
+int sommet_suivant(bool* tab_dispo, Graphe graph);
 
 static void initialise_true_n(bool* tab,int taille);
 
@@ -66,7 +70,6 @@ double parcoursSimple(Graphe graph){
 
 double calculDistanceParcours(Graphe graph,int taille, int* parcours){
   double distance = 0;
-  //int taille=get_taille(graph);
   for(int i=1 ; i<=taille; i++)
   {
     if (parcours[i])
@@ -76,9 +79,8 @@ double calculDistanceParcours(Graphe graph,int taille, int* parcours){
   return distance;
 }
 
-
-
-
+/* Cette fonction contient une erreur, à un moment on essaie d'accéder à une des cases d'un tableau pour lequel la mémoire allouée a 
+   déjà  été libérée */
 void BruteForce2 (Graphe graph, int nbVilles, int* parcours,bool* libre, double distanceParcours,int *parcoursFinal)
 {
   int taille=get_taille(graph);
@@ -114,7 +116,7 @@ int* algorithmeBruteForce2 (Graphe graph){
   int* parcours = malloc(taille+1*sizeof(int));
   parcours[0]=0;
   double distance=parcoursSimple(graph);
-  int* parcoursFinal = malloc(taille+1*sizeof(int));//tableau contenant le trajet le plus court au final
+  int* parcoursFinal = malloc(taille+1*sizeof(int));/*tableau contenant le trajet le plus court au final*/
   BruteForce2(graph, 1, parcours, libre, distance,parcoursFinal);
   return parcoursFinal;
 }
