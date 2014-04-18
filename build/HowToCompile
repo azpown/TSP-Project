@@ -3,3 +3,8 @@ Dans build,pour check les tests:
 cmake ..
 make
 ctest
+
+L'éxécutable se trouve dans le répertoire bin du dossier source:
+TSPsolv
+
+( -h --help pour l'aide.)

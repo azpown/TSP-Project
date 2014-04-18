@@ -5,9 +5,6 @@
  */
 
 
-
-/* La fonction getline est dans une extension GNU, d'où la ligne suivante.*/
-#define _GNU_SOURCE
 #include <Input.h>
 #include <malloc.h>
 #include <error.h>
@@ -16,8 +13,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
-
 
 /**
  * \brief Déclaration des fonctions statiques.
@@ -104,7 +99,7 @@ static void affectation_display_data(int indice,double x,double y,Input input);
 
 
 
-static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input input);
+static void parsing_display(FILE* file,char** ligne_ptr,size_t* taille_alloc,Input input);
 
 
 
@@ -115,7 +110,7 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
  */
 
 
-static void parsing_matrice(FILE* nom_file,char* ligne_ptr,size_t taille_alloc,Input input);
+static void parsing_matrice(FILE* nom_file,char** ligne_ptr,size_t* taille_alloc,Input input);
 
 
 
@@ -267,7 +262,6 @@ Input open_TSP_file(char* nom_file)
         exit(EXIT_FAILURE);
     }
     Input input=alloc_init_input(nom_file); 
-
     parsing_champs(file,input);
     /* Sorti dans parsing_champs si erreur */
     fclose(file);
@@ -462,13 +456,13 @@ static void parsing_champs(FILE* file,Input input)
        * sinon, on affiche un message d'erreur */
       if(bool_section && input->dimension && input->edge_weight_type && !input->edge_weight_matrix && input->edge_weight_format)
       {
-	parsing_matrice(file,ligne_ptr,taille_alloc,input);
+	parsing_matrice(file,&ligne_ptr,&taille_alloc,input);
 	continue;
       }
       
       else if(input->display_data_type && input->dimension)
       {
-	parsing_display(file,ligne_ptr,taille_alloc,input);
+	parsing_display(file,&ligne_ptr,&taille_alloc,input);
 	continue;
       }
       error(0,0,"Champs manquant avant section_part, ou section_part redondante.");
@@ -480,7 +474,6 @@ static void parsing_champs(FILE* file,Input input)
        break;
     
     /*------ ERREUR ------ */
-    printf("Erreur avec : %s",*ligne_ptr);
     error(0,0,"Champs redondant,inconnu ou dimension incorrecte.");
     free_erreur(file,ligne_ptr,input);
   }
@@ -503,7 +496,7 @@ static void affectation_display_data(int indice,double x,double y,Input input)
   input->display_data[indice][1]=y;
 }
 
-static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input input)
+static void parsing_display(FILE* file,char** ligne_ptr,size_t* taille_alloc,Input input)
 {
   int taille_ligne,nombre_affectation;
   int taille= input->dimension;
@@ -515,22 +508,22 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
   input->display_data= calloc(taille,sizeof(double*));
   for(int i=0;i<taille;i++)
   {
-    if((taille_ligne=getline(&ligne_ptr,&taille_alloc,file)) != EOF)
+    if((taille_ligne=getline(ligne_ptr,taille_alloc,file)) != EOF)
     {
-      nombre_affectation=sscanf(ligne_ptr,"%d %lf %lf",&numero_ville,&position_x,&position_y);
+      nombre_affectation=sscanf(*ligne_ptr,"%d %lf %lf",&numero_ville,&position_x,&position_y);
       
       /* Si il y a moins de 3 affectations, erreur de lecture*/
       if(nombre_affectation<3)
       {
 	error(0,0,"Format de la display_section incorrect.");
-	free_erreur(file,ligne_ptr,input);
+	free_erreur(file,*ligne_ptr,input);
       }
       
       if(numero_ville<1 || numero_ville > taille || input->display_data[numero_ville-1])
       /* input.display_data[numero_ville-1] : On verifie qu'il n'y a pas deja eu d'affectation.*/
       {
 	error(0,0,"Erreur display_section : ville avec le meme numéro ou numéro incorrect.");
-	free_erreur(file,ligne_ptr,input);
+	free_erreur(file,*ligne_ptr,input);
       }
 
       /* L'affectation realisé via sscanf est donc valide. */
@@ -539,12 +532,12 @@ static void parsing_display(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
     else
     {
       affiche_erreur();
-      free_erreur(file,ligne_ptr,input);
+      free_erreur(file,*ligne_ptr,input);
     }
   }
 }
 
-static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc,Input input)
+static void parsing_matrice(FILE* file,char** ligne_ptr,size_t* taille_alloc,Input input)
 {
   char* ptr_debut_double;
   char* ptr_fin_double;
@@ -555,17 +548,17 @@ static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
 
   for(int i=0;i<taille;i++)
   { 
-    if(taille_ligne=getline(&ligne_ptr,&taille_alloc,file) != EOF)
+    if((taille_ligne=getline(ligne_ptr,taille_alloc,file)) != EOF)
     {
       input->edge_weight_matrix[i] = calloc(taille, sizeof(double));
-      ptr_debut_double=ptr_fin_double=ligne_ptr;
+      ptr_debut_double=ptr_fin_double=*ligne_ptr;
       for(int j=0;j<taille;j++)
       {
 	input->edge_weight_matrix[i][j]=strtod(ptr_debut_double,&ptr_fin_double);
 	if(ptr_debut_double==ptr_fin_double || input->edge_weight_matrix[i][j]<0)
 	{
 	  error(0,0,"Erreur matrice: distance ou format incorrect.");
-	  free_erreur(file,ligne_ptr,input);
+	  free_erreur(file,*ligne_ptr,input);
 	}
 	/* On passe a la valeur suivante,en décalant le pointeur de debut. */
 	ptr_debut_double=ptr_fin_double;
@@ -574,13 +567,13 @@ static void parsing_matrice(FILE* file,char* ligne_ptr,size_t taille_alloc,Input
     else
     {
       affiche_erreur();
-      free_erreur(file,ligne_ptr,input);
+      free_erreur(file,*ligne_ptr,input);
     }
   }
   if(!est_symetrique(input->edge_weight_matrix,taille))
   {
     error(0,0,"Erreur matrice: Matrice non symétrique.");
-    free_erreur(file,ligne_ptr,input);
+    free_erreur(file,*ligne_ptr,input);
   }
 }
 
@@ -597,7 +590,7 @@ static bool est_symetrique(double** mat,int dim)
 	 
 
 
-	  
+
   
 	
 	

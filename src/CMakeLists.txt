@@ -20,3 +20,5 @@ add_subdirectory(Tas)
 add_subdirectory(Prim-MST)
 add_subdirectory(NearestNeighbour)
 add_subdirectory(BruteForceOpti)
+add_subdirectory(Main)
+

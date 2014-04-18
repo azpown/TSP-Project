@@ -90,7 +90,6 @@ int plusProcheVoisin(int sommet,bool* tabDispo,Graphe graph,double* acc)
 
 int* HeuristiquePlusProcheVoisin(Graphe graph,int departChemin,double* distanceAcc)
 {
-  printf("done");
   *(distanceAcc)=0;
   int taille=get_taille(graph);
   /* Allocation du tableau de retour (taille + ville depart). */
@@ -116,7 +115,6 @@ int* HeuristiquePlusProcheVoisin(Graphe graph,int departChemin,double* distanceA
   *(distanceAcc)+=distance_ville(graph,dernierVisite,departChemin);
   /* distanceAcc contient la distance du chemin a la fin du parcours. */
   tab[alloue]=departChemin;
-  printf("done");
   return tab;
 }
 

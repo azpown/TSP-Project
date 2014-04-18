@@ -15,7 +15,7 @@
  */
 int main (int argc,char* argv[])
 {
-  if(argc =! 3)
+  if(argc != 3)
   {
     printf("Usage : ./<NomExec> <CheminTspFile> <DistancePlusCourtChemin>\n");
     return EXIT_FAILURE;
@@ -23,7 +23,8 @@ int main (int argc,char* argv[])
   Graphe g= getGraphe(argv[1]);
   double acc=0;
   double min = (double) atoi(argv[2]);
-  /* On vérifie qu'il s'agit d'une 2 approximation et que la distance est valide */
+  /* On vérifie qu'il s'agit d'une 2 approximation et que la distance est valide pour chaque sommet en tant que 
+  * sommet de depart de l'algorithme */
   for(int i=0;i<get_taille(g);i++)
   {
     acc=0;

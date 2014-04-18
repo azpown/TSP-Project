@@ -26,7 +26,7 @@ void testBaseHeuristiqueAD(char* nomFichier,int depart,HeuristiqueAvecDepart H)
   if(estCycleValide(resultat,get_taille(g)))
     printf("OK\n");
   else
-    printf("ECHEC");
+    printf("ECHEC\n");
   freeHeuristique(g,resultat);
 }
 
@@ -39,7 +39,7 @@ void testBaseHeuristiqueSD(char* nomFichier,HeuristiqueSansDepart H)
   if(estCycleValide(resultat,get_taille(g)))
     printf("OK\n");
   else
-    printf("ECHEC");
+    printf("ECHEC\n");
   freeHeuristique(g,resultat);
 }
 
