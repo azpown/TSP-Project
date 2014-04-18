@@ -90,7 +90,7 @@ int main(int argc,char** argv)
     }
   }
   Graphe g = getGraphe(nom_file);
-  if(get_taille(g)<depart || depart<=0)
+  if(get_taille(g)<depart || depart<0)
   {
     Usage();
     printf("\n-ERREUR- : Dimension non valide (valide entre 0 et dimension matrice-1).\n");
